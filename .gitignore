@@ -1,0 +1,49 @@
+# -----------------------------------------------------------------------------
+# .gitignore for scaling_bench
+#
+# Rule of thumb: keep the *code* under git (bench.py, endtoend_bench.py, all
+# .sh launchers, plotting scripts, README), and ignore *data* (raw run logs,
+# consolidated CSVs, plots, SLURM outputs, python bytecode).
+#
+# Ignoring the data (~120 GB) keeps the repo small enough to push, and
+# guarantees that a fresh clone gets a clean slate to run benchmarks in.
+# -----------------------------------------------------------------------------
+
+# Raw solver run logs (bench.py fixed-iteration workflow) -- ~112 GB
+runs/
+
+# End-to-end solver run logs (endtoend_bench.py) -- ~8 GB
+runs_endtoend/
+
+# Generated plots
+plots/
+
+# Consolidated CSVs (rebuild with build_csv.py / endtoend_build_csv.py)
+results.csv
+results_endtoend_*.csv
+report.tsv
+
+# SLURM stdout/stderr (one per crun -b submission)
+slurm-*.out
+
+# Ephemeral scratch used by ee_loop's retry logic
+ee_retry.log
+
+# OpenMPI/PMIx session dirs rerouted off /tmp by _dpdlp_env
+tmp_dpdlp/
+
+# Atomic worker-coordination files (regenerated on the fly)
+.claims/
+**/.claims/
+
+# Python bytecode / caches
+__pycache__/
+*.pyc
+*.pyo
+
+# Editor / OS junk
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
