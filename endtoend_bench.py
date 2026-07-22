@@ -503,9 +503,11 @@ def _run_sweep_for_tol(args: argparse.Namespace, tol: str) -> int:
 
                 reused = _try_reuse_existing_log(solver, instance, n, tol)
                 if reused is not None:
-                    print(f"{prefix} ... reused (status={reused.get('status','?')} "
-                          f"iter={reused.get('iterations','?')} "
-                          f"total={reused.get('total_s','?')}s)")
+                    # bench._try_reuse_existing_log returns (log_path, parsed, exit_code)
+                    _lp, r_metrics, _rc = reused
+                    print(f"{prefix} ... reused (status={r_metrics.get('status','?')} "
+                          f"iter={r_metrics.get('iterations','?')} "
+                          f"total={r_metrics.get('total_s','?')}s)")
                     continue
 
                 claim = _claim_path(solver, instance, n, tol)
