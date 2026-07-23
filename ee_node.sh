@@ -20,9 +20,22 @@
 #     IMAGE       -- override the docker image (default katrines-cuopt-julia-dev:2004-112)
 #     NCCL_DEBUG  -- verbosity for NCCL layer (default WARN; try INFO if debugging)
 #
-# NB: no NCCL_NVLS_ENABLE forcing here anymore -- we let NCCL default (which
-# effectively disables NVLS given cuopt's plain cudaMalloc allocations, and
-# silences the spurious `Cuda failure 1 'invalid argument'` warnings).
+# NB: we KEEP NVLS enabled (NCCL_NVLS_ENABLE=1) but silence the resulting
+# WARN spam by lowering NCCL_DEBUG to VERSION.
+#
+# What was happening:
+#   NCCL 2.30+ turns NVLink SHARP (NVLS) ON by default on B200. NVLS wants
+#   VMM-mapped buffers so it calls cuMemGetAddressRange(buf) to check;
+#   cuopt-distributed allocates via cudaMalloc which VMM doesn't track,
+#   so cuMemGetAddressRange returns 1 ("invalid argument") and NCCL
+#   emits a WARN at include/alloc.h:383 -- literally once per collective.
+#   Correctness is fine (NCCL falls back to non-NVLS silently) but the
+#   log gets spammed 40x/s.
+#
+# NCCL_DEBUG=VERSION -> print version once at init, skip WARN/INFO/TRACE.
+#   So we still get proof NCCL loaded (`NCCL version 2.x`) and any real
+#   error stops the run, but the alloc-check WARN vanishes.
+#   Bump to WARN or INFO temporarily if you need to debug a stall.
 
 set -euo pipefail
 
@@ -62,7 +75,13 @@ done
 # 2) Docker config.
 # ---------------------------------------------------------------------------
 image="${IMAGE:-nvcr.io/nvidian/dt-compute/katrines-cuopt-julia-dev:2004-112}"
-nccl_debug="${NCCL_DEBUG:-WARN}"
+# VERSION = print `NCCL version X.Y.Z+cudaXX` once and be quiet after.
+# Suppresses the NVLS/cuMemGetAddressRange WARN spam. Bump to WARN/INFO
+# to debug a stall.
+nccl_debug="${NCCL_DEBUG:-VERSION}"
+# Keep NVLS enabled (default in NCCL 2.30+); the WARN spam it causes on
+# cudaMalloc'd buffers is already silenced by NCCL_DEBUG=VERSION above.
+nccl_nvls="${NCCL_NVLS_ENABLE:-1}"
 python_bin="/home/scratch.vmostovoi_gpu/.conda/envs/cuopt_dev_133/bin/python"
 
 # Forward any CLI args to endtoend_bench.py through ee_in_container.sh.
@@ -77,6 +96,7 @@ echo "scratch    : $scratch_string ($host_ip) -> $scratch_path"
 echo "image      : $image"
 echo "python     : $python_bin"
 echo "NCCL_DEBUG : $nccl_debug"
+echo "NCCL_NVLS  : $nccl_nvls"
 echo "ee args    : $*"
 echo "================"
 
@@ -104,6 +124,7 @@ in_container_script="$scratch_path/scaling_bench/ee_in_container.sh"
 exec docker run --rm --runtime nvidia \
     -e NVIDIA_VISIBLE_DEVICES=all \
     -e NCCL_DEBUG="$nccl_debug" \
+    -e NCCL_NVLS_ENABLE="$nccl_nvls" \
     -e RUNAS_UID="$user_uid" \
     -e RUNAS_USER="$user_string" \
     -e HOST_IP="$host_ip" \

@@ -213,41 +213,52 @@ def _cuopt_tol_pairs() -> list[tuple[str, str]]:
 
 
 def _ee_cuopt_params(already_presolved: bool = False) -> list[tuple[str, str]]:
-    """cuopt distributed PDLP end-to-end. presolve=1 by default; flip
-    to 0 when the MPS was already produced by an external presolver
-    (i.e. the instance path lives under _GUROBI_PRESOLVED_DIR).
+    """cuopt distributed PDLP end-to-end.
+
+    Presolve policy: DO NOT pass `--presolve` when we want the solver to
+    presolve normally -- passing `--presolve 1` explicitly routes cuopt
+    through the Papilo path instead of the intended PSLP path. Leaving
+    the flag off lets cuopt pick PSLP as its default. We only pass
+    `--presolve 0` when the MPS was already reduced externally (Gurobi)
+    and we want no in-solver presolve at all.
 
     Uses `--mps-reader experimental-fast`, the SIMD MPS parser now
     wired into the distributed loader path. Earlier builds rejected
     the flag with `Unknown argument: --mps-reader`; if you point at an
     older cuopt_cli, remove this line or the run will refuse to start.
     """
-    presolve = "0" if already_presolved else "1"
-    return [
+    params: list[tuple[str, str]] = [
         ("use-distributed-pdlp",       "true"),
         ("method",                     "1"),
-        ("presolve",                   presolve),
         ("mps_reader",                 "experimental-fast"),
         ("time_limit",                 str(EE_TIME_LIMIT_S)),
         ("iteration_limit",            "1000000000"),
         *_cuopt_tol_pairs(),
         ("log_to_console",             "true"),
     ]
+    if already_presolved:
+        # Externally pre-reduced MPS -- disable in-solver presolve.
+        params.insert(2, ("presolve", "0"))
+    return params
 
 
 def _ee_cuopt_basic_params(already_presolved: bool = False) -> list[tuple[str, str]]:
     """Single-GPU cuopt (no `--use-distributed-pdlp`, no MPI). Same
-    tolerances / mps reader / presolve toggle as the distributed one."""
-    presolve = "0" if already_presolved else "1"
-    return [
+    tolerances / mps reader / presolve policy as the distributed one:
+    only emit `--presolve 0` for gurobi-presolved inputs; otherwise leave
+    the flag off so cuopt uses its default PSLP presolver (passing
+    `--presolve 1` would silently switch to Papilo)."""
+    params: list[tuple[str, str]] = [
         ("method",                     "1"),
-        ("presolve",                   presolve),
         ("mps_reader",                 "experimental-fast"),
         ("time_limit",                 str(EE_TIME_LIMIT_S)),
         ("iteration_limit",            "1000000000"),
         *_cuopt_tol_pairs(),
         ("log_to_console",             "true"),
     ]
+    if already_presolved:
+        params.insert(1, ("presolve", "0"))
+    return params
 
 
 def _ee_dpdlp_flags(already_presolved: bool = False) -> list[tuple[str, str]]:
