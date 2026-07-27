@@ -237,6 +237,39 @@ INSTANCES = [
 
     # Open-energy benchmark (zen-garden), see github.com/ZEN-universe/ZEN-garden
     "/home/scratch.vmostovoi_gpu/datasets/zen-garden-eur-PI-28-200ts.mps",           # 2.9G
+
+    # Amazon LP-relaxation instances. Amazon's LP/ folder actually contains
+    # MIPs (99% binary vars) which they told us to relax to [0,1] and treat
+    # as continuous. Produced by gurobi_things/npz_to_mps.py --relax.
+    "/home/scratch.vmostovoi_gpu/datasets/amazon_lp/amazon_lp003.mps",               # 6.9G, 17M vars x 1M rows x 129M nnz
+    "/home/scratch.vmostovoi_gpu/datasets/amazon_lp/amazon_lp004.mps",               # 6.9G, 17M vars x 1M rows x 129M nnz
+
+    # Multicommodity-flow benchmark instances from Oliver Hinder's
+    # `large-scale-LP-test-problems` repo (github.com/ohinder/...),
+    # pre-generated and shared by cmaes_sw. Same suite reported in
+    # the D-PDLP paper (arXiv 2601.07628) Table 4 as `mcf_<C>_<W>_<S>`
+    # where C=commodities, W=warehouses, S=stores.
+    "/home/scratch.cmaes_sw/large-scale-LP-test-problems/large-problem-instances/multicommodity-flow-instance_2500_100_500.mps.gz",  # 3.0G gz, 1.5M rows x 126M cols x 254M nnz
+    "/home/scratch.cmaes_sw/large-scale-LP-test-problems/large-problem-instances/multicommodity-flow-instance_5000_100_250.mps",     # 21G,     1.8M rows x 127.5M cols x 257.5M nnz
+    "/home/scratch.cmaes_sw/large-scale-LP-test-problems/large-problem-instances/multicommodity-flow-instance_5000_50_500.mps",      # 20G,     2.8M rows x 126M cols x 254M nnz
+
+    # PSR6 model_de_<N>_scenarios stochastic power-system LPs, shared by
+    # bbozkaya on Jul 21 2026. These are the same instances that
+    # appear in his internal cuPDLP-vs-mPDLP vs Xpress Barrier table:
+    # (rows, cols, nnz reported by bbozkaya's Gurobi presolve log)
+    #   20-scen  : 28.0M rows x 36.1M cols x  93.3M nnz  (presolved: 27.7M / 31.9M / 88.4M)
+    #   50-scen  : 70.1M rows x 90.1M cols x 233.1M nnz  (presolved: 69.3M / 79.7M / 220.9M)
+    #  100-scen  : 140M   rows x 180M   cols x 466M   nnz (presolved: 138.5M / 159.4M / 441.7M)
+    # All three are well under the 1B-nnz zone where cuopt starts to
+    # hit int32-overflow crashes (see design_match investigation), so
+    # they should go through PSLP + solve without special handling.
+    # Loaded raw (mps.gz supported by cuopt's experimental-fast parser
+    # and by D-PDLP's MPS reader); we do NOT switch to bbozkaya's
+    # `20_presolved.lp` because (a) it exists only for 20-scen, and
+    # (b) .lp isn't supported by D-PDLP's loader.
+    "/home/scratch.bbozkaya_gpu/datasets/PSR6/model_de_20_scenarios.mps.gz",         # 705M gz -> 93M nnz
+    "/home/scratch.bbozkaya_gpu/datasets/PSR6/model_de_50_scenarios.mps.gz",         # 1.8G gz -> 233M nnz
+    "/home/scratch.bbozkaya_gpu/datasets/PSR6/model_de_100_scenarios.mps.gz",        # 3.6G gz -> 466M nnz
 ]
 N_GPUS_LIST = [1, 2, 4, 8]
 
@@ -376,15 +409,17 @@ RX_CUOPT_PART = re.compile(
 )
 RX_CUOPT_SETUP  = re.compile(r"^Setup time:\s+(?P<t>\d+(?:\.\d+)?)s")
 RX_CUOPT_STEP   = re.compile(r"^Step time:\s+(?P<t>\d+(?:\.\d+)?)s")
-# Only present when the run used --presolve 1 AND cuopt actually reached
-# the presolver (i.e. build was compiled with Papilo and the model was
-# not rejected). Line looks like:
+# Present when cuopt reaches either its legacy Papilo presolver or the
+# current default PSLP presolver. Lines look like:
 #     Papilo presolve time: 133.69s
-# The value is wall-clock seconds spent inside Papilo, and it is INCLUDED
+#     PSLP presolve time: 52.25s
+# The value is wall-clock seconds spent inside presolve, and it is INCLUDED
 # in the final "Status: ... Time: N.NNs" wall clock reported at end of
 # run, so we do NOT need to add it to total_s again -- we only capture
 # it for reporting parity with D-PDLP.
-RX_CUOPT_PRESOLVE = re.compile(r"^Papilo presolve time:\s+(?P<t>\d+(?:\.\d+)?)s")
+RX_CUOPT_PRESOLVE = re.compile(
+    r"^(?:Papilo|PSLP) presolve time:\s+(?P<t>\d+(?:\.\d+)?)s"
+)
 RX_CUOPT_STATUS = re.compile(
     r"^Status:\s+(?P<status>.+?)\s+Objective:.+?"
     r"Iterations:\s+(?P<it>\d+)\s+Time:\s+(?P<t>\d+(?:\.\d+)?)s"
@@ -460,6 +495,9 @@ def _cuopt_parse(log_path: Path, run_dir: Path) -> dict:
             out["status"] = "TIME_LIMIT" if last_row_elapsed >= 0.9 * 3600.0 else "CRASHED_MID_RUN"
 
     if out["setup_s"] is None and first_row_elapsed is not None:
+        # The current cuopt build's PDLP clock starts after MPS loading:
+        # logs can show MPS read=86.98s followed by iter-0 elapsed=84.235s.
+        # Therefore iter-0 is already post-MPS setup and needs no subtraction.
         out["setup_s"] = first_row_elapsed
     # step_s = actual iter-loop time as reported in the trace. Preferred
     # source: last_row_elapsed - first_row_elapsed (matches what the user
@@ -483,12 +521,11 @@ def _cuopt_parse(log_path: Path, run_dir: Path) -> dict:
 # Launcher: `mpirun -n N <bin> <MPS> <OUTPUT_DIR> --verbose --iter_limit 20000
 #           --time_limit 1e9 --eps_opt 1e-30 --eps_feas 1e-30 --no_presolve`.
 # Output : one machine-readable <inst>_summary.txt in OUTPUT_DIR with
-#          `Runtime (sec): ...` (= total_s), `Iterations Count: ...`,
+#          `Runtime (sec): ...` (= solve-loop time), `Iterations Count: ...`,
 #          `Termination Reason: ...` (= status). Cleaner than scraping
 #          stdout.
-# stdout : `[Timer] Data Distribution (Partition -> P2P Send) took X.XXX
-#          seconds.` (= partition_s). Verbose iter table: first row is at
-#          iter 0 with cumulative_time = setup; this gives an exact setup_s.
+# stdout : separate permutation and data-distribution timers. Their sum is
+#          setup_s; this remains reliable when NFS corruption loses iter 0.
 # ---------------------------------------------------------------------------
 
 def _dpdlp_argv(instance: str, n_gpus: int, solver: Solver) -> list[str]:
@@ -544,7 +581,11 @@ def _dpdlp_run_dir(instance: str, n_gpus: int) -> Path:
     return RUNS_DIR / "dpdlp" / f"{_stem_of(instance)}__N{n_gpus}"
 
 
-# stdout: `[Timer] Data Distribution (Partition -> P2P Send) took 1.234 seconds.`
+# stdout: `[Timer] Permuting LP Problem took 16.512 seconds.`
+RX_DPDLP_TIMER_PERMUTE = re.compile(
+    r"\[Timer\]\s+Permuting LP Problem\s+took\s+(?P<t>\d+(?:\.\d+)?)\s+seconds"
+)
+# Covers both Bcast -> Partition and Partition -> P2P Send variants.
 RX_DPDLP_TIMER_PART = re.compile(
     r"\[Timer\]\s+Data Distribution.*?took\s+(?P<t>\d+(?:\.\d+)?)\s+seconds"
 )
@@ -595,52 +636,31 @@ def _dpdlp_parse(log_path: Path, run_dir: Path) -> dict:
                     out["status"] = v
             except ValueError:
                 pass
-    if solve_s is not None:
-        # Fold presolve into total_s for apples-to-apples comparison
-        # with cuopt-distributed's own "Time: N.NNs" line (which is
-        # already end-to-end). If the summary didn't mention presolve
-        # (e.g. --no_presolve run), presolve_s stays None and we treat
-        # it as 0.
-        out["total_s"] = solve_s + (out.get("presolve_s") or 0.0)
-
-    # Secondary: stdout for partition timer + iter-0 elapsed (setup_s).
-    first_row_elapsed = None
-    last_row_elapsed  = None
+    # D-PDLP's Runtime excludes both pre-loop timers. MPS parsing remains
+    # excluded because D-PDLP does not expose a loader timer.
+    permute_s: float | None = None
+    partition_s: float | None = None
     if log_path.is_file():
         with log_path.open(errors="replace") as f:
             for line in f:
-                if (m := RX_DPDLP_TIMER_PART.search(line)):
-                    out["partition_s"]      = float(m["t"])
-                    out["partition_engine"] = "2D-grid"
+                if (m := RX_DPDLP_TIMER_PERMUTE.search(line)):
+                    permute_s = float(m["t"])
                     continue
-                if (m := RX_DPDLP_ITER_ROW.match(line)):
-                    elapsed = float(m["elapsed"])
-                    if first_row_elapsed is None:
-                        # First iter row prints at iter=0 with cumulative_time_sec
-                        # = time already spent before the loop = setup.
-                        first_row_elapsed = elapsed
-                    last_row_elapsed = elapsed
+                if (m := RX_DPDLP_TIMER_PART.search(line)):
+                    partition_s = float(m["t"])
+                    out["partition_s"]      = partition_s
+                    out["partition_engine"] = "2D-grid"
 
-    if first_row_elapsed is not None:
-        out["setup_s"] = first_row_elapsed
-    # Prefer last_row_elapsed - first_row_elapsed (= actual iter-loop time
-    # as visible in the trace) over total - setup. For D-PDLP the two
-    # values are usually nearly identical because total_s is reported
-    # right after the loop, but use the iter-table form for consistency
-    # with the cuopt-distributed parser.
-    if (out["step_s"] is None
-            and first_row_elapsed is not None
-            and last_row_elapsed is not None
-            and last_row_elapsed > first_row_elapsed):
-        out["step_s"] = last_row_elapsed - first_row_elapsed
-    # Fallback for when the iter-table wasn't found (should be rare with
-    # --verbose on). Note we use solve_s here, NOT out["total_s"] --
-    # since we fold presolve into total_s above, `total_s - setup_s`
-    # would over-report step_s by the presolve time. solve_s is D-PDLP's
-    # raw "Runtime (sec)" which excludes presolve.
-    if (out["step_s"] is None and solve_s is not None
-            and out["setup_s"] is not None):
-        out["step_s"] = max(0.0, solve_s - out["setup_s"])
+    if permute_s is not None or partition_s is not None:
+        out["setup_s"] = (permute_s or 0.0) + (partition_s or 0.0)
+
+    if solve_s is not None:
+        out["step_s"] = solve_s
+        out["total_s"] = (
+            solve_s
+            + (out.get("presolve_s") or 0.0)
+            + (out.get("setup_s") or 0.0)
+        )
     return out
 
 
@@ -953,11 +973,23 @@ class ClaimHeartbeat:
 # ===========================================================================
 
 def run_one(solver: Solver, instance: str, n_gpus: int) -> tuple[Path, dict, int]:
-    """Execute one (solver, instance, n_gpus) run. Always invokes the solver
-    and overwrites its log file. The CSV is the only source of truth for
-    which runs are 'done'; runs/ is just a debug log directory."""
+    """Execute one run, unless a successful canonical log already exists.
+
+    This second check happens after the caller acquired its claim. It protects
+    successful shared-NFS logs from stale metadata reads in the earlier
+    pre-claim reuse check and prevents a bad worker from truncating good work.
+    Non-zero exits remain retryable and may be overwritten.
+    """
     log_path = solver.log_path(instance, n_gpus)
     log_path.parent.mkdir(parents=True, exist_ok=True)
+
+    existing = _parse_log_metadata(log_path)
+    if existing is not None and existing.get("exit_code") == 0:
+        rd = solver.run_dir(instance, n_gpus)
+        parsed = solver.parse_log(log_path, rd)
+        parsed["gpu_peak_mb"] = existing.get("gpu_peak_mb")
+        parsed["gpu_peak2_mb"] = existing.get("gpu_peak2_mb")
+        return log_path, parsed, 0
 
     env  = solver.build_env(os.environ.copy(), n_gpus, solver)
     argv = solver.build_argv(instance, n_gpus, solver)
