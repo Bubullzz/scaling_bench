@@ -203,73 +203,72 @@ DPDLP_BOOL_FLAGS: list[str] = [
 
 
 INSTANCES = [
-    "/home/scratch.vmostovoi_gpu/mostovoi_cuopt/datasets/linear_programming/afiro_original.mps",
+    # Adendum Mittleman
+    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/heat-source-easy.mps",      # 5.6G
+    "/home/scratch.cmaes_sw/large-scale-LP-test-problems/large-problem-instances/multicommodity-flow-instance_2500_100_500.mps.gz",  # 3.0G gz, 1.5M rows x 126M cols x 254M nnz
+    "/home/scratch.cmaes_sw/large-scale-LP-test-problems/large-problem-instances/multicommodity-flow-instance_5000_100_250.mps",     # 21G,     1.8M rows x 127.5M cols x 257.5M nnz
+    "/home/scratch.cmaes_sw/large-scale-LP-test-problems/large-problem-instances/multicommodity-flow-instance_5000_50_500.mps",      # 20G,     2.8M rows x 126M cols x 254M nnz
+    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/mediterranean-shipping.mps",# 27G
+    # ????? prod_100_300_02
+    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/production-imventory.mps",  # 14G
+    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/qap-tho-150.mps",           # 48G
+    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/qap-wil-100.mps",           # 11G
+    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/supply-chain.mps",          # 32G
+    "/home/scratch.vmostovoi_gpu/datasets/big_lp/design_match.mps",                 # 123G (presolved)
+    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/tsp-gaia-10m.mps",          # 25G
+
+
+    # Original PDLP paper
+    # ^^^^"/home/scratch.vmostovoi_gpu/datasets/big_lp/design_match.mps",                 # 123G (presolved)
+    # ^^^^"/home/scratch.vmostovoi_gpu/datasets/big_lp/google/tsp-gaia-10m.mps",          # 25G
+    #"/home/scratch.vmostovoi_gpu/datasets/big_lp/tsp-gaia-100m.mps",                # 397G
+    # ^^^^"/home/scratch.vmostovoi_gpu/datasets/big_lp/google/heat-source-easy.mps",      # 5.6G
+    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/heat-source-hard.mps",      # 5.6G
+    # ^^^^"/home/scratch.vmostovoi_gpu/datasets/big_lp/google/production-imventory.mps",  # 14G
+    # ^^^^"/home/scratch.vmostovoi_gpu/datasets/big_lp/google/qap-tho-150.mps",           # 48G
+    # ^^^^"/home/scratch.vmostovoi_gpu/datasets/big_lp/google/qap-wil-100.mps",           # 11G
+    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/world-shipping.mps",        
+    # ^^^^"/home/scratch.vmostovoi_gpu/datasets/big_lp/google/mediterranean-shipping.mps",# 27G
+    # ^^^^"/home/scratch.vmostovoi_gpu/datasets/big_lp/google/supply-chain.mps",          # 32G
+
+    # D-PDLP
+    # bench on miplib >10M nnz possible too 
     "/home/scratch.cmaes_sw/zib03.mps",
+    # ??? pagerank 1 2 3 () mais solve en 4 secondes du coup osef 
+    # ^^^^"mcf_*"
+    # ^^^^"design_match"
+    # ??? QAP solven en max 43 secodes du coup bon 
+    # ??? Unit Com (ds1, ds2)   
     
+    # Burcin / industry
     "/home/scratch.vmostovoi_gpu/datasets/big_lp/psr_100.mps",                      # 54G
     "/home/scratch.vmostovoi_gpu/datasets/big_lp/C5_bigger_sanitized.mps",          # 34G
     "/home/scratch.vmostovoi_gpu/datasets/big_lp/C5_baseline_sanitized.mps",        # 14G
     "/home/scratch.bbozkaya_gpu/datasets/GAMS/ELMOD_876_10_noVEnames.mps",         
     "/home/scratch.bbozkaya_gpu/datasets/GAMS/VERYLARGE/BEAM_4032_11_8_CLI.mps",    # 132G (Burcin VERYLARGE)
-
-
-    # design_match raw (123G) is too big for PSLP presolve (SIGSEGV in transpose)
-    # -> substituted at sweep time by design_match_gurobi_presolved.mps via
-    #    endtoend_bench.PRESOLVE_THESE. Keep the raw path listed so the
-    #    substitution key matches; the raw file itself is not opened.
-    "/home/scratch.vmostovoi_gpu/datasets/big_lp/design_match.mps",                 # 123G (presolved)
-    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/heat-source-easy.mps",      # 5.6G
-    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/heat-source-hard.mps",      # 5.6G
-    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/mediterranean-shipping.mps",# 27G
-    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/production-imventory.mps",  # 14G
-    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/qap-tho-150.mps",           # 48G
-    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/qap-wil-100.mps",           # 11G
-    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/supply-chain.mps",          # 32G
-    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/tsp-gaia-10m.mps",          # 25G
-    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/world-shipping.mps",        
-    #"/home/scratch.vmostovoi_gpu/datasets/big_lp/tsp-gaia-100m.mps",                # 397G
-
-    # H. Mittelmann LPfeas test set (plato.asu.edu/ftp/lptestset/), .mps
-    # extracted from *.mps.bz2. Sizes are modest compared to the Google /
-    # GAMS monsters so PSLP presolve should handle them raw.
-    "/home/scratch.vmostovoi_gpu/datasets/mittleman_mps/Dual2_5000.mps",             # 30M rows x 33M cols x 93M nnz
-    "/home/scratch.vmostovoi_gpu/datasets/mittleman_mps/dlr2.mps",
-
-    # Open-energy benchmark (zen-garden), see github.com/ZEN-universe/ZEN-garden
-    "/home/scratch.vmostovoi_gpu/datasets/zen-garden-eur-PI-28-200ts.mps",           # 2.9G
-
-    # Amazon LP-relaxation instances. Amazon's LP/ folder actually contains
-    # MIPs (99% binary vars) which they told us to relax to [0,1] and treat
-    # as continuous. Produced by gurobi_things/npz_to_mps.py --relax.
     "/home/scratch.vmostovoi_gpu/datasets/amazon_lp/amazon_lp003.mps",               # 6.9G, 17M vars x 1M rows x 129M nnz
     "/home/scratch.vmostovoi_gpu/datasets/amazon_lp/amazon_lp004.mps",               # 6.9G, 17M vars x 1M rows x 129M nnz
-
-    # Multicommodity-flow benchmark instances from Oliver Hinder's
-    # `large-scale-LP-test-problems` repo (github.com/ohinder/...),
-    # pre-generated and shared by cmaes_sw. Same suite reported in
-    # the D-PDLP paper (arXiv 2601.07628) Table 4 as `mcf_<C>_<W>_<S>`
-    # where C=commodities, W=warehouses, S=stores.
-    "/home/scratch.cmaes_sw/large-scale-LP-test-problems/large-problem-instances/multicommodity-flow-instance_2500_100_500.mps.gz",  # 3.0G gz, 1.5M rows x 126M cols x 254M nnz
-    "/home/scratch.cmaes_sw/large-scale-LP-test-problems/large-problem-instances/multicommodity-flow-instance_5000_100_250.mps",     # 21G,     1.8M rows x 127.5M cols x 257.5M nnz
-    "/home/scratch.cmaes_sw/large-scale-LP-test-problems/large-problem-instances/multicommodity-flow-instance_5000_50_500.mps",      # 20G,     2.8M rows x 126M cols x 254M nnz
-
-    # PSR6 model_de_<N>_scenarios stochastic power-system LPs, shared by
-    # bbozkaya on Jul 21 2026. These are the same instances that
-    # appear in his internal cuPDLP-vs-mPDLP vs Xpress Barrier table:
-    # (rows, cols, nnz reported by bbozkaya's Gurobi presolve log)
-    #   20-scen  : 28.0M rows x 36.1M cols x  93.3M nnz  (presolved: 27.7M / 31.9M / 88.4M)
-    #   50-scen  : 70.1M rows x 90.1M cols x 233.1M nnz  (presolved: 69.3M / 79.7M / 220.9M)
-    #  100-scen  : 140M   rows x 180M   cols x 466M   nnz (presolved: 138.5M / 159.4M / 441.7M)
-    # All three are well under the 1B-nnz zone where cuopt starts to
-    # hit int32-overflow crashes (see design_match investigation), so
-    # they should go through PSLP + solve without special handling.
-    # Loaded raw (mps.gz supported by cuopt's experimental-fast parser
-    # and by D-PDLP's MPS reader); we do NOT switch to bbozkaya's
-    # `20_presolved.lp` because (a) it exists only for 20-scen, and
-    # (b) .lp isn't supported by D-PDLP's loader.
     "/home/scratch.bbozkaya_gpu/datasets/PSR6/model_de_20_scenarios.mps.gz",         # 705M gz -> 93M nnz
     "/home/scratch.bbozkaya_gpu/datasets/PSR6/model_de_50_scenarios.mps.gz",         # 1.8G gz -> 233M nnz
     "/home/scratch.bbozkaya_gpu/datasets/PSR6/model_de_100_scenarios.mps.gz",        # 3.6G gz -> 466M nnz
+
+    # Open-energy benchmark
+    "/home/scratch.vmostovoi_gpu/datasets/zen-garden-eur-PI-28-200ts.mps",           # 2.9G, 26M vars x 28M rows x 77M nnz
+    "/home/scratch.vmostovoi_gpu/datasets/open_energy_benchmark/IESA-Opt-NL-10-1h.mps",                              # 2.8G, 9.7M vars x 15M rows x 76M nnz
+    "/home/scratch.vmostovoi_gpu/datasets/open_energy_benchmark/IESA-Opt-NL-5-3h.mps",                               # 2.2G, 12M vars x 15M rows x 62M nnz
+    "/home/scratch.vmostovoi_gpu/datasets/open_energy_benchmark/TIMES-STEM-15-1h.mps",                               # 1.9G, 6.7M vars x 7.0M rows x 48M nnz
+    "/home/scratch.vmostovoi_gpu/datasets/open_energy_benchmark/zen-garden-eur-PI-constrained-expansion-28-100ts.mps", # 1.8G, 14M vars x 17M rows x 48M nnz
+    "/home/scratch.vmostovoi_gpu/datasets/open_energy_benchmark/pypsa-de-elec-60-1h.mps",                            # 2.2G, 10M vars x 22M rows x 42M nnz
+    "/home/scratch.vmostovoi_gpu/datasets/open_energy_benchmark/ethos_fine_europe_60tp-175-720ts.mps",               # 1.7G, 8.1M vars x 9.2M rows x 33M nnz
+    "/home/scratch.vmostovoi_gpu/datasets/open_energy_benchmark/pypsa-eur-elec-100-3h.mps",                          # 1.4G, 6.7M vars x 14M rows x 27M nnz
+    "/home/scratch.vmostovoi_gpu/datasets/open_energy_benchmark/zen-garden-eur-PI-no-storage-28-100ts.mps",          # 988M, 11M vars x 10M rows x 27M nnz
+    "/home/scratch.vmostovoi_gpu/datasets/open_energy_benchmark/times-ireland-noco2-40-1ts.mps",                     # 693M, 4.5M vars x 4.8M rows x 22M nnz
+    "/home/scratch.vmostovoi_gpu/datasets/open_energy_benchmark/pypsa-eur-sec-50-24h.mps",                           # 504M, 2.2M vars x 4.7M rows x 11M nnz
+
+
+    # biggest ones from lpfeas, without addendum
+    "/home/scratch.vmostovoi_gpu/datasets/mittleman_mps/Dual2_5000.mps",             # 30M rows x 33M cols x 93M nnz
+    "/home/scratch.vmostovoi_gpu/datasets/mittleman_mps/dlr2.mps",
 ]
 N_GPUS_LIST = [1, 2, 4, 8]
 

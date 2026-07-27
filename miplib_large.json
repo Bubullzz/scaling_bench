@@ -1,0 +1,218 @@
+[
+  {
+    "name": "neos-4535459-waipa",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/neos-4535459-waipa.mps",
+    "n": 961401,
+    "m": 163001,
+    "nnz": 256963000,
+    "size_mb": 7059.697456
+  },
+  {
+    "name": "hawaiiv10-130",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/hawaiiv10-130.mps",
+    "n": 685130,
+    "m": 1388052,
+    "nnz": 183263000,
+    "size_mb": 8930.627634
+  },
+  {
+    "name": "dlr2",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/dlr2.mps",
+    "n": 38868107,
+    "m": 7132926,
+    "nnz": 78091600,
+    "size_mb": 4073.079388
+  },
+  {
+    "name": "neos-3230511-yuna",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/neos-3230511-yuna.mps",
+    "n": 99472,
+    "m": 19335696,
+    "nnz": 58613700,
+    "size_mb": 2378.622957
+  },
+  {
+    "name": "neos-3229051-yass",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/neos-3229051-yass.mps",
+    "n": 99472,
+    "m": 18846096,
+    "nnz": 57144900,
+    "size_mb": 2317.422957
+  },
+  {
+    "name": "neos-4332801-seret",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/neos-4332801-seret.mps",
+    "n": 20682487,
+    "m": 19912111,
+    "nnz": 47513000,
+    "size_mb": 2490.009752
+  },
+  {
+    "name": "neos-4332810-sesia",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/neos-4332810-sesia.mps",
+    "n": 20682487,
+    "m": 19912111,
+    "nnz": 47513000,
+    "size_mb": 2307.118812
+  },
+  {
+    "name": "t11nonreg",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/t11nonreg.mps",
+    "n": 4596905,
+    "m": 27375,
+    "nnz": 46841400,
+    "size_mb": 4146.172561
+  },
+  {
+    "name": "ivu59",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/ivu59.mps",
+    "n": 2569996,
+    "m": 3436,
+    "nnz": 36186300,
+    "size_mb": 1434.23856
+  },
+  {
+    "name": "supportcase11",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/supportcase11.mps",
+    "n": 8066286,
+    "m": 15270211,
+    "nnz": 32602300,
+    "size_mb": 1701.415773
+  },
+  {
+    "name": "square47",
+    "path": "/home/scratch.cmaes_sw/miplib_benchmark/square47.mps",
+    "n": 95030,
+    "m": 61591,
+    "nnz": 27329900,
+    "size_mb": 1432.073554
+  },
+  {
+    "name": "neos-3740487-motru",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/neos-3740487-motru.mps",
+    "n": 1689612,
+    "m": 4936372,
+    "nnz": 26433500,
+    "size_mb": 939.332279
+  },
+  {
+    "name": "nucorsav",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/nucorsav.mps",
+    "n": 55410,
+    "m": 1812472,
+    "nnz": 26170400,
+    "size_mb": 1364.983288
+  },
+  {
+    "name": "neos-3208254-reiu",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/neos-3208254-reiu.mps",
+    "n": 3154336,
+    "m": 9464908,
+    "nnz": 25080200,
+    "size_mb": 948.042929
+  },
+  {
+    "name": "ivu06-big",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/ivu06-big.mps",
+    "n": 2277736,
+    "m": 1177,
+    "nnz": 23125800,
+    "size_mb": 939.988736
+  },
+  {
+    "name": "a2864-99blp",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/a2864-99blp.mps",
+    "n": 200787,
+    "m": 22117,
+    "nnz": 20078700,
+    "size_mb": 532.949257
+  },
+  {
+    "name": "dlr1",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/dlr1.mps",
+    "n": 9142907,
+    "m": 1735470,
+    "nnz": 18365100,
+    "size_mb": 919.462361
+  },
+  {
+    "name": "usafa",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/usafa.mps",
+    "n": 228648,
+    "m": 1377561,
+    "nnz": 16485100,
+    "size_mb": 886.808524
+  },
+  {
+    "name": "supportcase38",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/supportcase38.mps",
+    "n": 6296679,
+    "m": 4231124,
+    "nnz": 15728600,
+    "size_mb": 1857.124338
+  },
+  {
+    "name": "neos-2991472-kalu",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/neos-2991472-kalu.mps",
+    "n": 12105,
+    "m": 18170,
+    "nnz": 13709400,
+    "size_mb": 357.444358
+  },
+  {
+    "name": "square41",
+    "path": "/home/scratch.cmaes_sw/miplib_benchmark/square41.mps",
+    "n": 62234,
+    "m": 40160,
+    "nnz": 13566400,
+    "size_mb": 712.615621
+  },
+  {
+    "name": "kottenpark09",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/kottenpark09.mps",
+    "n": 2893026,
+    "m": 325547,
+    "nnz": 13085500,
+    "size_mb": 1221.679776
+  },
+  {
+    "name": "scpn2",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/scpn2.mps",
+    "n": 1000000,
+    "m": 5000,
+    "nnz": 12500000,
+    "size_mb": 696.305182
+  },
+  {
+    "name": "uc720-7-4-4-8",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/uc720-7-4-4-8.mps",
+    "n": 1405278,
+    "m": 4308353,
+    "nnz": 11856400,
+    "size_mb": 533.923189
+  },
+  {
+    "name": "neos-4545615-waita",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/neos-4545615-waita.mps",
+    "n": 654950,
+    "m": 345152,
+    "nnz": 10670200,
+    "size_mb": 312.75997
+  },
+  {
+    "name": "rfds-4-days",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/rfds-4-days.mps",
+    "n": 2184028,
+    "m": 1766257,
+    "nnz": 10464800,
+    "size_mb": 605.858227
+  },
+  {
+    "name": "proteindesign121hz512p19",
+    "path": "/home/scratch.cmaes_sw/MIPLIB-minus-benchmark/proteindesign121hz512p19.mps",
+    "n": 2589931,
+    "m": 301,
+    "nnz": 10331100,
+    "size_mb": 525.653065
+  }
+]
