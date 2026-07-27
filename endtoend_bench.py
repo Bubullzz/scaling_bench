@@ -529,12 +529,24 @@ def _run_sweep_for_tol(args: argparse.Namespace, tol: str) -> int:
                 try:
                     print(f"{prefix} ...", end=" ", flush=True)
                     metrics = _run_one(solver, instance, n, tol)
-                    print(f"status={metrics.get('status','?'):>10s} "
-                          f"iters={metrics.get('iterations','?'):>8} "
-                          f"total={metrics.get('total_s','?')}s "
-                          f"gpu_peak={metrics.get('gpu_peak_mb','?')}MB "
-                          f"peak2={metrics.get('gpu_peak2_mb','?')}MB "
-                          f"[exit={metrics.get('exit_code','?')}]")
+                    # Coerce all summary fields through str() -- the parser
+                    # may return None for any of these when the solver
+                    # crashed (e.g. ncclCommInitAll fail, SIGSEGV, or
+                    # int32-overflow parser error). Formatting None with
+                    # a spec like `:>10s` raises "unsupported format
+                    # string passed to NoneType.__format__" and mangles
+                    # the summary line into an opaque crash message
+                    # that hides the *real* exit code / status. Cast
+                    # first, format on the resulting string, then the
+                    # crash gets logged as e.g. `status=None [exit=-6]`.
+                    st  = str(metrics.get("status")       or "?")
+                    it  = str(metrics.get("iterations")   or "?")
+                    tot = str(metrics.get("total_s")      or "?")
+                    gp  = str(metrics.get("gpu_peak_mb")  or "?")
+                    gp2 = str(metrics.get("gpu_peak2_mb") or "?")
+                    ec  = str(metrics.get("exit_code")    or "?")
+                    print(f"status={st:>10s} iters={it:>8s} total={tot}s "
+                          f"gpu_peak={gp}MB peak2={gp2}MB [exit={ec}]")
                 except Exception as e:
                     print(f"!! {solver.name} {stem} N={n} crashed: {e}")
                     rc = rc or 1
