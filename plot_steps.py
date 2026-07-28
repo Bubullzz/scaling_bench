@@ -23,7 +23,7 @@ crash-vs-time-limit classification, which we import to stay
 consistent between plots.
 
 Usage:
-    python plot_steps.py                 # default: tol=1e-4, both plots
+    python plot_steps.py                 # default: tol=1e-4 -> plots/1e-4/
     python plot_steps.py --tol 1e-6
     python plot_steps.py --view iters    # just the iteration count
     python plot_steps.py --view rate     # just time/1000 iters
@@ -327,7 +327,8 @@ def parse_cli() -> argparse.Namespace:
     p.add_argument("--csv", default=None,
                    help="explicit path to the CSV (default: derived from --tol).")
     p.add_argument("--out-dir", default=None,
-                   help="output directory for PNGs (default: <this dir>/plots).")
+                   help="output directory for PNGs "
+                        "(default: <this dir>/plots/<tol>/).")
     p.add_argument("--view", choices=list(VIEW_TO_FN) + ["both"], default="both",
                    help="which chart to render. 'both' (default) writes two PNGs.")
     return p.parse_args()
@@ -338,13 +339,13 @@ def main() -> int:
     csv_path = Path(args.csv or (HERE / f"results_endtoend_tol{args.tol}.csv"))
     if not csv_path.is_file():
         sys.exit(f"CSV not found: {csv_path}. Run endtoend_build_csv.py --tol {args.tol} first.")
-    out_dir = Path(args.out_dir or (HERE / "plots"))
+    out_dir = Path(args.out_dir or (HERE / "plots" / args.tol))
     rows = load_rows(csv_path)
 
     views = list(VIEW_TO_FN) if args.view == "both" else [args.view]
     for v in views:
         stem, fn = VIEW_TO_FN[v]
-        fn(rows, out_dir / f"{stem}_tol{args.tol}.png", tol=args.tol)
+        fn(rows, out_dir / f"{stem}.png", tol=args.tol)
     return 0
 
 

@@ -203,48 +203,36 @@ DPDLP_BOOL_FLAGS: list[str] = [
 
 
 INSTANCES = [
-    # Adendum Mittleman
+    # ------------------------------------------------------------------
+    # Mittelmann LPfeas ADDENDUM (Oliver Hinder large-scale set)
+    # See datasets.ADDENDUM_STEMS / plato.asu.edu/ftp/lpfeas.html
+    # Missing vs official table: prod_100_300_02; we use mcf_5000_100_250
+    # in place of mcf_5000_100_400.
+    # ------------------------------------------------------------------
     "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/heat-source-easy.mps",      # 5.6G
     "/home/scratch.cmaes_sw/large-scale-LP-test-problems/large-problem-instances/multicommodity-flow-instance_2500_100_500.mps.gz",  # 3.0G gz, 1.5M rows x 126M cols x 254M nnz
     "/home/scratch.cmaes_sw/large-scale-LP-test-problems/large-problem-instances/multicommodity-flow-instance_5000_100_250.mps",     # 21G,     1.8M rows x 127.5M cols x 257.5M nnz
     "/home/scratch.cmaes_sw/large-scale-LP-test-problems/large-problem-instances/multicommodity-flow-instance_5000_50_500.mps",      # 20G,     2.8M rows x 126M cols x 254M nnz
     "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/mediterranean-shipping.mps",# 27G
-    # ????? prod_100_300_02
-    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/production-imventory.mps",  # 14G
+    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/production-imventory.mps",  # 14G  (production-inventory)
     "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/qap-tho-150.mps",           # 48G
     "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/qap-wil-100.mps",           # 11G
     "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/supply-chain.mps",          # 32G
-    "/home/scratch.vmostovoi_gpu/datasets/big_lp/design_match.mps",                 # 123G (presolved)
+    "/home/scratch.vmostovoi_gpu/datasets/big_lp/design_match.mps",                 # 123G (synthetic-design-match, presolved)
     "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/tsp-gaia-10m.mps",          # 25G
 
-
-    # Original PDLP paper
-    # ^^^^"/home/scratch.vmostovoi_gpu/datasets/big_lp/design_match.mps",                 # 123G (presolved)
-    # ^^^^"/home/scratch.vmostovoi_gpu/datasets/big_lp/google/tsp-gaia-10m.mps",          # 25G
-    #"/home/scratch.vmostovoi_gpu/datasets/big_lp/tsp-gaia-100m.mps",                # 397G
-    # ^^^^"/home/scratch.vmostovoi_gpu/datasets/big_lp/google/heat-source-easy.mps",      # 5.6G
+    # Original PDLP paper (beyond ADDENDUM)
     "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/heat-source-hard.mps",      # 5.6G
-    # ^^^^"/home/scratch.vmostovoi_gpu/datasets/big_lp/google/production-imventory.mps",  # 14G
-    # ^^^^"/home/scratch.vmostovoi_gpu/datasets/big_lp/google/qap-tho-150.mps",           # 48G
-    # ^^^^"/home/scratch.vmostovoi_gpu/datasets/big_lp/google/qap-wil-100.mps",           # 11G
-    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/world-shipping.mps",        
-    # ^^^^"/home/scratch.vmostovoi_gpu/datasets/big_lp/google/mediterranean-shipping.mps",# 27G
-    # ^^^^"/home/scratch.vmostovoi_gpu/datasets/big_lp/google/supply-chain.mps",          # 32G
+    "/home/scratch.vmostovoi_gpu/datasets/big_lp/google/world-shipping.mps",
 
-    # D-PDLP
-    # bench on miplib >10M nnz possible too 
+    # D-PDLP extras
     "/home/scratch.cmaes_sw/zib03.mps",
-    # ??? pagerank 1 2 3 () mais solve en 4 secondes du coup osef 
-    # ^^^^"mcf_*"
-    # ^^^^"design_match"
-    # ??? QAP solven en max 43 secodes du coup bon 
-    # ??? Unit Com (ds1, ds2)   
-    
+
     # Burcin / industry
     "/home/scratch.vmostovoi_gpu/datasets/big_lp/psr_100.mps",                      # 54G
     "/home/scratch.vmostovoi_gpu/datasets/big_lp/C5_bigger_sanitized.mps",          # 34G
     "/home/scratch.vmostovoi_gpu/datasets/big_lp/C5_baseline_sanitized.mps",        # 14G
-    "/home/scratch.bbozkaya_gpu/datasets/GAMS/ELMOD_876_10_noVEnames.mps",         
+    "/home/scratch.bbozkaya_gpu/datasets/GAMS/ELMOD_876_10_noVEnames.mps",
     "/home/scratch.bbozkaya_gpu/datasets/GAMS/VERYLARGE/BEAM_4032_11_8_CLI.mps",    # 132G (Burcin VERYLARGE)
     "/home/scratch.vmostovoi_gpu/datasets/amazon_lp/amazon_lp003.mps",               # 6.9G, 17M vars x 1M rows x 129M nnz
     "/home/scratch.vmostovoi_gpu/datasets/amazon_lp/amazon_lp004.mps",               # 6.9G, 17M vars x 1M rows x 129M nnz
@@ -265,8 +253,7 @@ INSTANCES = [
     "/home/scratch.vmostovoi_gpu/datasets/open_energy_benchmark/times-ireland-noco2-40-1ts.mps",                     # 693M, 4.5M vars x 4.8M rows x 22M nnz
     "/home/scratch.vmostovoi_gpu/datasets/open_energy_benchmark/pypsa-eur-sec-50-24h.mps",                           # 504M, 2.2M vars x 4.7M rows x 11M nnz
 
-
-    # biggest ones from lpfeas, without addendum
+    # Mittelmann LPfeas core (not ADDENDUM) — largest LPFeas cases we keep
     "/home/scratch.vmostovoi_gpu/datasets/mittleman_mps/Dual2_5000.mps",             # 30M rows x 33M cols x 93M nnz
     "/home/scratch.vmostovoi_gpu/datasets/mittleman_mps/dlr2.mps",
 ]

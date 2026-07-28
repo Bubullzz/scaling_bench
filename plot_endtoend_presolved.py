@@ -46,7 +46,7 @@ def main() -> int:
     csv_path = Path(args.csv or (HERE / f"results_endtoend_tol{args.tol}.csv"))
     if not csv_path.is_file():
         sys.exit(f"CSV not found: {csv_path}. Run endtoend_build_csv.py first.")
-    out_dir = Path(args.out_dir or (HERE / "plots"))
+    out_dir = Path(args.out_dir or (HERE / "plots" / args.tol))
 
     rows = load_rows(csv_path)
 
@@ -60,7 +60,7 @@ def main() -> int:
     if not rows:
         sys.exit("no *_gurobi_presolved rows in CSV; nothing to plot.")
 
-    out_path = out_dir / f"endtoend_tol{args.tol}_presolved_only.png"
+    out_path = out_dir / "endtoend_presolved_only.png"
     plot_view(rows, "all", out_path, tol=args.tol)
     return 0
 
