@@ -1,0 +1,52 @@
+### solver=cuopt-base
+### instance=/home/scratch.vmostovoi_gpu/datasets/big_lp/C5_bigger_sanitized.mps
+### n_gpus=1
+### CUDA_VISIBLE_DEVICES=0
+### started=2026-06-19T20:39:45.322605
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --use-distributed-pdlp false --mps-reader fast --method 1 --presolve 0 --pdlp-disable-graph false --iteration-limit 5000 --time-limit 1e9 --absolute-primal-tolerance 1e-30 --relative-primal-tolerance 1e-30 --absolute-dual-tolerance 1e-30 --relative-dual-tolerance 1e-30 --absolute-gap-tolerance 1e-30 --relative-gap-tolerance 1e-30 --log-to-console true /home/scratch.vmostovoi_gpu/datasets/big_lp/C5_bigger_sanitized.mps
+### --- solver output ---
+Setting parameter absolute_dual_tolerance to 1.000000e-30
+Setting parameter absolute_gap_tolerance to 1.000000e-30
+Setting parameter absolute_primal_tolerance to 1.000000e-30
+Setting parameter iteration_limit to 5000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter pdlp_disable_graph to false
+Setting parameter presolve to 0
+Setting parameter relative_dual_tolerance to 1.000000e-30
+Setting parameter relative_gap_tolerance to 1.000000e-30
+Setting parameter relative_primal_tolerance to 1.000000e-30
+Setting parameter time_limit to 1.000000e+09
+Setting parameter use_distributed_pdlp to false
+Reading file C5_bigger_sanitized.mps
+Using experimental fast MPS parser for '/home/scratch.vmostovoi_gpu/datasets/big_lp/C5_bigger_sanitized.mps'
+Read file C5_bigger_sanitized.mps in 51.92 seconds
+cuOpt version: 26.8.0, git hash: 5e62e9ba, host arch: x86_64, device archs: 100a-real
+CPU: INTEL(R) XEON(R) PLATINUM 8570, threads (physical/logical): 112/224, RAM: 1898.88 GiB
+CUDA 13.3, device: NVIDIA B200 (ID 0), VRAM: 178.34 GiB
+CUDA device UUID: bc954a02-44c5-9c8e-1c8c-bedd7499c834
+
+Solving a problem with 57249021 constraints, 327801326 variables (0 integers), and 731225678 nonzeros
+Problem scaling:
+Objective coefficents range:          [3e-02, 1e+03]
+Constraint matrix coefficients range: [5e-07, 4e+05]
+Constraint rhs / bounds range:        [1e-02, 7e+07]
+Variable bounds range:                [0e+00, 6e+07]
+Warning: input problem contains a large range of coefficients: consider reformulating to avoid numerical difficulties.
+
+Objective offset 0.000000 scaling_factor 1.000000
+   Iter    Primal Obj.      Dual Obj.    Gap        Primal Res.  Dual Res.   Time
+      0 +0.00000000e+00 +0.00000000e+00  0.00e+00   2.78e+08     3.14e+06   63.957s
+   1000 -1.00134240e+11 +2.01667463e+13  2.03e+13   1.30e+07     3.81e+04   78.924s
+   2000 -5.87936718e+10 -9.28130749e+11  8.69e+11   1.32e+07     1.85e+04   91.547s
+   3000 -3.65803415e+10 -4.39629273e+11  4.03e+11   8.10e+06     1.17e+04   104.168s
+   4000 -2.65768955e+10 -5.21259034e+10  2.55e+10   4.81e+06     7.28e+03   116.787s
+   5000 -2.05305480e+10 +8.30591176e+11  8.51e+11   2.84e+06     4.20e+03   129.394s
+PDLP finished
+Status: Iteration Limit   Objective: -2.05305480e+10  Iterations: 5000  Time: 139.529s
+
+### exit_code=0
+### finished=2026-06-19T20:43:27.602535
+### gpu_peak_mb=170367.1
+### gpu_peak2_mb=0.0
+### per_gpu_peak_mb=[170367.0625]

@@ -1,0 +1,36 @@
+### solver=cuopt-base
+### instance=/home/scratch.vmostovoi_gpu/datasets/big_lp/google/world-shipping.mps
+### n_gpus=1
+### CUDA_VISIBLE_DEVICES=0
+### started=2026-07-24T10:48:05.260468
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --method 1 --mps-reader experimental-fast --time-limit 3600 --iteration-limit 1000000000 --relative-primal-tolerance 1e-6 --relative-dual-tolerance 1e-6 --relative-gap-tolerance 1e-6 --log-to-console true /home/scratch.vmostovoi_gpu/datasets/big_lp/google/world-shipping.mps
+### --- solver output ---
+Setting parameter iteration_limit to 1000000000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter relative_dual_tolerance to 1.000000e-06
+Setting parameter relative_gap_tolerance to 1.000000e-06
+Setting parameter relative_primal_tolerance to 1.000000e-06
+Setting parameter time_limit to 3.600000e+03
+Reading file world-shipping.mps
+Using experimental fast MPS parser for '/home/scratch.vmostovoi_gpu/datasets/big_lp/google/world-shipping.mps'
+Read file world-shipping.mps in 52.55 seconds
+cuOpt version: 26.8.0, git hash: 7116ead1, host arch: x86_64, device archs: 100a-real
+CPU: INTEL(R) XEON(R) PLATINUM 8570, threads (physical/logical): 112/224, RAM: 1288.61 GiB
+CUDA 13.3, device: NVIDIA B200 (ID 0), VRAM: 178.34 GiB
+CUDA device UUID: 5b3b2195-5d98-9774-145e-bfc9011037d7
+Solving a problem with 15304282 constraints, 228867510 variables (0 integers), and 688658522 nonzeros
+Problem scaling:
+Objective coefficents range:          [1e+00, 1e+00]
+Constraint matrix coefficients range: [5e-06, 8e+03]
+Constraint rhs / bounds range:        [0e+00, 1e+00]
+Variable bounds range:                [0e+00, 1e+04]
+Warning: input problem contains a large range of coefficients: consider reformulating to avoid numerical difficulties.
+
+Using PSLP presolver
+
+### exit_code=-11
+### finished=2026-07-24T10:52:38.196807
+### gpu_peak_mb=62870.4
+### gpu_peak2_mb=0.0
+### per_gpu_peak_mb=[62870.375]

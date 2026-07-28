@@ -1,0 +1,17 @@
+Termination Reason: TIME_LIMIT
+Runtime (sec): 3.600031e+03
+Iterations Count: 10824800
+Primal Objective Value: 1.623263e+18
+Dual Objective Value: 1.628490e+18
+Relative Primal Residual: 3.003055e-11
+Relative Dual Residual: 8.069040e+02
+Absolute Objective Gap: 5.226459e+15
+Relative Objective Gap: 1.607274e-03
+Rows: 957908
+Columns: 16908311
+Nonzeros: 128756276
+Presolve Status: REDUCED
+Presolve Time (sec): 1.860478e+01
+Reduced Rows: 957908
+Reduced Columns: 16908311
+Reduced Nonzeros: 128756276

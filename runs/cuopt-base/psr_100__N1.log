@@ -1,0 +1,65 @@
+### solver=cuopt-base
+### instance=/home/scratch.vmostovoi_gpu/datasets/big_lp/psr_100.mps
+### n_gpus=1
+### CUDA_VISIBLE_DEVICES=0
+### started=2026-06-28T19:26:10.714443
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --use-distributed-pdlp false --mps-reader fast --method 1 --presolve 0 --iteration-limit 20000 --time-limit 1e9 --absolute-primal-tolerance 1e-30 --relative-primal-tolerance 1e-30 --absolute-dual-tolerance 1e-30 --relative-dual-tolerance 1e-30 --absolute-gap-tolerance 1e-30 --relative-gap-tolerance 1e-30 --log-to-console true /home/scratch.vmostovoi_gpu/datasets/big_lp/psr_100.mps
+### --- solver output ---
+Setting parameter absolute_dual_tolerance to 1.000000e-30
+Setting parameter absolute_gap_tolerance to 1.000000e-30
+Setting parameter absolute_primal_tolerance to 1.000000e-30
+Setting parameter iteration_limit to 20000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter presolve to 0
+Setting parameter relative_dual_tolerance to 1.000000e-30
+Setting parameter relative_gap_tolerance to 1.000000e-30
+Setting parameter relative_primal_tolerance to 1.000000e-30
+Setting parameter time_limit to 1.000000e+09
+Setting parameter use_distributed_pdlp to false
+Reading file psr_100.mps
+Using experimental fast MPS parser for '/home/scratch.vmostovoi_gpu/datasets/big_lp/psr_100.mps'
+Read file psr_100.mps in 96.79 seconds
+cuOpt version: 26.8.0, git hash: 5e62e9ba, host arch: x86_64, device archs: 100a-real
+CPU: INTEL(R) XEON(R) PLATINUM 8570, threads (physical/logical): 112/224, RAM: 1811.90 GiB
+CUDA 13.3, device: NVIDIA B200 (ID 0), VRAM: 178.34 GiB
+CUDA device UUID: 8a66a624-18d0-b6e2-3a57-51f9c8ee79d5
+
+Solving a problem with 234509018 constraints, 303096179 variables (0 integers), and 857252872 nonzeros
+Problem scaling:
+Objective coefficents range:          [5e-04, 3e+06]
+Constraint matrix coefficients range: [1e-03, 7e+01]
+Constraint rhs / bounds range:        [1e-05, 7e+07]
+Variable bounds range:                [0e+00, 1e+08]
+Warning: input problem contains a large range of coefficients: consider reformulating to avoid numerical difficulties.
+
+Objective offset 0.000000 scaling_factor 1.000000
+   Iter    Primal Obj.      Dual Obj.    Gap        Primal Res.  Dual Res.   Time
+      0 +0.00000000e+00 +0.00000000e+00  0.00e+00   1.09e+09     1.76e+07   30.121s
+   1000 +6.22375359e+11 +9.79783826e+14  9.79e+14   3.36e+07     1.46e+05   48.765s
+   2000 +7.18543466e+11 +5.63211005e+14  5.62e+14   2.43e+07     1.13e+05   64.640s
+   3000 +8.05123980e+11 +3.09601920e+14  3.09e+14   2.08e+07     6.96e+04   80.542s
+   4000 +8.87792455e+11 +1.49213754e+14  1.48e+14   1.68e+07     5.82e+04   96.460s
+   5000 +9.60898377e+11 +6.01780183e+13  5.92e+13   1.42e+07     4.33e+04   112.366s
+   6000 +1.02710645e+12 +5.90839588e+12  4.88e+12   1.15e+07     3.17e+04   128.296s
+   7000 +1.07286520e+12 -3.13711119e+13  3.24e+13   1.07e+07     2.19e+04   144.205s
+   8000 +1.11970674e+12 -4.52609614e+13  4.64e+13   9.03e+06     1.76e+04   160.119s
+   9000 +1.14988084e+12 -4.17382578e+13  4.29e+13   7.49e+06     1.47e+04   176.041s
+  10000 +1.10210707e+12 -3.78301976e+13  3.89e+13   6.32e+06     1.30e+04   191.967s
+  11000 +1.07372398e+12 -3.33996107e+13  3.45e+13   5.31e+06     1.67e+04   207.720s
+  12000 +1.04249037e+12 -2.50570832e+13  2.61e+13   4.32e+06     1.86e+04   223.481s
+  13000 +1.01276234e+12 -1.55721456e+13  1.66e+13   3.56e+06     1.72e+04   239.251s
+  14000 +9.74885425e+11 -8.61510805e+12  9.59e+12   2.88e+06     1.29e+04   255.026s
+  15000 +8.91201224e+11 -5.38324607e+12  6.27e+12   2.11e+06     1.20e+04   270.803s
+  16000 +8.68340501e+11 -3.28953318e+12  4.16e+12   1.69e+06     1.33e+04   286.565s
+  17000 +8.45261799e+11 -1.45054548e+12  2.30e+12   1.20e+06     2.70e+04   302.335s
+  18000 +8.30653384e+11 -3.69706618e+11  1.20e+12   8.97e+05     2.13e+04   318.111s
+  19000 +8.18605899e+11 +1.55577699e+11  6.63e+11   6.93e+05     1.64e+04   333.888s
+  20000 +8.10566052e+11 +5.44998843e+11  2.66e+11   5.75e+05     1.31e+04   349.669s
+Error in solve_lp: std::bad_alloc: out_of_memory: CUDA error (failed to allocate 1876072144 bytes) at: /tmp/conda-bld-output/bld/rattler-build_librmm/work/cpp/src/mr/cuda_async_view_memory_resource.cpp:43: cudaErrorMemoryAllocation out of memory
+
+### exit_code=0
+### finished=2026-06-28T19:34:25.866348
+### gpu_peak_mb=183354.4
+### gpu_peak2_mb=0.0
+### per_gpu_peak_mb=[183354.375]

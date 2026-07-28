@@ -1,0 +1,65 @@
+### solver=cuopt-base
+### instance=/home/scratch.bbozkaya_gpu/datasets/GAMS/ELMOD_876_10_noVEnames.mps
+### n_gpus=1
+### CUDA_VISIBLE_DEVICES=0
+### started=2026-06-28T19:27:01.110114
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --use-distributed-pdlp false --mps-reader fast --method 1 --presolve 0 --iteration-limit 20000 --time-limit 1e9 --absolute-primal-tolerance 1e-30 --relative-primal-tolerance 1e-30 --absolute-dual-tolerance 1e-30 --relative-dual-tolerance 1e-30 --absolute-gap-tolerance 1e-30 --relative-gap-tolerance 1e-30 --log-to-console true /home/scratch.bbozkaya_gpu/datasets/GAMS/ELMOD_876_10_noVEnames.mps
+### --- solver output ---
+Setting parameter absolute_dual_tolerance to 1.000000e-30
+Setting parameter absolute_gap_tolerance to 1.000000e-30
+Setting parameter absolute_primal_tolerance to 1.000000e-30
+Setting parameter iteration_limit to 20000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter presolve to 0
+Setting parameter relative_dual_tolerance to 1.000000e-30
+Setting parameter relative_gap_tolerance to 1.000000e-30
+Setting parameter relative_primal_tolerance to 1.000000e-30
+Setting parameter time_limit to 1.000000e+09
+Setting parameter use_distributed_pdlp to false
+Reading file ELMOD_876_10_noVEnames.mps
+Using experimental fast MPS parser for '/home/scratch.bbozkaya_gpu/datasets/GAMS/ELMOD_876_10_noVEnames.mps'
+Read file ELMOD_876_10_noVEnames.mps in 38.68 seconds
+cuOpt version: 26.8.0, git hash: 5e62e9ba, host arch: x86_64, device archs: 100a-real
+CPU: INTEL(R) XEON(R) PLATINUM 8570, threads (physical/logical): 112/224, RAM: 1825.50 GiB
+CUDA 13.3, device: NVIDIA B200 (ID 0), VRAM: 178.34 GiB
+CUDA device UUID: 848e20d7-eaa4-59c0-7708-a1d183bcb5f1
+
+Solving a problem with 256284723 constraints, 226061766 variables (0 integers), and 717436984 nonzeros
+Problem scaling:
+Objective coefficents range:          [1e+00, 1e+00]
+Constraint matrix coefficients range: [1e-07, 9e+04]
+Constraint rhs / bounds range:        [3e-07, 4e+06]
+Variable bounds range:                [9e+00, 5e+03]
+Warning: input problem contains a large range of coefficients: consider reformulating to avoid numerical difficulties.
+
+Objective offset 0.000000 scaling_factor 1.000000
+   Iter    Primal Obj.      Dual Obj.    Gap        Primal Res.  Dual Res.   Time
+      0 +0.00000000e+00 +0.00000000e+00  0.00e+00   1.16e+06     1.00e+00   74.777s
+   1000 -6.01610075e+12 +1.12343919e+01  6.02e+12   5.71e+11     9.72e-01   91.550s
+   2000 -1.01027719e+14 +5.21023256e+01  1.01e+14   9.58e+12     9.02e-01   106.016s
+   3000 -5.56636926e+14 +1.09202833e+02  5.57e+14   5.28e+13     8.04e-01   120.462s
+   4000 -1.19764840e+15 +1.99119435e+02  1.20e+15   1.14e+14     6.49e-01   134.930s
+   5000 -1.92516074e+15 +3.02983420e+02  1.93e+15   1.83e+14     4.69e-01   149.388s
+   6000 -2.26667685e+15 +4.41390786e+02  2.27e+15   2.15e+14     2.31e-01   163.844s
+   7000 -2.31752876e+15 +5.91266932e+02  2.32e+15   2.20e+14     3.49e-02   178.270s
+   8000 -1.95956662e+15 +7.22203723e+02  1.96e+15   1.86e+14     2.56e-01   192.711s
+   9000 -1.32372493e+15 +8.01708673e+02  1.32e+15   1.26e+14     3.93e-01   207.176s
+  10000 -9.37456737e+14 +9.28340403e+02  9.37e+14   8.89e+13     6.11e-01   221.639s
+  11000 -5.09935492e+14 +1.00883910e+03  5.10e+14   4.84e+13     7.50e-01   235.947s
+  12000 -6.10010830e+13 +1.00060340e+03  6.10e+13   5.78e+12     7.36e-01   250.301s
+  13000 +2.88687148e+14 -2.28891019e+03  2.89e+14   2.74e+13     5.90e-01   264.657s
+  14000 +4.61766619e+14 -1.13532284e+04  4.62e+14   4.38e+13     3.76e-01   279.023s
+  15000 +1.34331807e+15 -1.63579019e+04  1.34e+15   1.27e+14     2.71e-01   293.269s
+  16000 +2.49475391e+15 -1.99561611e+04  2.49e+15   2.37e+14     2.07e-01   307.455s
+  17000 +3.04812828e+15 -2.50637126e+04  3.05e+15   2.89e+14     1.15e-01   321.604s
+  18000 +2.92519019e+15 -3.01698492e+04  2.93e+15   2.77e+14     2.47e-02   335.741s
+  19000 +2.26808710e+15 -3.39039729e+04  2.27e+15   2.15e+14     4.30e-02   349.918s
+  20000 +1.37216570e+15 -3.55050553e+04  1.37e+15   1.30e+14     7.16e-02   364.079s
+Error in solve_lp: std::bad_alloc: out_of_memory: CUDA error (failed to allocate 2050277784 bytes) at: /tmp/conda-bld-output/bld/rattler-build_librmm/work/cpp/src/mr/cuda_async_view_memory_resource.cpp:43: cudaErrorMemoryAllocation out of memory
+
+### exit_code=0
+### finished=2026-06-28T19:34:39.627773
+### gpu_peak_mb=183354.4
+### gpu_peak2_mb=0.0
+### per_gpu_peak_mb=[183354.375]

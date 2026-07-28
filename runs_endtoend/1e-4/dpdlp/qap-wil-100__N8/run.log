@@ -1,0 +1,100 @@
+### solver=dpdlp
+### instance=/home/scratch.vmostovoi_gpu/datasets/big_lp/google/qap-wil-100.mps
+### n_gpus=8
+### CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+### started=2026-07-18T23:54:02.632335
+### argv=/home/scratch.vmostovoi_gpu/.conda/envs/dpdlp/bin/mpirun -n 8 /home/scratch.vmostovoi_gpu/D-PDLP/build/cupdlpx-dist /home/scratch.vmostovoi_gpu/datasets/big_lp/google/qap-wil-100.mps /home/scratch.vmostovoi_gpu/scaling_bench/runs_endtoend/1e-4/dpdlp/qap-wil-100__N8 --iter_limit 10000000 --time_limit 3600 --eps_opt 1e-4 --eps_feas 1e-4 --verbose
+### --- solver output ---
+Rank 0: Loading MPS file '/home/scratch.vmostovoi_gpu/datasets/big_lp/google/qap-wil-100.mps'...
+[Auto-Grid] Decided grid shape: 1 x 8 for 8 processes.
+NCCL version 2.30.7+cuda12.9
+NCCL version 2.30.7+cuda12.9
+NCCL version 2.30.7+cuda12.9
+NCCL version 2.30.7+cuda12.9
+NCCL version 2.30.7+cuda12.9
+NCCL version 2.30.7+cuda12.9
+NCCL version 2.30.7+cuda12.9
+NCCL version 2.30.7+cuda12.9
+---------------------------------------------------------------------------------------
+                                     D-PDLP                                                
+             A First-Order LP Solver Powered by Multiple GPU System                        
+                              (c) Hongpei Li, 2026                                           
+                          Contact: ishongpeili@gmail.com                                      
+                                                                                           
+   Based on cuPDLPx by Haihao Lu, MIT (2025): https://github.com/MIT-Lu-Lab/cuPDLPx  
+---------------------------------------------------------------------------------------
+problem: 1980200 rows, 49015000 columns, 198020000 nonzeros
+settings:
+  iter_limit         : 10000000
+  time_limit         : 3600.00 sec
+  eps_opt            : 1.0e-04
+  eps_feas           : 1.0e-04
+  eps_infeas_detect  : 1.0e-10
+------------------------------ Distributed Configuration ------------------------------
+   Grid Size         : Auto-detect (implementation dependent)
+  Partition Method   : NNZ Balance
+  Permute Method     : Block Random (Block-wise Random shuffle)
+---------------------------------------------------------------------------------------
+Running presolver (PSLP v0.0.8)...
+  status          : UNCHANGED
+  presolve time   : 25 sec
+  reduced problem : 1980200 rows, 49015000 columns, 198020000 nonzeros
+[Timer] Permuting LP Problem took 5.685 seconds.
+[Timer] Data Distribution (Bcast -> Partition) took 9.730 seconds.
+---------------------------------------------------------------------------------------
+   runtime     |     objective      |   absolute residuals    |   relative residuals    
+  iter   time  |  pr obj    du obj  |  pr res  du res   gap   |  pr res  du res   gap   
+---------------------------------------------------------------------------------------
+     0 0.0e+00 |  0.0e+00   0.0e+00 | 1.4e+01 6.6e+03 0.0e+00 | 9.3e-01 1.0e+00 0.0e+00 
+   200 6.1e-01 |  2.2e+05   2.8e+05 | 4.0e-01 5.2e+04 6.4e+04 | 2.6e-02 7.9e+00 1.3e-01 
+   400 1.5e+00 |  2.2e+05   2.3e+05 | 2.6e-02 4.4e+03 2.4e+03 | 1.7e-03 6.7e-01 5.4e-03 
+   600 1.6e+00 |  2.2e+05   2.2e+05 | 3.1e-02 2.5e+03 1.2e+03 | 2.1e-03 3.7e-01 2.7e-03 
+   800 1.7e+00 |  2.2e+05   2.2e+05 | 2.4e-02 1.7e+03 1.1e+03 | 1.6e-03 2.6e-01 2.4e-03 
+  1000 1.8e+00 |  2.2e+05   2.2e+05 | 1.4e-01 4.2e+02 1.8e+02 | 9.3e-03 6.3e-02 4.0e-04 
+  1200 1.9e+00 |  2.2e+05   2.2e+05 | 8.1e-02 2.3e+02 5.4e+01 | 5.4e-03 3.4e-02 1.2e-04 
+  1400 2.0e+00 |  2.2e+05   2.2e+05 | 8.5e-02 6.5e+01 1.6e+02 | 5.6e-03 9.8e-03 3.7e-04 
+  1600 2.1e+00 |  2.2e+05   2.2e+05 | 5.7e-02 3.5e+01 8.1e+01 | 3.8e-03 5.3e-03 1.8e-04 
+  1800 2.2e+00 |  2.2e+05   2.2e+05 | 4.2e-02 2.4e+01 5.2e+01 | 2.7e-03 3.6e-03 1.2e-04 
+  2000 2.3e+00 |  2.2e+05   2.2e+05 | 3.2e-02 1.8e+01 3.8e+01 | 2.1e-03 2.7e-03 8.7e-05 
+  2200 2.4e+00 |  2.2e+05   2.2e+05 | 2.5e-02 7.1e+00 2.0e+01 | 1.7e-03 1.1e-03 4.4e-05 
+  2400 2.5e+00 |  2.2e+05   2.2e+05 | 1.9e-02 5.1e+00 9.4e+00 | 1.3e-03 7.6e-04 2.1e-05 
+  2600 2.6e+00 |  2.2e+05   2.2e+05 | 1.5e-02 3.8e+00 7.4e+00 | 1.0e-03 5.8e-04 1.7e-05 
+  2800 2.7e+00 |  2.2e+05   2.2e+05 | 1.3e-02 3.1e+00 4.8e+00 | 8.4e-04 4.6e-04 1.1e-05 
+  3000 2.8e+00 |  2.2e+05   2.2e+05 | 1.1e-02 2.6e+00 3.5e+00 | 7.1e-04 3.8e-04 7.9e-06 
+  3200 2.9e+00 |  2.2e+05   2.2e+05 | 9.2e-03 2.1e+00 2.3e+00 | 6.1e-04 3.2e-04 5.2e-06 
+  3400 3.0e+00 |  2.2e+05   2.2e+05 | 8.0e-03 1.5e+00 9.5e-01 | 5.3e-04 2.2e-04 2.2e-06 
+  3600 3.1e+00 |  2.2e+05   2.2e+05 | 6.8e-03 1.2e+00 1.0e+00 | 4.5e-04 1.8e-04 2.3e-06 
+  3800 3.2e+00 |  2.2e+05   2.2e+05 | 5.9e-03 1.1e+00 9.0e-01 | 3.9e-04 1.6e-04 2.0e-06 
+  4000 3.3e+00 |  2.2e+05   2.2e+05 | 5.1e-03 9.3e-01 6.6e-01 | 3.3e-04 1.4e-04 1.5e-06 
+  4200 3.4e+00 |  2.2e+05   2.2e+05 | 4.4e-03 8.1e-01 2.9e-01 | 2.9e-04 1.2e-04 6.6e-07 
+  4400 3.5e+00 |  2.2e+05   2.2e+05 | 3.9e-03 6.9e-01 1.5e-01 | 2.6e-04 1.0e-04 3.4e-07 
+  4600 3.6e+00 |  2.2e+05   2.2e+05 | 3.5e-03 6.3e-01 1.7e-01 | 2.3e-04 9.4e-05 3.8e-07 
+  4800 3.7e+00 |  2.2e+05   2.2e+05 | 3.2e-03 5.6e-01 1.0e-01 | 2.1e-04 8.4e-05 2.3e-07 
+  5000 3.8e+00 |  2.2e+05   2.2e+05 | 2.9e-03 5.1e-01 1.0e-01 | 1.9e-04 7.6e-05 2.3e-07 
+  5200 3.9e+00 |  2.2e+05   2.2e+05 | 2.8e-03 4.1e-01 6.6e-01 | 1.8e-04 6.2e-05 1.5e-06 
+  5400 4.0e+00 |  2.2e+05   2.2e+05 | 2.6e-03 3.5e-01 5.2e-01 | 1.7e-04 5.2e-05 1.2e-06 
+  5600 4.1e+00 |  2.2e+05   2.2e+05 | 2.4e-03 3.1e-01 4.4e-01 | 1.6e-04 4.7e-05 9.9e-07 
+  5800 4.2e+00 |  2.2e+05   2.2e+05 | 2.2e-03 2.8e-01 5.2e-01 | 1.5e-04 4.2e-05 1.2e-06 
+  6000 4.3e+00 |  2.2e+05   2.2e+05 | 2.0e-03 2.5e-01 4.4e-01 | 1.4e-04 3.8e-05 1.0e-06 
+  6200 4.3e+00 |  2.2e+05   2.2e+05 | 1.9e-03 2.3e-01 5.4e-01 | 1.2e-04 3.5e-05 1.2e-06 
+  6400 4.4e+00 |  2.2e+05   2.2e+05 | 1.8e-03 2.1e-01 3.9e-01 | 1.2e-04 3.1e-05 8.8e-07 
+  6600 4.5e+00 |  2.2e+05   2.2e+05 | 1.6e-03 1.9e-01 4.3e-01 | 1.1e-04 2.8e-05 9.8e-07 
+  6800 4.6e+00 |  2.2e+05   2.2e+05 | 1.5e-03 1.7e-01 3.3e-01 | 1.0e-04 2.6e-05 7.4e-07 
+  7000 4.7e+00 |  2.2e+05   2.2e+05 | 1.4e-03 1.6e-01 1.4e-01 | 9.4e-05 2.4e-05 3.1e-07 
+---------------------------------------------------------------------------------------
+Solution Summary
+  Status             : OPTIMAL
+  Presolve time      : 25 sec
+  Solve time         : 4.75 sec
+  Iterations         : 7000
+  Primal objective   : 220803.8086
+  Dual objective     : 220803.9442
+  Objective gap      : 3.071e-07
+  Primal infeas      : 9.447e-05
+  Dual infeas        : 2.427e-05
+
+### exit_code=0
+### finished=2026-07-18T23:58:33.774619
+### gpu_peak_mb=4898.5
+### gpu_peak2_mb=4898.5
+### per_gpu_peak_mb=[4898.5, 4898.5, 4898.5, 4898.5, 4898.5, 4898.5, 4898.5, 4898.5]

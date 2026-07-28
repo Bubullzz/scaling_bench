@@ -1,0 +1,25 @@
+### solver=cuopt-distributed
+### instance=/home/scratch.bbozkaya_gpu/datasets/GAMS/VERYLARGE/BEAM_4032_11_8_CLI.mps
+### n_gpus=8
+### CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+### started=2026-07-23T12:24:05.990980
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --use-distributed-pdlp true --method 1 --mps-reader experimental-fast --time-limit 3600 --iteration-limit 1000000000 --relative-primal-tolerance 1e-6 --relative-dual-tolerance 1e-6 --relative-gap-tolerance 1e-6 --log-to-console true /home/scratch.bbozkaya_gpu/datasets/GAMS/VERYLARGE/BEAM_4032_11_8_CLI.mps
+### --- solver output ---
+Setting parameter iteration_limit to 1000000000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter relative_dual_tolerance to 1.000000e-06
+Setting parameter relative_gap_tolerance to 1.000000e-06
+Setting parameter relative_primal_tolerance to 1.000000e-06
+Setting parameter time_limit to 3.600000e+03
+Setting parameter use_distributed_pdlp to true
+Reading file BEAM_4032_11_8_CLI.mps
+Using experimental fast MPS parser for '/home/scratch.bbozkaya_gpu/datasets/GAMS/VERYLARGE/BEAM_4032_11_8_CLI.mps'
+Parser exception: {"MPS_PARSER_ERROR_TYPE": "RuntimeError", "msg": "fast MPS parser requires 64-bit indices: nnz=2673203562 exceeds index max=2147483647"}
+Parsing input file failed. Exiting!
+
+### exit_code=255
+### finished=2026-07-23T12:26:57.488012
+### gpu_peak_mb=1364.4
+### gpu_peak2_mb=1364.4
+### per_gpu_peak_mb=[1364.375, 1364.375, 1364.375, 1364.375, 1364.375, 1364.375, 1364.375, 1364.375]

@@ -1,19 +1,15 @@
 # -----------------------------------------------------------------------------
 # .gitignore for scaling_bench
 #
-# Rule of thumb: keep the *code* under git (bench.py, endtoend_bench.py, all
-# .sh launchers, plotting scripts, README), and ignore *data* (raw run logs,
-# consolidated CSVs, plots, SLURM outputs, python bytecode).
-#
-# Ignoring the data (~120 GB) keeps the repo small enough to push, and
-# guarantees that a fresh clone gets a clean slate to run benchmarks in.
+# Keep code under git (bench.py, endtoend_bench.py, launchers, plot scripts).
+# Ignore generated plots/CSVs, SLURM outputs, and python bytecode.
+# Run logs (runs/, runs_endtoend/) are intentionally tracked / trackable.
+# D-PDLP primal/dual solution dumps are huge and not needed — ignore them.
 # -----------------------------------------------------------------------------
 
-# Raw solver run logs (bench.py fixed-iteration workflow) -- ~112 GB
-runs/
-
-# End-to-end solver run logs (endtoend_bench.py) -- ~8 GB
-runs_endtoend/
+# D-PDLP solution vectors (multi-GB each; summaries + run.log are enough)
+*_primal_solution.txt
+*_dual_solution.txt
 
 # Generated plots
 plots/

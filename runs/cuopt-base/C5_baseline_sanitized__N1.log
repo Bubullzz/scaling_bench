@@ -1,0 +1,66 @@
+### solver=cuopt-base
+### instance=/home/scratch.vmostovoi_gpu/datasets/big_lp/C5_baseline_sanitized.mps
+### n_gpus=1
+### CUDA_VISIBLE_DEVICES=0
+### started=2026-06-28T19:26:33.924827
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --use-distributed-pdlp false --mps-reader fast --method 1 --presolve 0 --iteration-limit 20000 --time-limit 1e9 --absolute-primal-tolerance 1e-30 --relative-primal-tolerance 1e-30 --absolute-dual-tolerance 1e-30 --relative-dual-tolerance 1e-30 --absolute-gap-tolerance 1e-30 --relative-gap-tolerance 1e-30 --log-to-console true /home/scratch.vmostovoi_gpu/datasets/big_lp/C5_baseline_sanitized.mps
+### --- solver output ---
+Setting parameter absolute_dual_tolerance to 1.000000e-30
+Setting parameter absolute_gap_tolerance to 1.000000e-30
+Setting parameter absolute_primal_tolerance to 1.000000e-30
+Setting parameter iteration_limit to 20000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter presolve to 0
+Setting parameter relative_dual_tolerance to 1.000000e-30
+Setting parameter relative_gap_tolerance to 1.000000e-30
+Setting parameter relative_primal_tolerance to 1.000000e-30
+Setting parameter time_limit to 1.000000e+09
+Setting parameter use_distributed_pdlp to false
+Reading file C5_baseline_sanitized.mps
+Using experimental fast MPS parser for '/home/scratch.vmostovoi_gpu/datasets/big_lp/C5_baseline_sanitized.mps'
+Read file C5_baseline_sanitized.mps in 35.82 seconds
+cuOpt version: 26.8.0, git hash: 5e62e9ba, host arch: x86_64, device archs: 100a-real
+CPU: INTEL(R) XEON(R) PLATINUM 8570, threads (physical/logical): 112/224, RAM: 1908.18 GiB
+CUDA 13.3, device: NVIDIA B200 (ID 0), VRAM: 178.34 GiB
+CUDA device UUID: 8317f78c-f99d-83bd-c482-32dac10ef30c
+
+Solving a problem with 20649941 constraints, 133005495 variables (0 integers), and 279633807 nonzeros
+Problem scaling:
+Objective coefficents range:          [1e-02, 8e+03]
+Constraint matrix coefficients range: [5e-07, 4e+05]
+Constraint rhs / bounds range:        [1e-02, 7e+07]
+Variable bounds range:                [0e+00, 6e+07]
+Warning: input problem contains a large range of coefficients: consider reformulating to avoid numerical difficulties.
+
+Objective offset 0.000000 scaling_factor 1.000000
+   Iter    Primal Obj.      Dual Obj.    Gap        Primal Res.  Dual Res.   Time
+      0 +0.00000000e+00 +0.00000000e+00  0.00e+00   2.78e+08     3.20e+06   19.665s
+   1000 -8.70485502e+09 +1.99681685e+12  2.01e+12   8.44e+06     7.88e+03   25.497s
+   2000 +1.17356208e+10 -2.20285696e+10  3.38e+10   5.91e+06     2.88e+03   30.395s
+   3000 +1.60688617e+10 -1.80517509e+11  1.97e+11   3.54e+06     2.54e+03   35.294s
+   4000 +1.91523634e+10 -7.34409569e+10  9.26e+10   2.31e+06     1.53e+03   40.191s
+   5000 +2.18677056e+10 +9.18695140e+07  2.18e+10   1.57e+06     1.07e+03   45.084s
+   6000 +2.40328907e+10 -2.71369480e+09  2.67e+10   1.14e+06     6.13e+02   49.981s
+   7000 +2.58875324e+10 +2.92823718e+10  3.39e+09   1.04e+06     4.74e+02   54.873s
+   8000 +2.69659844e+10 +3.34221857e+10  6.46e+09   7.39e+05     4.10e+02   59.766s
+   9000 +2.81525553e+10 +2.53006542e+10  2.85e+09   6.84e+05     5.30e+02   64.663s
+  10000 +3.17010442e+10 +3.25295225e+10  8.28e+08   6.51e+05     4.97e+02   69.557s
+  11000 +3.43366689e+10 +3.33630878e+10  9.74e+08   6.30e+05     4.86e+02   74.398s
+  12000 +3.58716792e+10 +3.34229622e+10  2.45e+09   5.58e+05     4.69e+02   79.240s
+  13000 +3.68486549e+10 +3.53975280e+10  1.45e+09   5.36e+05     4.60e+02   84.081s
+  14000 +3.85555528e+10 +3.60393054e+10  2.52e+09   5.06e+05     1.13e+03   88.927s
+  15000 +4.08520328e+10 +3.88887948e+10  1.96e+09   4.59e+05     1.07e+03   93.768s
+  16000 +4.23276263e+10 +4.25734786e+10  2.46e+08   4.40e+05     1.03e+03   98.610s
+  17000 +4.34992698e+10 +4.52534623e+10  1.75e+09   4.16e+05     9.91e+02   103.451s
+  18000 +4.41399705e+10 +4.67129423e+10  2.57e+09   4.08e+05     9.65e+02   108.292s
+  19000 +4.50077524e+10 +4.60318770e+10  1.02e+09   3.97e+05     9.62e+02   113.133s
+  20000 +4.54687358e+10 +4.55631297e+10  9.44e+07   3.80e+05     9.27e+02   117.974s
+PDLP finished
+Status: Iteration Limit   Objective: 4.54687358e+10  Iterations: 20000  Time: 122.069s
+
+### exit_code=0
+### finished=2026-06-28T19:29:26.335219
+### gpu_peak_mb=68250.4
+### gpu_peak2_mb=0.0
+### per_gpu_peak_mb=[68250.375]

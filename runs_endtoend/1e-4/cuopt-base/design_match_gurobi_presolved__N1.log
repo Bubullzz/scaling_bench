@@ -1,0 +1,37 @@
+### solver=cuopt-base
+### instance=/home/scratch.vmostovoi_gpu/gurobi_things/gurobi_presolved/design_match_gurobi_presolved.mps
+### n_gpus=1
+### CUDA_VISIBLE_DEVICES=0
+### started=2026-07-23T15:41:43.166374
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --method 1 --presolve 0 --mps-reader experimental-fast --time-limit 3600 --iteration-limit 1000000000 --relative-primal-tolerance 1e-4 --relative-dual-tolerance 1e-4 --relative-gap-tolerance 1e-4 --log-to-console true /home/scratch.vmostovoi_gpu/gurobi_things/gurobi_presolved/design_match_gurobi_presolved.mps
+### --- solver output ---
+Setting parameter iteration_limit to 1000000000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter presolve to 0
+Setting parameter relative_dual_tolerance to 1.000000e-04
+Setting parameter relative_gap_tolerance to 1.000000e-04
+Setting parameter relative_primal_tolerance to 1.000000e-04
+Setting parameter time_limit to 3.600000e+03
+Reading file design_match_gurobi_presolved.mps
+Using experimental fast MPS parser for '/home/scratch.vmostovoi_gpu/gurobi_things/gurobi_presolved/design_match_gurobi_presolved.mps'
+Read file design_match_gurobi_presolved.mps in 90.68 seconds
+cuOpt version: 26.8.0, git hash: 7116ead1, host arch: x86_64, device archs: 100a-real
+CPU: INTEL(R) XEON(R) PLATINUM 8570, threads (physical/logical): 112/224, RAM: 1313.13 GiB
+CUDA 13.3, device: NVIDIA B200 (ID 0), VRAM: 178.34 GiB
+CUDA device UUID: 8a66a624-18d0-b6e2-3a57-51f9c8ee79d5
+Solving a problem with 7328562 constraints, 25328562 variables (0 integers), and 1624089970 nonzeros
+Problem scaling:
+Objective coefficents range:          [5e-01, 4e+00]
+Constraint matrix coefficients range: [1e-13, 2e+00]
+Constraint rhs / bounds range:        [2e-03, 1e+00]
+Variable bounds range:                [0e+00, 4e+00]
+Warning: input problem contains a large range of coefficients: consider reformulating to avoid numerical difficulties.
+
+Error in solve_lp: std::bad_alloc: out_of_memory: CUDA error (failed to allocate 18446744069581083392 bytes) at: /tmp/conda-bld-output/bld/rattler-build_librmm/work/cpp/src/mr/cuda_async_view_memory_resource.cpp:43: cudaErrorMemoryAllocation out of memory
+
+### exit_code=0
+### finished=2026-07-23T15:43:29.259564
+### gpu_peak_mb=40948.4
+### gpu_peak2_mb=0.0
+### per_gpu_peak_mb=[40948.375]

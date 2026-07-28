@@ -1,0 +1,65 @@
+### solver=cuopt-base
+### instance=/home/scratch.vmostovoi_gpu/datasets/big_lp/google/qap-wil-100.mps
+### n_gpus=1
+### CUDA_VISIBLE_DEVICES=0
+### started=2026-06-28T19:29:13.482723
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --use-distributed-pdlp false --mps-reader fast --method 1 --presolve 0 --iteration-limit 20000 --time-limit 1e9 --absolute-primal-tolerance 1e-30 --relative-primal-tolerance 1e-30 --absolute-dual-tolerance 1e-30 --relative-dual-tolerance 1e-30 --absolute-gap-tolerance 1e-30 --relative-gap-tolerance 1e-30 --log-to-console true /home/scratch.vmostovoi_gpu/datasets/big_lp/google/qap-wil-100.mps
+### --- solver output ---
+Setting parameter absolute_dual_tolerance to 1.000000e-30
+Setting parameter absolute_gap_tolerance to 1.000000e-30
+Setting parameter absolute_primal_tolerance to 1.000000e-30
+Setting parameter iteration_limit to 20000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter presolve to 0
+Setting parameter relative_dual_tolerance to 1.000000e-30
+Setting parameter relative_gap_tolerance to 1.000000e-30
+Setting parameter relative_primal_tolerance to 1.000000e-30
+Setting parameter time_limit to 1.000000e+09
+Setting parameter use_distributed_pdlp to false
+Reading file qap-wil-100.mps
+Using experimental fast MPS parser for '/home/scratch.vmostovoi_gpu/datasets/big_lp/google/qap-wil-100.mps'
+Read file qap-wil-100.mps in 13.15 seconds
+cuOpt version: 26.8.0, git hash: 5e62e9ba, host arch: x86_64, device archs: 100a-real
+CPU: INTEL(R) XEON(R) PLATINUM 8570, threads (physical/logical): 112/224, RAM: 1401.77 GiB
+CUDA 13.3, device: NVIDIA B200 (ID 0), VRAM: 178.34 GiB
+CUDA device UUID: 032cc9ce-c7f1-23bb-e695-6946f1192583
+
+Solving a problem with 1980200 constraints, 49015000 variables (0 integers), and 198020000 nonzeros
+Problem scaling:
+Objective coefficents range:          [1e+00, 1e+00]
+Constraint matrix coefficients range: [3e-03, 1e+00]
+Constraint rhs / bounds range:        [1e+00, 1e+00]
+Variable bounds range:                [0e+00, 0e+00]
+
+Objective offset 0.000000 scaling_factor 1.000000
+   Iter    Primal Obj.      Dual Obj.    Gap        Primal Res.  Dual Res.   Time
+      0 +0.00000000e+00 +0.00000000e+00  0.00e+00   1.41e+01     6.64e+03   2.703s
+   1000 +2.21440289e+05 +2.21264628e+05  1.76e+02   1.41e-01     4.16e+02   6.027s
+   2000 +2.20860236e+05 +2.20821811e+05  3.84e+01   3.21e-02     1.80e+01   8.910s
+   3000 +2.20808873e+05 +2.20805387e+05  3.49e+00   1.07e-02     2.56e+00   11.792s
+   4000 +2.20804861e+05 +2.20804204e+05  6.57e-01   5.07e-03     9.25e-01   14.675s
+   5000 +2.20804008e+05 +2.20804112e+05  1.04e-01   2.90e-03     5.05e-01   17.556s
+   6000 +2.20803535e+05 +2.20803977e+05  4.42e-01   2.05e-03     2.54e-01   20.439s
+   7000 +2.20803809e+05 +2.20803944e+05  1.36e-01   1.43e-03     1.61e-01   23.319s
+   8000 +2.20803765e+05 +2.20803920e+05  1.55e-01   1.07e-03     1.19e-01   26.200s
+   9000 +2.20803909e+05 +2.20803888e+05  2.10e-02   9.47e-04     7.46e-02   29.082s
+  10000 +2.20803795e+05 +2.20803881e+05  8.60e-02   7.69e-04     5.39e-02   31.963s
+  11000 +2.20803636e+05 +2.20803876e+05  2.40e-01   6.29e-04     4.32e-02   34.819s
+  12000 +2.20803759e+05 +2.20803871e+05  1.13e-01   5.28e-04     3.55e-02   37.676s
+  13000 +2.20803738e+05 +2.20803863e+05  1.25e-01   4.80e-04     2.76e-02   40.535s
+  14000 +2.20803769e+05 +2.20803861e+05  9.19e-02   4.52e-04     2.20e-02   43.391s
+  15000 +2.20803741e+05 +2.20803858e+05  1.17e-01   4.06e-04     1.77e-02   46.248s
+  16000 +2.20803748e+05 +2.20803857e+05  1.09e-01   3.58e-04     1.47e-02   49.104s
+  17000 +2.20803810e+05 +2.20803856e+05  4.66e-02   3.14e-04     1.27e-02   51.961s
+  18000 +2.20803814e+05 +2.20803856e+05  4.16e-02   2.80e-04     1.08e-02   54.817s
+  19000 +2.20803836e+05 +2.20803855e+05  1.91e-02   2.51e-04     9.95e-03   57.674s
+  20000 +2.20803839e+05 +2.20803854e+05  1.42e-02   2.35e-04     8.42e-03   60.533s
+PDLP finished
+Status: Iteration Limit   Objective: 2.20803839e+05  Iterations: 20000  Time: 62.790s
+
+### exit_code=0
+### finished=2026-06-28T19:30:35.502566
+### gpu_peak_mb=29850.4
+### gpu_peak2_mb=0.0
+### per_gpu_peak_mb=[29850.375]

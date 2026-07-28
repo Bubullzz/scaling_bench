@@ -1,0 +1,51 @@
+### solver=cuopt-base
+### instance=/home/scratch.vmostovoi_gpu/datasets/big_lp/google/qap-tho-150.mps
+### n_gpus=1
+### CUDA_VISIBLE_DEVICES=0
+### started=2026-06-19T20:53:17.785411
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --use-distributed-pdlp false --mps-reader fast --method 1 --presolve 0 --pdlp-disable-graph false --iteration-limit 5000 --time-limit 1e9 --absolute-primal-tolerance 1e-30 --relative-primal-tolerance 1e-30 --absolute-dual-tolerance 1e-30 --relative-dual-tolerance 1e-30 --absolute-gap-tolerance 1e-30 --relative-gap-tolerance 1e-30 --log-to-console true /home/scratch.vmostovoi_gpu/datasets/big_lp/google/qap-tho-150.mps
+### --- solver output ---
+Setting parameter absolute_dual_tolerance to 1.000000e-30
+Setting parameter absolute_gap_tolerance to 1.000000e-30
+Setting parameter absolute_primal_tolerance to 1.000000e-30
+Setting parameter iteration_limit to 5000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter pdlp_disable_graph to false
+Setting parameter presolve to 0
+Setting parameter relative_dual_tolerance to 1.000000e-30
+Setting parameter relative_gap_tolerance to 1.000000e-30
+Setting parameter relative_primal_tolerance to 1.000000e-30
+Setting parameter time_limit to 1.000000e+09
+Setting parameter use_distributed_pdlp to false
+Reading file qap-tho-150.mps
+Using experimental fast MPS parser for '/home/scratch.vmostovoi_gpu/datasets/big_lp/google/qap-tho-150.mps'
+Read file qap-tho-150.mps in 45.38 seconds
+cuOpt version: 26.8.0, git hash: 5e62e9ba, host arch: x86_64, device archs: 100a-real
+CPU: INTEL(R) XEON(R) PLATINUM 8570, threads (physical/logical): 112/224, RAM: 1909.06 GiB
+CUDA 13.3, device: NVIDIA B200 (ID 0), VRAM: 178.34 GiB
+CUDA device UUID: bc954a02-44c5-9c8e-1c8c-bedd7499c834
+
+Solving a problem with 6705300 constraints, 249783750 variables (0 integers), and 1005795000 nonzeros
+Problem scaling:
+Objective coefficents range:          [1e+00, 1e+00]
+Constraint matrix coefficients range: [9e-05, 1e+00]
+Constraint rhs / bounds range:        [1e+00, 1e+00]
+Variable bounds range:                [0e+00, 0e+00]
+
+Objective offset 0.000000 scaling_factor 1.000000
+   Iter    Primal Obj.      Dual Obj.    Gap        Primal Res.  Dual Res.   Time
+      0 +0.00000000e+00 +0.00000000e+00  0.00e+00   1.73e+01     1.03e+04   13.637s
+   1000 +4.35211124e+06 +4.36380425e+06  1.17e+04   1.33e-01     2.28e+04   31.759s
+   2000 +4.34512672e+06 +4.34591390e+06  7.87e+02   4.18e-02     1.31e+03   47.707s
+   3000 +4.34482676e+06 +4.34496409e+06  1.37e+02   1.67e-02     1.99e+02   63.655s
+   4000 +4.34483439e+06 +4.34486657e+06  3.22e+01   8.81e-03     6.57e+01   79.604s
+   5000 +4.34485396e+06 +4.34485584e+06  1.88e+00   5.20e-03     3.44e+01   95.542s
+PDLP finished
+Status: Iteration Limit   Objective: 4.34485396e+06  Iterations: 5000  Time: 102.392s
+
+### exit_code=0
+### finished=2026-06-19T20:56:10.224830
+### gpu_peak_mb=145055.1
+### gpu_peak2_mb=0.0
+### per_gpu_peak_mb=[145055.0625]

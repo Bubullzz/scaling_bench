@@ -1,0 +1,52 @@
+### solver=cuopt-distributed
+### instance=/home/scratch.vmostovoi_gpu/datasets/big_lp/google/tsp-gaia-10m.mps
+### n_gpus=8
+### CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+### started=2026-06-19T20:34:19.969685
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --use-distributed-pdlp true --distributed-pdlp-partitioner kaminpar --mps-reader fast --method 1 --presolve 0 --pdlp-disable-graph false --iteration-limit 5000 --time-limit 1e9 --absolute-primal-tolerance 1e-30 --relative-primal-tolerance 1e-30 --absolute-dual-tolerance 1e-30 --relative-dual-tolerance 1e-30 --absolute-gap-tolerance 1e-30 --relative-gap-tolerance 1e-30 --log-to-console true /home/scratch.vmostovoi_gpu/datasets/big_lp/google/tsp-gaia-10m.mps
+### --- solver output ---
+Setting parameter absolute_dual_tolerance to 1.000000e-30
+Setting parameter absolute_gap_tolerance to 1.000000e-30
+Setting parameter absolute_primal_tolerance to 1.000000e-30
+Setting parameter distributed_pdlp_partitioner to kaminpar
+Setting parameter iteration_limit to 5000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter pdlp_disable_graph to false
+Setting parameter presolve to 0
+Setting parameter relative_dual_tolerance to 1.000000e-30
+Setting parameter relative_gap_tolerance to 1.000000e-30
+Setting parameter relative_primal_tolerance to 1.000000e-30
+Setting parameter time_limit to 1.000000e+09
+Setting parameter use_distributed_pdlp to true
+Reading file tsp-gaia-10m.mps
+Using experimental fast MPS parser for '/home/scratch.vmostovoi_gpu/datasets/big_lp/google/tsp-gaia-10m.mps'
+Read file tsp-gaia-10m.mps in 27.50 seconds
+solve_lp_distributed_from_mps: distributed_pdlp_num_gpus == -1, auto-detected 8 visible CUDA device(s)
+cuOpt version: 26.8.0, git hash: 5e62e9ba, host arch: x86_64, device archs: 100a-real
+CPU: INTEL(R) XEON(R) PLATINUM 8570, threads (physical/logical): 112/224, RAM: 1927.07 GiB
+CUDA 13.3, device: NVIDIA B200 (ID 0), VRAM: 178.34 GiB
+CUDA device UUID: bc954a02-44c5-9c8e-1c8c-bedd7499c834
+
+Solving a problem with 17016681 constraints, 60601996 variables (0 integers), and 475701996 nonzeros (distributed mps-direct path)
+Solving with distributed PDLP on 8 GPU (mps direct path)
+Partitioning 17016681 constraints + 60601996 variables into 8 part(s) using the kaminpar partitioner
+KaMinPar partitioned bipartite graph: nvtx=77618677 nnz=475701996 nb_parts=8 nthreads=224 edge_cut=1741361 in 2.194s
+distributed_pdlp: building rank_data for 8 parts ...
+distributed_pdlp: rank_data build done in 7.124 s
+distributed_pdlp: building 8 shard solver(s) ...
+distributed_pdlp: shard build done in 5.200 s
+      0 +0.00000000e+00 +0.00000000e+00  0.00e+00   3.47e+03     7.78e+03   41.994s
+   1000 +1.30204128e+08 +1.30207886e+08  3.76e+03   3.34e+00     1.15e+00   43.340s
+   2000 +1.30202870e+08 +1.30203351e+08  4.80e+02   1.29e+00     1.88e-01   44.490s
+   3000 +1.30202860e+08 +1.30203000e+08  1.40e+02   7.56e-01     7.24e-02   45.644s
+   4000 +1.30202886e+08 +1.30202944e+08  5.84e+01   4.98e-01     4.24e-02   46.798s
+   5000 +1.30202906e+08 +1.30202947e+08  4.11e+01   3.63e-01     2.95e-02   47.953s
+PDLP finished
+Status: Iteration Limit   Objective: 1.30202906e+08  Iterations: 5000  Time: 49.680s
+
+### exit_code=0
+### finished=2026-06-19T20:35:52.462920
+### gpu_peak_mb=19437.1
+### gpu_peak2_mb=11725.1
+### per_gpu_peak_mb=[19437.0625, 10221.0625, 10701.0625, 10349.0625, 11501.0625, 11469.0625, 11725.0625, 10925.0625]

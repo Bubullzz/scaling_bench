@@ -1,0 +1,51 @@
+### solver=cuopt-base
+### instance=/home/scratch.vmostovoi_gpu/datasets/big_lp/google/heat-source-hard.mps
+### n_gpus=1
+### CUDA_VISIBLE_DEVICES=0
+### started=2026-06-19T20:49:19.823973
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --use-distributed-pdlp false --mps-reader fast --method 1 --presolve 0 --pdlp-disable-graph false --iteration-limit 5000 --time-limit 1e9 --absolute-primal-tolerance 1e-30 --relative-primal-tolerance 1e-30 --absolute-dual-tolerance 1e-30 --relative-dual-tolerance 1e-30 --absolute-gap-tolerance 1e-30 --relative-gap-tolerance 1e-30 --log-to-console true /home/scratch.vmostovoi_gpu/datasets/big_lp/google/heat-source-hard.mps
+### --- solver output ---
+Setting parameter absolute_dual_tolerance to 1.000000e-30
+Setting parameter absolute_gap_tolerance to 1.000000e-30
+Setting parameter absolute_primal_tolerance to 1.000000e-30
+Setting parameter iteration_limit to 5000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter pdlp_disable_graph to false
+Setting parameter presolve to 0
+Setting parameter relative_dual_tolerance to 1.000000e-30
+Setting parameter relative_gap_tolerance to 1.000000e-30
+Setting parameter relative_primal_tolerance to 1.000000e-30
+Setting parameter time_limit to 1.000000e+09
+Setting parameter use_distributed_pdlp to false
+Reading file heat-source-hard.mps
+Using experimental fast MPS parser for '/home/scratch.vmostovoi_gpu/datasets/big_lp/google/heat-source-hard.mps'
+Read file heat-source-hard.mps in 6.08 seconds
+cuOpt version: 26.8.0, git hash: 5e62e9ba, host arch: x86_64, device archs: 100a-real
+CPU: INTEL(R) XEON(R) PLATINUM 8570, threads (physical/logical): 112/224, RAM: 1937.24 GiB
+CUDA 13.3, device: NVIDIA B200 (ID 0), VRAM: 178.34 GiB
+CUDA device UUID: bc954a02-44c5-9c8e-1c8c-bedd7499c834
+
+Solving a problem with 15625000 constraints, 31628008 variables (0 integers), and 125000000 nonzeros
+Problem scaling:
+Objective coefficents range:          [1e+00, 1e+00]
+Constraint matrix coefficients range: [1e+00, 4e+05]
+Constraint rhs / bounds range:        [0e+00, 0e+00]
+Variable bounds range:                [1e-03, 5e-01]
+
+Objective offset 0.000000 scaling_factor 1.000000
+   Iter    Primal Obj.      Dual Obj.    Gap        Primal Res.  Dual Res.   Time
+      0 +0.00000000e+00 +0.00000000e+00  0.00e+00   0.00e+00     3.95e+03   10.466s
+   1000 +3.18482012e+06 +9.07641805e+13  9.08e+13   1.01e+05     5.28e+11   12.647s
+   2000 +7.57846980e+06 +2.93290592e+14  2.93e+14   8.26e+04     1.17e+12   14.510s
+   3000 +1.33228778e+07 +6.75902853e+14  6.76e+14   7.05e+04     2.29e+12   16.373s
+   4000 +2.16920841e+07 +1.08070112e+15  1.08e+15   5.95e+04     3.28e+12   18.236s
+   5000 +3.02437407e+07 +1.47815128e+15  1.48e+15   5.09e+04     4.19e+12   20.097s
+PDLP finished
+Status: Iteration Limit   Objective: 3.02437407e+07  Iterations: 5000  Time: 20.876s
+
+### exit_code=0
+### finished=2026-06-19T20:49:51.448802
+### gpu_peak_mb=23871.1
+### gpu_peak2_mb=0.0
+### per_gpu_peak_mb=[23871.0625]

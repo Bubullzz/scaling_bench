@@ -1,0 +1,60 @@
+### solver=dpdlp
+### instance=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/datasets/linear_programming/afiro_original.mps
+### n_gpus=8
+### CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+### started=2026-07-17T19:26:58.273803
+### argv=/home/scratch.vmostovoi_gpu/.conda/envs/dpdlp/bin/mpirun -n 8 /home/scratch.vmostovoi_gpu/D-PDLP/build/cupdlpx-dist /home/scratch.vmostovoi_gpu/mostovoi_cuopt/datasets/linear_programming/afiro_original.mps /home/scratch.vmostovoi_gpu/scaling_bench/runs_endtoend/1e-4/dpdlp/afiro_original__N8 --iter_limit 10000000 --time_limit 3600 --eps_opt 1e-4 --eps_feas 1e-4 --verbose
+### --- solver output ---
+Rank 0: Loading MPS file '/home/scratch.vmostovoi_gpu/mostovoi_cuopt/datasets/linear_programming/afiro_original.mps'...
+[Auto-Grid] Decided grid shape: 2 x 4 for 8 processes.
+---------------------------------------------------------------------------------------
+                                     D-PDLP                                                
+             A First-Order LP Solver Powered by Multiple GPU System                        
+                              (c) Hongpei Li, 2026                                           
+                          Contact: ishongpeili@gmail.com                                      
+                                                                                           
+   Based on cuPDLPx by Haihao Lu, MIT (2025): https://github.com/MIT-Lu-Lab/cuPDLPx  
+---------------------------------------------------------------------------------------
+problem: 27 rows, 32 columns, 83 nonzeros
+settings:
+  iter_limit         : 10000000
+  time_limit         : 3600.00 sec
+  eps_opt            : 1.0e-04
+  eps_feas           : 1.0e-04
+  eps_infeas_detect  : 1.0e-10
+------------------------------ Distributed Configuration ------------------------------
+   Grid Size         : Auto-detect (implementation dependent)
+  Partition Method   : NNZ Balance
+  Permute Method     : Block Random (Block-wise Random shuffle)
+---------------------------------------------------------------------------------------
+Running presolver (PSLP v0.0.8)...
+  status          : REDUCED
+  presolve time   : 0.000197 sec
+  reduced problem : 14 rows, 18 columns, 40 nonzeros
+[Timer] Permuting LP Problem took 0.000 seconds.
+[Timer] Data Distribution (Bcast -> Partition) took 0.049 seconds.
+---------------------------------------------------------------------------------------
+   runtime     |     objective      |   absolute residuals    |   relative residuals    
+  iter   time  |  pr obj    du obj  |  pr res  du res   gap   |  pr res  du res   gap   
+---------------------------------------------------------------------------------------
+     0 0.0e+00 |  0.0e+00   0.0e+00 | 0.0e+00 9.2e-01 0.0e+00 | 0.0e+00 4.8e-01 0.0e+00 
+   200 2.8e-02 | -4.6e+02  -3.9e+02 | 1.9e-01 1.2e-01 7.5e+01 | 2.0e-03 6.1e-02 8.9e-02 
+   400 3.9e-02 | -4.7e+02  -4.6e+02 | 6.7e-01 1.1e-03 1.4e+00 | 7.3e-03 5.8e-04 1.5e-03 
+   600 4.8e-02 | -4.6e+02  -4.6e+02 | 8.8e-05 1.2e-04 8.6e-02 | 9.6e-07 6.5e-05 9.2e-05 
+---------------------------------------------------------------------------------------
+Solution Summary
+  Status             : OPTIMAL
+  Presolve time      : 0.000197 sec
+  Solve time         : 0.0475 sec
+  Iterations         : 600
+  Primal objective   : -464.7472708
+  Dual objective     : -464.8329746
+  Objective gap      : 9.210e-05
+  Primal infeas      : 9.566e-07
+  Dual infeas        : 6.463e-05
+
+### exit_code=0
+### finished=2026-07-17T19:27:15.548183
+### gpu_peak_mb=3148.5
+### gpu_peak2_mb=3148.5
+### per_gpu_peak_mb=[3148.5, 3148.5, 3148.5, 3148.5, 3148.5, 3148.5, 3148.5, 3148.5]

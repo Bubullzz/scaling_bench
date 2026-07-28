@@ -1,0 +1,53 @@
+### solver=cuopt-base
+### instance=/home/scratch.vmostovoi_gpu/datasets/amazon_lp/amazon_lp003.mps
+### n_gpus=1
+### CUDA_VISIBLE_DEVICES=0
+### started=2026-07-24T11:54:45.257098
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --method 1 --mps-reader experimental-fast --time-limit 3600 --iteration-limit 1000000000 --relative-primal-tolerance 1e-6 --relative-dual-tolerance 1e-6 --relative-gap-tolerance 1e-6 --log-to-console true /home/scratch.vmostovoi_gpu/datasets/amazon_lp/amazon_lp003.mps
+### --- solver output ---
+Setting parameter iteration_limit to 1000000000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter relative_dual_tolerance to 1.000000e-06
+Setting parameter relative_gap_tolerance to 1.000000e-06
+Setting parameter relative_primal_tolerance to 1.000000e-06
+Setting parameter time_limit to 3.600000e+03
+Reading file amazon_lp003.mps
+Using experimental fast MPS parser for '/home/scratch.vmostovoi_gpu/datasets/amazon_lp/amazon_lp003.mps'
+Read file amazon_lp003.mps in 7.89 seconds
+cuOpt version: 26.8.0, git hash: 7116ead1, host arch: x86_64, device archs: 100a-real
+CPU: INTEL(R) XEON(R) PLATINUM 8570, threads (physical/logical): 112/224, RAM: 1178.96 GiB
+CUDA 13.3, device: NVIDIA B200 (ID 0), VRAM: 178.34 GiB
+CUDA device UUID: 5b3b2195-5d98-9774-145e-bfc9011037d7
+Solving a problem with 1045169 constraints, 16995607 variables (0 integers), and 129173347 nonzeros
+Problem scaling:
+Objective coefficents range:          [8e-11, 9e+09]
+Constraint matrix coefficients range: [2e-05, 2e+08]
+Constraint rhs / bounds range:        [1e+00, 6e+08]
+Variable bounds range:                [0e+00, 1e+00]
+Warning: input problem contains a large range of coefficients: consider reformulating to avoid numerical difficulties.
+
+Using PSLP presolver
+PSLP Presolved problem: 159180 constraints, 678095 variables, 1210633 non-zeros
+PSLP presolve time: 34.64s
+Objective offset 1125202777.187288 scaling_factor 1.000000
+   Iter    Primal Obj.      Dual Obj.    Gap        Primal Res.  Dual Res.   Time
+      0 +1.12520278e+09 +1.12520278e+09  0.00e+00   2.55e+06     6.76e+10   35.224s
+   1000 +8.83161795e+08 +8.88100575e+08  4.94e+06   2.38e+02     8.45e+07   35.306s
+   2000 +8.69196467e+08 +8.69226601e+08  3.01e+04   4.02e+03     6.99e+04   35.348s
+   3000 +8.69104725e+08 +8.69105647e+08  9.22e+02   7.62e+03     5.01e+02   35.391s
+   3900 +8.69103623e+08 +8.69103623e+08  4.61e-02   5.23e+01     6.59e+01   35.429s
+LP Solver status:                Optimal
+Primal objective:                +8.69103623e+08
+Dual objective:                  +8.69103623e+08
+Duality gap (abs/rel):           +4.61e-02 / +2.65e-11
+Primal infeasibility (abs/rel):  +5.23e+01 / +8.45e-07
+Dual infeasibility (abs/rel):    +6.59e+01 / +9.74e-10
+PDLP finished
+Status: Optimal   Objective: 8.69103623e+08  Iterations: 3900  Time: 35.431s
+
+### exit_code=0
+### finished=2026-07-24T11:55:33.710405
+### gpu_peak_mb=10458.4
+### gpu_peak2_mb=0.0
+### per_gpu_peak_mb=[10458.375]

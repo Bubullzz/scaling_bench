@@ -1,0 +1,44 @@
+### solver=cuopt-distributed
+### instance=/home/scratch.vmostovoi_gpu/datasets/big_lp/google/world-shipping.mps
+### n_gpus=8
+### CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+### started=2026-07-23T13:28:39.282151
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --use-distributed-pdlp true --method 1 --mps-reader experimental-fast --time-limit 3600 --iteration-limit 1000000000 --relative-primal-tolerance 1e-4 --relative-dual-tolerance 1e-4 --relative-gap-tolerance 1e-4 --log-to-console true /home/scratch.vmostovoi_gpu/datasets/big_lp/google/world-shipping.mps
+### --- solver output ---
+Setting parameter iteration_limit to 1000000000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter relative_dual_tolerance to 1.000000e-04
+Setting parameter relative_gap_tolerance to 1.000000e-04
+Setting parameter relative_primal_tolerance to 1.000000e-04
+Setting parameter time_limit to 3.600000e+03
+Setting parameter use_distributed_pdlp to true
+Reading file world-shipping.mps
+Using experimental fast MPS parser for '/home/scratch.vmostovoi_gpu/datasets/big_lp/google/world-shipping.mps'
+Read file world-shipping.mps in 53.21 seconds
+cuOpt version: 26.8.0, git hash: 7116ead1, host arch: x86_64, device archs: 100a-real
+CPU: INTEL(R) XEON(R) PLATINUM 8570, threads (physical/logical): 112/224, RAM: 1659.53 GiB
+CUDA 13.3, device: NVIDIA B200 (ID 0), VRAM: 178.34 GiB
+CUDA device UUID: 8a66a624-18d0-b6e2-3a57-51f9c8ee79d5
+CUDA 13.3, device: NVIDIA B200 (ID 1), VRAM: 178.34 GiB
+CUDA device UUID: a95cef4d-4b2e-b2ec-e608-339df4d73538
+CUDA 13.3, device: NVIDIA B200 (ID 2), VRAM: 178.34 GiB
+CUDA device UUID: d7aa3a8f-e107-db98-5d88-0e5576cb471c
+CUDA 13.3, device: NVIDIA B200 (ID 3), VRAM: 178.34 GiB
+CUDA device UUID: b7bc8c92-020e-76f0-25f2-f1ece267cc9e
+CUDA 13.3, device: NVIDIA B200 (ID 4), VRAM: 178.34 GiB
+CUDA device UUID: 43eb1646-5a5c-dae1-8224-2915cd8310c0
+CUDA 13.3, device: NVIDIA B200 (ID 5), VRAM: 178.34 GiB
+CUDA device UUID: b86f4c01-79e3-92e3-287a-78d01ef792fd
+CUDA 13.3, device: NVIDIA B200 (ID 6), VRAM: 178.34 GiB
+CUDA device UUID: fede491e-b7b6-ed3f-a7dd-cf1d00b7a753
+CUDA 13.3, device: NVIDIA B200 (ID 7), VRAM: 178.34 GiB
+CUDA device UUID: f6a76f64-75da-d5be-1a7c-7156bd2cff2e
+Solving a problem with 15304282 constraints, 228867510 variables (0 integers), and 688658522 nonzeros
+Using PSLP presolver
+
+### exit_code=-11
+### finished=2026-07-23T13:31:44.559436
+### gpu_peak_mb=1432.4
+### gpu_peak2_mb=1364.4
+### per_gpu_peak_mb=[1432.375, 1364.375, 1364.375, 1364.375, 1364.375, 1364.375, 1364.375, 1364.375]

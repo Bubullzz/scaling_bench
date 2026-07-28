@@ -1,0 +1,52 @@
+### solver=cuopt-base
+### instance=/home/scratch.vmostovoi_gpu/datasets/big_lp/google/mediterranean-shipping.mps
+### n_gpus=1
+### CUDA_VISIBLE_DEVICES=0
+### started=2026-06-19T20:49:51.465505
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --use-distributed-pdlp false --mps-reader fast --method 1 --presolve 0 --pdlp-disable-graph false --iteration-limit 5000 --time-limit 1e9 --absolute-primal-tolerance 1e-30 --relative-primal-tolerance 1e-30 --absolute-dual-tolerance 1e-30 --relative-dual-tolerance 1e-30 --absolute-gap-tolerance 1e-30 --relative-gap-tolerance 1e-30 --log-to-console true /home/scratch.vmostovoi_gpu/datasets/big_lp/google/mediterranean-shipping.mps
+### --- solver output ---
+Setting parameter absolute_dual_tolerance to 1.000000e-30
+Setting parameter absolute_gap_tolerance to 1.000000e-30
+Setting parameter absolute_primal_tolerance to 1.000000e-30
+Setting parameter iteration_limit to 5000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter pdlp_disable_graph to false
+Setting parameter presolve to 0
+Setting parameter relative_dual_tolerance to 1.000000e-30
+Setting parameter relative_gap_tolerance to 1.000000e-30
+Setting parameter relative_primal_tolerance to 1.000000e-30
+Setting parameter time_limit to 1.000000e+09
+Setting parameter use_distributed_pdlp to false
+Reading file mediterranean-shipping.mps
+Using experimental fast MPS parser for '/home/scratch.vmostovoi_gpu/datasets/big_lp/google/mediterranean-shipping.mps'
+Read file mediterranean-shipping.mps in 34.61 seconds
+cuOpt version: 26.8.0, git hash: 5e62e9ba, host arch: x86_64, device archs: 100a-real
+CPU: INTEL(R) XEON(R) PLATINUM 8570, threads (physical/logical): 112/224, RAM: 1917.22 GiB
+CUDA 13.3, device: NVIDIA B200 (ID 0), VRAM: 178.34 GiB
+CUDA device UUID: bc954a02-44c5-9c8e-1c8c-bedd7499c834
+
+Solving a problem with 7490593 constraints, 208479461 variables (0 integers), and 628927462 nonzeros
+Problem scaling:
+Objective coefficents range:          [1e+00, 1e+00]
+Constraint matrix coefficients range: [5e-04, 6e+03]
+Constraint rhs / bounds range:        [0e+00, 1e+00]
+Variable bounds range:                [0e+00, 1e+03]
+Warning: input problem contains a large range of coefficients: consider reformulating to avoid numerical difficulties.
+
+Objective offset 0.000000 scaling_factor 1.000000
+   Iter    Primal Obj.      Dual Obj.    Gap        Primal Res.  Dual Res.   Time
+      0 +0.00000000e+00 +0.00000000e+00  0.00e+00   0.00e+00     2.39e+03   41.112s
+   1000 -5.07702101e+02 +0.00000000e+00  5.08e+02   1.23e+00     4.55e+01   52.087s
+   2000 -1.33351495e+03 -9.75397196e+02  3.58e+02   2.81e+00     5.83e+00   61.531s
+   3000 -1.35227427e+03 -1.18017140e+03  1.72e+02   2.59e+00     1.25e+00   70.976s
+   4000 -1.32593103e+03 -1.16286550e+03  1.63e+02   2.09e+00     1.43e+00   80.421s
+   5000 -1.28198468e+03 -1.12778732e+03  1.54e+02   1.66e+00     1.55e+00   89.857s
+PDLP finished
+Status: Iteration Limit   Objective: -1.28198468e+03  Iterations: 5000  Time: 95.511s
+
+### exit_code=0
+### finished=2026-06-19T20:52:21.199659
+### gpu_peak_mb=109759.1
+### gpu_peak2_mb=0.0
+### per_gpu_peak_mb=[109759.0625]

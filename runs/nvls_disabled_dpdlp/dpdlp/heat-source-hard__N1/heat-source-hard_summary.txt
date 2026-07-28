@@ -1,0 +1,12 @@
+Termination Reason: ITERATION_LIMIT
+Runtime (sec): 9.775712e+00
+Iterations Count: 5000
+Primal Objective Value: 3.024411e+07
+Dual Objective Value: 1.478217e+15
+Relative Primal Residual: 5.092516e+04
+Relative Dual Residual: 1.059650e+09
+Absolute Objective Gap: 1.478217e+15
+Relative Objective Gap: 1.000000e+00
+Rows: 15625000
+Columns: 31628008
+Nonzeros: 125000000

@@ -1,0 +1,66 @@
+### solver=cuopt-distributed
+### instance=/home/scratch.vmostovoi_gpu/datasets/big_lp/C5_bigger_sanitized.mps
+### n_gpus=1
+### CUDA_VISIBLE_DEVICES=0
+### started=2026-06-28T19:06:10.519642
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --use-distributed-pdlp true --distributed-pdlp-partitioner kaminpar --mps-reader fast --method 1 --presolve 0 --iteration-limit 20000 --time-limit 1e9 --absolute-primal-tolerance 1e-30 --relative-primal-tolerance 1e-30 --absolute-dual-tolerance 1e-30 --relative-dual-tolerance 1e-30 --absolute-gap-tolerance 1e-30 --relative-gap-tolerance 1e-30 --log-to-console true /home/scratch.vmostovoi_gpu/datasets/big_lp/C5_bigger_sanitized.mps
+### --- solver output ---
+Setting parameter absolute_dual_tolerance to 1.000000e-30
+Setting parameter absolute_gap_tolerance to 1.000000e-30
+Setting parameter absolute_primal_tolerance to 1.000000e-30
+Setting parameter distributed_pdlp_partitioner to kaminpar
+Setting parameter iteration_limit to 20000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter presolve to 0
+Setting parameter relative_dual_tolerance to 1.000000e-30
+Setting parameter relative_gap_tolerance to 1.000000e-30
+Setting parameter relative_primal_tolerance to 1.000000e-30
+Setting parameter time_limit to 1.000000e+09
+Setting parameter use_distributed_pdlp to true
+Reading file C5_bigger_sanitized.mps
+Using experimental fast MPS parser for '/home/scratch.vmostovoi_gpu/datasets/big_lp/C5_bigger_sanitized.mps'
+Read file C5_bigger_sanitized.mps in 54.07 seconds
+solve_lp_distributed_from_mps: distributed_pdlp_num_gpus == -1, auto-detected 1 visible CUDA device(s)
+cuOpt version: 26.8.0, git hash: 5e62e9ba, host arch: x86_64, device archs: 100a-real
+CPU: INTEL(R) XEON(R) PLATINUM 8570, threads (physical/logical): 112/224, RAM: 1903.79 GiB
+CUDA 13.3, device: NVIDIA B200 (ID 0), VRAM: 178.34 GiB
+CUDA device UUID: 80dfcbea-0346-6bb8-8c34-81210097de1f
+
+Solving a problem with 57249021 constraints, 327801326 variables (0 integers), and 731225678 nonzeros (distributed mps-direct path)
+Solving with distributed PDLP on 1 GPU (mps direct path)
+Partitioning 57249021 constraints + 327801326 variables into 1 part(s) using the kaminpar partitioner
+KaMinPar: nb_parts == 1, returning trivial single-block partition
+distributed_pdlp: building rank_data for 1 parts ...
+distributed_pdlp: rank_data build done in 34.840 s
+distributed_pdlp: building 1 shard solver(s) ...
+distributed_pdlp: shard build done in 24.761 s
+      0 +0.00000000e+00 +0.00000000e+00  0.00e+00   2.78e+08     3.14e+06   129.568s
+   1000 -1.00134240e+11 +2.01667463e+13  2.03e+13   1.30e+07     3.81e+04   144.326s
+   2000 -5.87936718e+10 -9.28130749e+11  8.69e+11   1.32e+07     1.85e+04   156.949s
+   3000 -3.65803415e+10 -4.39629273e+11  4.03e+11   8.10e+06     1.17e+04   169.565s
+   4000 -2.65768955e+10 -5.21259034e+10  2.55e+10   4.81e+06     7.28e+03   182.178s
+   5000 -2.05305480e+10 +8.30591176e+11  8.51e+11   2.84e+06     4.20e+03   194.777s
+   6000 -1.72210612e+10 +4.61962234e+11  4.79e+11   1.97e+06     2.47e+03   207.389s
+   7000 -1.55245102e+10 +1.25556995e+11  1.41e+11   1.24e+06     1.27e+03   219.988s
+   8000 -1.45549921e+10 +1.13414621e+11  1.28e+11   8.13e+05     7.87e+02   232.588s
+   9000 -1.35896160e+10 +8.24578273e+09  2.18e+10   6.33e+05     3.70e+02   245.196s
+  10000 -1.26121585e+10 -1.82775120e+10  5.67e+09   4.96e+05     2.52e+02   257.793s
+  11000 -1.18399440e+10 -1.00974258e+10  1.74e+09   4.56e+05     2.16e+02   270.273s
+  12000 -1.11922215e+10 -9.90617376e+09  1.29e+09   4.26e+05     1.99e+02   282.751s
+  13000 -1.06768981e+10 -1.24454062e+10  1.77e+09   4.07e+05     1.84e+02   295.230s
+  14000 -9.89291804e+09 -1.52358511e+10  5.34e+09   3.92e+05     1.52e+02   307.723s
+  15000 -9.07353748e+09 -1.58859002e+10  6.81e+09   3.81e+05     1.39e+02   320.203s
+  16000 -8.51430553e+09 -1.73484220e+10  8.83e+09   3.68e+05     1.32e+02   332.682s
+  17000 -7.96765286e+09 -1.85614278e+10  1.06e+10   3.52e+05     1.26e+02   345.162s
+  18000 -7.62014694e+09 -1.96869950e+10  1.21e+10   3.36e+05     1.20e+02   357.642s
+  19000 -7.27370745e+09 -2.15284231e+10  1.43e+10   3.14e+05     1.16e+02   370.123s
+  20000 -6.97032544e+09 -2.36333088e+10  1.67e+10   3.00e+05     1.12e+02   382.604s
+PDLP finished
+Status: Iteration Limit   Objective: -6.97032544e+09  Iterations: 20000  Time: 389.726s
+
+### exit_code=0
+### finished=2026-06-28T19:14:03.838755
+### gpu_peak_mb=159052.4
+### gpu_peak2_mb=0.0
+### per_gpu_peak_mb=[159052.375]
