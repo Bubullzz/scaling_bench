@@ -1,0 +1,16 @@
+### solver=dpdlp
+### instance=/home/scratch.vmostovoi_gpu/datasets/open_energy_benchmark/TIMES-STEM-15-1h.mps
+### n_gpus=8
+### CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+### started=2026-07-29T05:34:30.617060-07:00
+### argv=MANUAL_SKIP (never launched; same hang as 1e-4)
+### --- solver output ---
+
+### MANUAL SKIP: D-PDLP hangs on TIMES-STEM-15-1h after iter ~200 (same as 1e-4).
+### Pre-emptively skipped so the 1e-6 sweep does not burn 4h Slurm walltime.
+### Delete this footer (or the whole log) to force a re-run.
+### exit_code=124
+### finished=2026-07-29T05:34:30.617060-07:00
+### gpu_peak_mb=0
+### gpu_peak2_mb=0
+### per_gpu_peak_mb=[]

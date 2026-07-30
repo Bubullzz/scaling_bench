@@ -106,6 +106,32 @@ def ee_gpu_counts_for(solver: Solver) -> list[int]:
     return EE_GPU_COUNTS.get(solver.name, [8])
 
 
+def _visible_gpu_count() -> int:
+    """How many GPUs this worker can actually see (Slurm/crun -g N +
+    NVIDIA_VISIBLE_DEVICES). Used to skip N=8 tuples on a 1-GPU node
+    instead of launching mpirun/NCCL and crashing."""
+    cvd = os.environ.get("CUDA_VISIBLE_DEVICES", "").strip()
+    if cvd and cvd.lower() not in ("all", "void"):
+        # "0,1,2" or "0" -- ignore empty slots.
+        parts = [p for p in cvd.split(",") if p.strip() != ""]
+        if parts:
+            return len(parts)
+    nvd = os.environ.get("NVIDIA_VISIBLE_DEVICES", "").strip()
+    if nvd and nvd.lower() not in ("all", "void"):
+        parts = [p for p in nvd.split(",") if p.strip() != ""]
+        # UUID lists also comma-separated; count entries.
+        if parts:
+            return len(parts)
+    try:
+        import subprocess
+        out = subprocess.check_output(
+            ["nvidia-smi", "-L"], text=True, stderr=subprocess.DEVNULL,
+        )
+        return sum(1 for line in out.splitlines() if line.startswith("GPU "))
+    except Exception:
+        return 0
+
+
 # ---------------------------------------------------------------------------
 # Presolve substitution
 # ---------------------------------------------------------------------------
@@ -442,9 +468,11 @@ def parse_cli() -> argparse.Namespace:
         help="print what would run without executing anything",
     )
     p.add_argument(
-        "--stale-claim-after", type=int, default=300, metavar="SEC",
+        "--stale-claim-after", type=int, default=900, metavar="SEC",
         help="reclaim a peer worker's claim after this many seconds of "
-             "silence (default 300).",
+             "silence (default 900). Live workers refresh their claim every "
+             f"{bench.CLAIM_HEARTBEAT_S:.0f}s via ClaimHeartbeat, so this only "
+             "triggers for genuinely dead workers.",
     )
     return p.parse_args()
 
@@ -486,6 +514,14 @@ def _run_sweep_for_tol(args: argparse.Namespace, tol: str) -> int:
     print("(workers only produce per-run logs; "
           f"consolidate later with `python endtoend_build_csv.py --tol {tol}`)")
 
+    n_visible = _visible_gpu_count()
+    print(f"    visible GPUs : {n_visible} "
+          f"(CUDA_VISIBLE_DEVICES={os.environ.get('CUDA_VISIBLE_DEVICES', '')!r}, "
+          f"NVIDIA_VISIBLE_DEVICES={os.environ.get('NVIDIA_VISIBLE_DEVICES', '')!r})")
+    if n_visible <= 0 and not args.dry_run:
+        print("!! no GPUs visible -- aborting this sweep", file=sys.stderr)
+        return 2
+
     if args.dry_run:
         for solver in active:
             for instance in grid_instances:
@@ -512,6 +548,13 @@ def _run_sweep_for_tol(args: argparse.Namespace, tol: str) -> int:
                 stem = _stem_of(instance)
                 prefix = f"[{counter:2d}/{n_runs}] {solver.name} {stem} N={n}"
 
+                # On a 1-GPU node, silently skip N=8 (distributed) tuples so
+                # EE_PROFILE=base workers never try to launch mpirun/NCCL.
+                if n > n_visible:
+                    print(f"{prefix} ... skipped (need {n} GPUs, only "
+                          f"{n_visible} visible on this node)")
+                    continue
+
                 reused = _try_reuse_existing_log(solver, instance, n, tol)
                 if reused is not None:
                     # bench._try_reuse_existing_log returns (log_path, parsed, exit_code)
@@ -528,7 +571,12 @@ def _run_sweep_for_tol(args: argparse.Namespace, tol: str) -> int:
 
                 try:
                     print(f"{prefix} ...", end=" ", flush=True)
-                    metrics = _run_one(solver, instance, n, tol)
+                    # Refresh the claim's mtime while the solver runs, or peers
+                    # would treat it as stale after --stale-claim-after seconds
+                    # and start the SAME tuple (duplicate work + concurrent
+                    # writers mangling the shared run log).
+                    with bench.ClaimHeartbeat(claim):
+                        metrics = _run_one(solver, instance, n, tol)
                     # Coerce all summary fields through str() -- the parser
                     # may return None for any of these when the solver
                     # crashed (e.g. ncclCommInitAll fail, SIGSEGV, or

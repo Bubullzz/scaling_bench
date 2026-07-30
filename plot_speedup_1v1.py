@@ -36,6 +36,7 @@ from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
 
 from datasets import ADDENDUM_STEMS
 
@@ -252,14 +253,25 @@ def load_pairs(csv_path: Path, other: str, metric: str,
     return pairs
 
 
-def _tl_suffix(p: Pair) -> str:
+def _tl_suffix(p: Pair, other_short: str = "base") -> str:
     if p.ours_tl and p.other_tl:
         return "  [both TL]"
     if p.ours_tl:
         return "  [cuOpt TL]"
     if p.other_tl:
-        return "  [base TL]"
+        return f"  [{other_short} TL]"
     return ""
+
+
+def _speedup_tag(p: Pair) -> str:
+    """Bar annotation. Baseline-only TL is a lower bound on speedup
+    (they were capped at 3600s), so show '>n.nx' rather than 'n.nx*'."""
+    s = p.speedup
+    if p.other_tl and not p.ours_tl:
+        return f">{s:.2f}×"
+    if p.any_tl:
+        return f"{s:.2f}×*"
+    return f"{s:.2f}×"
 
 
 def plot_speedup(pairs: list[Pair], cfg: dict, out_path: Path,
@@ -268,13 +280,17 @@ def plot_speedup(pairs: list[Pair], cfg: dict, out_path: Path,
         print(f"!! no pairs for {out_path.name}", file=sys.stderr)
         return
 
+    # Short TL tag for the baseline: "base" for single-GPU, "D-PDLP" otherwise.
+    other_short = "base" if "single" in cfg["label"].lower() else cfg["label"]
+
     n = len(pairs)
     speedups = [p.speedup for p in pairs]
-    labels = [p.label + _tl_suffix(p) for p in pairs]
+    labels = [p.label + _tl_suffix(p, other_short) for p in pairs]
     wins = sum(1 for s in speedups if s > 1.01)
     losses = sum(1 for s in speedups if s < 0.99)
     geomean = math.exp(sum(math.log(s) for s in speedups) / n)
     colors = [WIN_C if s > 1.01 else (LOSE_C if s < 0.99 else TIE_C) for s in speedups]
+    has_tl = any(p.any_tl for p in pairs)
 
     fig_h = max(4.8, 0.38 * n + 1.4)
     fig, ax = plt.subplots(figsize=(8.8, fig_h), dpi=200)
@@ -286,36 +302,43 @@ def plot_speedup(pairs: list[Pair], cfg: dict, out_path: Path,
     # Hatch any bar involving a time-limit so TL cases are visually distinct.
     for bar, p in zip(bars, pairs):
         if p.any_tl:
-            bar.set_hatch("///")
+            bar.set_hatch("////")
             bar.set_edgecolor("#1A1A1A")
             bar.set_linewidth(0.4)
 
     ax.axvline(1.0, color="#1A1A1A", linewidth=1.2, zorder=3)
-    ax.axvline(geomean, color="#1A1A1A", linewidth=1.0, linestyle=(0, (3, 2)),
-               alpha=0.55, zorder=3)
 
     ax.set_yticks(list(y))
     ax.set_yticklabels(labels, fontsize=11)
+    # Read the ranking from top to bottom: lowest speedup first and strongest
+    # speedup last at the bottom.
+    ax.invert_yaxis()
     ax.set_xlabel(xlabel, fontsize=12)
     ax.set_xlim(0, max(2.8, math.ceil(max(speedups) * 10) / 10 + 0.2))
 
-    for i, (s, p) in enumerate(zip(speedups, pairs)):
-        tag = f"{s:.2f}×"
-        if p.any_tl:
-            tag += "*"
-        ax.text(s + 0.04, i, tag, va="center", ha="left",
+    for i, p in enumerate(pairs):
+        ax.text(p.speedup + 0.04, i, _speedup_tag(p), va="center", ha="left",
                 fontsize=9.5, color="#1A1A1A")
 
-    ax.plot([], [], color=WIN_C, linewidth=8, label=cfg["win_label"])
-    ax.plot([], [], color=LOSE_C, linewidth=8, label=cfg["lose_label"])
-    ax.plot([], [], color="#1A1A1A", linewidth=1.2, label="parity (1×)")
-    ax.plot([], [], color="#1A1A1A", linewidth=1.0, linestyle=(0, (3, 2)),
-            label=f"geomean ({geomean:.2f}×)")
-    if any(p.any_tl for p in pairs):
-        ax.barh([], [], color="#CCCCCC", hatch="///", edgecolor="#1A1A1A",
-                label="involves time limit*")
-    leg = ax.legend(loc="lower right", frameon=True, fontsize=12,
-                    fancybox=False, edgecolor="#CCCCCC", framealpha=1.0)
+    # Keep the geomean outside the data area so it never covers a bar.
+    ax.set_title(f"Geometric mean speedup: {geomean:.2f}×",
+                 loc="left", fontsize=11, pad=10, color="#1A1A1A")
+
+    handles = [
+        Patch(facecolor=WIN_C, edgecolor="none", label=cfg["win_label"]),
+        Patch(facecolor=LOSE_C, edgecolor="none", label=cfg["lose_label"]),
+        plt.Line2D([0], [0], color="#1A1A1A", linewidth=1.2, label="parity (1×)"),
+    ]
+    if has_tl:
+        # Use a real Patch so the hatch renders in the legend (empty barh
+        # handles often show as a flat colour and look "wrong").
+        handles.append(Patch(
+            facecolor="#E8E8E8", edgecolor="#1A1A1A", linewidth=0.6,
+            hatch="////", label="involves time limit",
+        ))
+    leg = ax.legend(handles=handles, loc="upper right", frameon=True,
+                    fontsize=11, fancybox=False, edgecolor="#CCCCCC",
+                    framealpha=1.0)
     leg.get_frame().set_linewidth(0.6)
 
     ax.grid(axis="x", color="#E6E6E6", linewidth=0.8, zorder=0)
@@ -334,7 +357,7 @@ def plot_speedup(pairs: list[Pair], cfg: dict, out_path: Path,
     print(f"  n={n}  wins={wins}  losses={losses}  geomean={geomean:.3f}×"
           f"  (tl_pairs={sum(1 for p in pairs if p.any_tl)})")
     for p in pairs:
-        print(f"  {p.label + _tl_suffix(p):40s}  {p.speedup:6.3f}×  "
+        print(f"  {p.label + _tl_suffix(p, other_short):40s}  {_speedup_tag(p):>8s}  "
               f"(ours={p.t_ours:.4g}  other={p.t_other:.4g})")
 
 

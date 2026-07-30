@@ -16,10 +16,17 @@
 #     ./ee_loop.sh 12 -- --tol 1e-6         # 12 workers, only tol=1e-6
 #     ./ee_loop.sh 4  -- --solver dpdlp     # 4 workers, D-PDLP only
 #
-# Env knobs (all optional):
+#     # cuopt-base on a single shared B200 (does NOT take a full 8-GPU node):
+#     EE_PROFILE=base ./ee_loop.sh 6 -- --solver cuopt-base
+#     EE_PROFILE=base ./ee_loop.sh 4 -- --solver cuopt-base --tol 1e-4
+#
+# Env knobs (all optional; forwarded to ee_submit.sh):
+#     EE_PROFILE      -- dist (default, 8×B200 exclusive) | base (1×B200 shared)
 #     EE_SLEEP        -- seconds between submissions (default 5)
-#     EE_GPU_COUNT    -- GPUs per worker (default 8)
+#     EE_GPU_COUNT    -- GPUs per worker
+#     EE_GPU_QUERY    -- crun -q node query
 #     EE_WALL_TIME    -- crun -t value  (default 4:00:00)
+#     EE_EXCLUSIVE    -- 1/0 for crun -ex
 #
 # Tips:
 #   - If the sweep has ~15 instances and each solver run has time_limit
@@ -27,6 +34,9 @@
 #     -- but with N workers in parallel this drops to ~15h/N of wall time.
 #   - Don't submit far more workers than there are unclaimed tuples;
 #     endtoend_bench.py exits cleanly if it finds no work.
+#   - Keep 8-GPU solvers (cuopt-distributed / dpdlp) on EE_PROFILE=dist
+#     and cuopt-base on EE_PROFILE=base so scarce full-node B200 slots
+#     aren't wasted on N=1 runs.
 
 set -euo pipefail
 
@@ -47,7 +57,7 @@ if ! [[ "$N" =~ ^[0-9]+$ ]] || (( N < 1 )); then
     exit 2
 fi
 
-echo "### ee_loop: $(date -u +%FT%TZ) submitting $N worker(s)"
+echo "### ee_loop: $(date -u +%FT%TZ) submitting $N worker(s)  profile=${EE_PROFILE:-dist}"
 echo "### ee_loop: forwarding to endtoend_bench.py: ${FORWARD[*]:-<none>}"
 
 for (( i=1; i<=N; i++ )); do
