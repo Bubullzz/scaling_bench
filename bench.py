@@ -118,9 +118,9 @@ CUOPT_CONDA_PREFIX = Path("/home/scratch.vmostovoi_gpu/.conda/envs/cuopt_dev_133
 ITER_LIMIT: str = "20000"
 
 CUOPT_PARAMS: list[tuple[str, str]] = [
-    ("use_distributed_pdlp",       "true"),    # required: enable distributed PDLP path
-    ("distributed_pdlp_partitioner", "kaminpar"),  # auto|dummy|metis|kaminpar (multi-threaded => much faster than METIS on big graphs)
-    ("mps_reader",                 "experimental-fast"),   # new SIMD MPS parser, distributed-path-safe (replaces plain "fast" which used to crash on the distributed loader on some inputs)
+    # Multi-GPU is selected via --num-gpus in _cuopt_argv (not a static flag).
+    ("distributed_pdlp_partitioner", "kaminpar"),  # auto|dummy|metis|kaminpar
+    ("mps_reader",                 "experimental-fast"),
     ("method",                     "1"),       # PDLP only (no concurrent dual simplex)
     ("presolve",                   "0"),       # None - distributed PDLP rejects anything else
     ("iteration_limit",            ITER_LIMIT),  # fixed iter cap = fixed work
@@ -136,14 +136,12 @@ CUOPT_PARAMS: list[tuple[str, str]] = [
 
 
 # --- cuopt (single-GPU baseline, no distributed PDLP) ---------------------
-# Same binary, same fixed-work strategy, but use_distributed_pdlp=false so
-# the solver follows the legacy single-shard PDLP path. Useful as the "this
-# is what one GPU does without any of the distributed framework overhead"
-# baseline against which both distributed cuopt and D-PDLP are compared.
-# Only N=1 is meaningful here (the distributed path is what enables N>1).
+# Same binary, same fixed-work strategy, with --num-gpus 1 (see
+# _cuopt_basic_argv). Useful as the "this is what one GPU does without any
+# of the distributed framework overhead" baseline against which both
+# distributed cuopt and D-PDLP are compared. Only N=1 is meaningful here.
 CUOPT_BASIC_PARAMS: list[tuple[str, str]] = [
-    ("use_distributed_pdlp",       "false"),   # the baseline knob
-    ("mps_reader",                 "experimental-fast"),   # SIMD MPS parser, same as distributed cuopt
+    ("mps_reader",                 "experimental-fast"),
     ("method",                     "1"),
     ("presolve",                   "0"),
     ("iteration_limit",            ITER_LIMIT),
@@ -227,6 +225,11 @@ INSTANCES = [
 
     # D-PDLP extras
     "/home/scratch.cmaes_sw/zib03.mps",
+    "/home/scratch.vmostovoi_gpu/datasets/generated/qap/QAP-LP/wil50.mps",
+    "/home/scratch.vmostovoi_gpu/datasets/generated/qap/QAP-LP/lipa50a.mps",
+    "/home/scratch.vmostovoi_gpu/datasets/generated/qap/QAP-LP/lipa50b.mps",
+    "/home/scratch.vmostovoi_gpu/datasets/generated/qap/QAP-LP/tai50a.mps",
+    "/home/scratch.vmostovoi_gpu/datasets/generated/qap/QAP-LP/tai50b.mps",
 
     # Burcin / industry
     "/home/scratch.vmostovoi_gpu/datasets/big_lp/psr_100.mps",                      # 54G
@@ -253,9 +256,69 @@ INSTANCES = [
     "/home/scratch.vmostovoi_gpu/datasets/open_energy_benchmark/times-ireland-noco2-40-1ts.mps",                     # 693M, 4.5M vars x 4.8M rows x 22M nnz
     "/home/scratch.vmostovoi_gpu/datasets/open_energy_benchmark/pypsa-eur-sec-50-24h.mps",                           # 504M, 2.2M vars x 4.7M rows x 11M nnz
 
-    # Mittelmann LPfeas core (not ADDENDUM) — largest LPFeas cases we keep
+    # Mittelmann LPfeas (full local hans_lps set — datasets.LPFEAS_STEMS).
+    # Dual2_5000 / dlr2 keep the existing mittleman_mps copies used by prior runs.
     "/home/scratch.vmostovoi_gpu/datasets/mittleman_mps/Dual2_5000.mps",             # 30M rows x 33M cols x 93M nnz
     "/home/scratch.vmostovoi_gpu/datasets/mittleman_mps/dlr2.mps",
+    "/home/scratch.cmaes_sw/hans_lps/16_n14.mps",
+    "/home/scratch.cmaes_sw/hans_lps/L1_sixm1000obs.mps",
+    "/home/scratch.cmaes_sw/hans_lps/L1_sixm250obs.mps",
+    "/home/scratch.cmaes_sw/hans_lps/L2CTA3D.mps",
+    "/home/scratch.cmaes_sw/hans_lps/Linf_520c.mps",
+    "/home/scratch.cmaes_sw/hans_lps/Primal2_1000.mps",
+    "/home/scratch.cmaes_sw/hans_lps/a2864.mps",
+    "/home/scratch.cmaes_sw/hans_lps/bdry2.mps",
+    "/home/scratch.cmaes_sw/hans_lps/cont1.mps",
+    "/home/scratch.cmaes_sw/hans_lps/cont11.mps",
+    "/home/scratch.cmaes_sw/hans_lps/datt256_lp.mps",
+    "/home/scratch.cmaes_sw/hans_lps/degme.mps",
+    "/home/scratch.cmaes_sw/hans_lps/dlr1.mps",
+    "/home/scratch.cmaes_sw/hans_lps/ex10.mps",
+    "/home/scratch.cmaes_sw/hans_lps/fhnw-binschedule1.mps",
+    "/home/scratch.cmaes_sw/hans_lps/fome13.mps",
+    "/home/scratch.cmaes_sw/hans_lps/graph40-40.mps",
+    "/home/scratch.cmaes_sw/hans_lps/i_n13.mps",
+    "/home/scratch.cmaes_sw/hans_lps/irish-electricity.mps",
+    "/home/scratch.cmaes_sw/hans_lps/karted.mps",
+    "/home/scratch.cmaes_sw/hans_lps/lo10.mps",
+    "/home/scratch.cmaes_sw/hans_lps/long15.mps",
+    "/home/scratch.cmaes_sw/hans_lps/neos.mps",
+    "/home/scratch.cmaes_sw/hans_lps/neos-3025225.mps",
+    "/home/scratch.cmaes_sw/hans_lps/neos-5052403-cygnet.mps",
+    "/home/scratch.cmaes_sw/hans_lps/neos-5251015.mps",
+    "/home/scratch.cmaes_sw/hans_lps/neos3.mps",
+    "/home/scratch.cmaes_sw/hans_lps/netlarge1.mps",
+    "/home/scratch.cmaes_sw/hans_lps/netlarge2.mps",
+    "/home/scratch.cmaes_sw/hans_lps/netlarge3.mps",
+    "/home/scratch.cmaes_sw/hans_lps/netlarge6.mps",
+    "/home/scratch.cmaes_sw/hans_lps/ns1687037.mps",
+    "/home/scratch.cmaes_sw/hans_lps/ns1688926.mps",
+    "/home/scratch.cmaes_sw/hans_lps/nug08-3rd.mps",
+    "/home/scratch.cmaes_sw/hans_lps/pds-100.mps",
+    "/home/scratch.cmaes_sw/hans_lps/physiciansched3-3.mps",
+    "/home/scratch.cmaes_sw/hans_lps/qap15.mps",
+    "/home/scratch.cmaes_sw/hans_lps/rail02.mps",
+    "/home/scratch.cmaes_sw/hans_lps/rail4284.mps",
+    "/home/scratch.cmaes_sw/hans_lps/rmine15.mps",
+    "/home/scratch.cmaes_sw/hans_lps/s100.mps",
+    "/home/scratch.cmaes_sw/hans_lps/s250r10.mps",
+    "/home/scratch.cmaes_sw/hans_lps/s82.mps",
+    "/home/scratch.cmaes_sw/hans_lps/savsched1.mps",
+    "/home/scratch.cmaes_sw/hans_lps/scpm1.mps",
+    "/home/scratch.cmaes_sw/hans_lps/set-cover-model.mps",
+    "/home/scratch.cmaes_sw/hans_lps/shs1023.mps",
+    "/home/scratch.cmaes_sw/hans_lps/square15.mps",
+    "/home/scratch.cmaes_sw/hans_lps/square41.mps",
+    "/home/scratch.cmaes_sw/hans_lps/stat96v2.mps",
+    "/home/scratch.cmaes_sw/hans_lps/stormG2_1000.mps",
+    "/home/scratch.cmaes_sw/hans_lps/stp3d.mps",
+    "/home/scratch.cmaes_sw/hans_lps/supportcase10.mps",
+    "/home/scratch.cmaes_sw/hans_lps/supportcase19.mps",
+    "/home/scratch.cmaes_sw/hans_lps/thk_48.mps",
+    "/home/scratch.cmaes_sw/hans_lps/thk_63.mps",
+    "/home/scratch.cmaes_sw/hans_lps/tpl-tub-ws1617.mps",
+    "/home/scratch.cmaes_sw/hans_lps/wide15.mps",
+    "/home/scratch.cmaes_sw/hans_lps/woodlands09.mps",
 ]
 N_GPUS_LIST = [1, 2, 4, 8]
 
@@ -296,13 +359,25 @@ def gpu_counts_for(solver: Solver) -> list[int]:
 
 
 def _stem_of(path: str) -> str:
-    """Strip .mps[.gz|.bz2|.lz4] from a basename."""
+    """Strip .mps[.gz|.bz2|.lz4] from a basename.
+
+    Externally-presolved variants (`*_PSLP_presolved`, `*_gurobi_presolved`)
+    collapse to the canonical instance stem so claims/logs/CSV keys stay
+    aligned with `bench.INSTANCES` / dataset names. `psr-100_*.mps` maps to
+    `psr_100`.
+    """
     name = Path(path).name
     for ext in (".gz", ".bz2", ".lz4"):
         if name.endswith(ext):
             name = name[: -len(ext)]
     if name.endswith(".mps"):
         name = name[: -4]
+    for suf in ("_PSLP_presolved", "_gurobi_presolved"):
+        if name.endswith(suf):
+            name = name[: -len(suf)]
+            break
+    if name == "psr-100":
+        name = "psr_100"
     return name
 
 
@@ -326,7 +401,13 @@ def _cuopt_flag_args() -> list[str]:
 
 
 def _cuopt_argv(instance: str, n_gpus: int, solver: Solver) -> list[str]:
-    return [str(solver.binary), *_cuopt_flag_args(), instance]
+    # --num-gpus selects multi-GPU distributed PDLP (default is 1).
+    return [
+        str(solver.binary),
+        *_cuopt_flag_args(),
+        "--num-gpus", str(n_gpus),
+        instance,
+    ]
 
 
 def _cuopt_env(base_env: dict, n_gpus: int, solver: Solver) -> dict:
@@ -367,7 +448,12 @@ def _cuopt_basic_flag_args() -> list[str]:
 
 
 def _cuopt_basic_argv(instance: str, n_gpus: int, solver: Solver) -> list[str]:
-    return [str(solver.binary), *_cuopt_basic_flag_args(), instance]
+    return [
+        str(solver.binary),
+        *_cuopt_basic_flag_args(),
+        "--num-gpus", str(n_gpus),
+        instance,
+    ]
 
 
 def _cuopt_basic_log_path(instance: str, n_gpus: int) -> Path:

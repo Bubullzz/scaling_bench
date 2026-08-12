@@ -1,0 +1,62 @@
+### solver=cuopt-base
+### instance=/home/scratch.cmaes_sw/hans_lps/L1_sixm250obs.mps
+### n_gpus=1
+### CUDA_VISIBLE_DEVICES=0
+### started=2026-07-31T15:31:26.653917
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --method 1 --mps-reader experimental-fast --time-limit 3600 --iteration-limit 1000000000 --relative-primal-tolerance 1e-4 --relative-dual-tolerance 1e-4 --relative-gap-tolerance 1e-4 --log-to-console true /home/scratch.cmaes_sw/hans_lps/L1_sixm250obs.mps
+### --- solver output ---
+Setting parameter iteration_limit to 1000000000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter relative_dual_tolerance to 1.000000e-04
+Setting parameter relative_gap_tolerance to 1.000000e-04
+Setting parameter relative_primal_tolerance to 1.000000e-04
+Setting parameter time_limit to 3.600000e+03
+Reading file L1_sixm250obs.mps
+Using experimental fast MPS parser for '/home/scratch.cmaes_sw/hans_lps/L1_sixm250obs.mps'
+Read file L1_sixm250obs.mps in 0.51 seconds
+cuOpt version: 26.8.0, git hash: 7116ead1, host arch: x86_64, device archs: 100a-real
+CPU: INTEL(R) XEON(R) PLATINUM 8570, threads (physical/logical): 112/224, RAM: 1695.08 GiB
+CUDA 13.3, device: NVIDIA B200 (ID 0), VRAM: 178.34 GiB
+CUDA device UUID: 9cf5855e-0d9f-8a57-2857-ca9eac5a3446
+Solving a problem with 986069 constraints, 428032 variables (0 integers), and 4280320 nonzeros
+Problem scaling:
+Objective coefficents range:          [2e-06, 5e-02]
+Constraint matrix coefficients range: [1e+00, 1e+00]
+Constraint rhs / bounds range:        [0e+00, 0e+00]
+Variable bounds range:                [1e+00, 4e+05]
+
+Using PSLP presolver
+PSLP Presolved problem: 721574 constraints, 310388 variables, 3151794 non-zeros
+PSLP presolve time: 0.91s
+Objective offset 0.000000 scaling_factor 1.000000
+   Iter    Primal Obj.      Dual Obj.    Gap        Primal Res.  Dual Res.   Time
+      0 +0.00000000e+00 +0.00000000e+00  0.00e+00   0.00e+00     6.85e+01   1.005s
+   1000 +6.03864944e+03 +6.10973730e+03  7.11e+01   3.94e+00     2.98e-01   1.104s
+   2000 +4.79722172e+03 +4.91774148e+03  1.21e+02   8.51e+01     7.29e-03   1.171s
+   3000 +4.66633474e+03 +4.72441967e+03  5.81e+01   7.21e+01     1.46e-03   1.238s
+   4000 +4.64704099e+03 +4.64718529e+03  1.44e-01   9.98e+01     2.46e-04   1.306s
+   5000 +4.63411736e+03 +4.63700621e+03  2.89e+00   1.92e+01     9.11e-05   1.373s
+   6000 +4.63271734e+03 +4.63610418e+03  3.39e+00   2.40e+01     8.22e-05   1.442s
+   7000 +4.63479696e+03 +4.62961601e+03  5.18e+00   1.08e+02     5.75e-06   1.509s
+   8000 +4.62967207e+03 +4.56094548e+03  6.87e+01   1.00e+00     1.18e-03   1.577s
+   9000 +4.62950415e+03 +4.61227197e+03  1.72e+01   1.60e-01     4.12e-04   1.644s
+  10000 +4.62945748e+03 +4.62740312e+03  2.05e+00   1.84e-01     2.74e-05   1.711s
+  11000 +4.62940788e+03 +4.62888393e+03  5.24e-01   1.21e+00     6.30e-06   1.777s
+  12000 +4.62945884e+03 +4.62958797e+03  1.29e-01   6.51e-02     1.19e-06   1.843s
+  13000 +4.62946271e+03 +4.62946288e+03  1.70e-04   3.07e-03     5.32e-09   1.909s
+  14000 +4.62946280e+03 +4.62907978e+03  3.83e-01   6.08e-05     4.56e-06   1.976s
+LP Solver status:                Optimal
+Primal objective:                +4.62946280e+03
+Dual objective:                  +4.62907978e+03
+Duality gap (abs/rel):           +3.83e-01 / +4.14e-05
+Primal infeasibility (abs/rel):  +6.08e-05 / +6.08e-05
+Dual infeasibility (abs/rel):    +4.56e-06 / +6.56e-08
+PDLP finished
+Status: Optimal   Objective: 4.62946280e+03  Iterations: 14000  Time: 1.977s
+
+### exit_code=0
+### finished=2026-07-31T15:31:30.117640
+### gpu_peak_mb=2042.4
+### gpu_peak2_mb=0.0
+### per_gpu_peak_mb=[2042.375]

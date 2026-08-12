@@ -85,10 +85,15 @@ class MemPair:
 
 
 def _stem(instance: str) -> str:
-    name = Path(instance).name.replace("_gurobi_presolved", "")
+    name = Path(instance).name
+    for suf in ("_PSLP_presolved", "_gurobi_presolved"):
+        name = name.replace(suf, "")
     for sfx in (".mps.gz", ".mps", ".lp.gz", ".lp"):
         if name.endswith(sfx):
-            return name[: -len(sfx)]
+            name = name[: -len(sfx)]
+            break
+    if name == "psr-100":
+        name = "psr_100"
     return name
 
 

@@ -1,0 +1,63 @@
+### solver=cuopt-base
+### instance=/home/scratch.vmostovoi_gpu/datasets/PSLP_presolved/qap-tho-150_PSLP_presolved.mps
+### n_gpus=1
+### CUDA_VISIBLE_DEVICES=0
+### started=2026-08-09T14:24:10.466922
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --method 1 --presolve 0 --mps-reader experimental-fast --time-limit 3600 --iteration-limit 1000000000 --relative-primal-tolerance 1e-4 --relative-dual-tolerance 1e-4 --relative-gap-tolerance 1e-4 --log-to-console true /home/scratch.vmostovoi_gpu/datasets/PSLP_presolved/qap-tho-150_PSLP_presolved.mps
+### --- solver output ---
+Setting parameter iteration_limit to 1000000000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter presolve to 0
+Setting parameter relative_dual_tolerance to 1.000000e-04
+Setting parameter relative_gap_tolerance to 1.000000e-04
+Setting parameter relative_primal_tolerance to 1.000000e-04
+Setting parameter time_limit to 3.600000e+03
+Reading file qap-tho-150_PSLP_presolved.mps
+Using experimental fast MPS parser for '/home/scratch.vmostovoi_gpu/datasets/PSLP_presolved/qap-tho-150_PSLP_presolved.mps'
+Read file qap-tho-150_PSLP_presolved.mps in 60.33 seconds
+cuOpt version: 26.10.0, git hash: f3ebc673, host arch: x86_64, device archs: 100a-real
+CPU: INTEL(R) XEON(R) PLATINUM 8570, threads (physical/logical): 112/224, RAM (available/total): 1904.30 / 2015.54 GiB
+CUDA 13.3, device: NVIDIA B200 (ID 0), VRAM: 178.34 GiB
+CUDA device UUID: 5b3b2195-5d98-9774-145e-bfc9011037d7
+Solving a problem with 6705300 constraints, 249783750 variables (0 integers), and 1005795000 nonzeros
+Problem scaling:
+Objective coefficents range:          [1e+00, 1e+00]
+Constraint matrix coefficients range: [9e-05, 1e+00]
+Constraint rhs / bounds range:        [1e+00, 1e+00]
+Variable bounds range:                [0e+00, 1e+04]
+
+Objective offset 0.000000 scaling_factor 1.000000
+   Iter    Primal Obj.      Dual Obj.    Gap        Primal Res.  Dual Res.   Time
+      0 +0.00000000e+00 +0.00000000e+00  0.00e+00   1.73e+01     1.03e+04   13.455s
+   1000 +4.35211124e+06 +4.36380425e+06  1.17e+04   1.33e-01     2.28e+04   31.097s
+   2000 +4.34512672e+06 +4.34591390e+06  7.87e+02   4.18e-02     1.31e+03   46.325s
+   3000 +4.34482676e+06 +4.34496409e+06  1.37e+02   1.67e-02     1.99e+02   61.545s
+   4000 +4.34483439e+06 +4.34486657e+06  3.22e+01   8.81e-03     6.57e+01   76.792s
+   5000 +4.34485396e+06 +4.34485584e+06  1.88e+00   5.20e-03     3.44e+01   92.045s
+   6000 +4.34483816e+06 +4.34484634e+06  8.18e+00   3.64e-03     2.00e+01   107.324s
+   7000 +4.34484531e+06 +4.34484352e+06  1.79e+00   2.66e-03     1.19e+01   122.580s
+   8000 +4.34484181e+06 +4.34484232e+06  5.06e-01   1.95e-03     8.47e+00   137.848s
+   9000 +4.34484738e+06 +4.34484147e+06  5.91e+00   1.51e-03     6.33e+00   153.129s
+  10000 +4.34484304e+06 +4.34484005e+06  2.99e+00   1.31e-03     4.28e+00   168.400s
+  11000 +4.34484089e+06 +4.34483973e+06  1.16e+00   1.08e-03     3.23e+00   183.534s
+  12000 +4.34483716e+06 +4.34483953e+06  2.37e+00   8.84e-04     2.58e+00   198.675s
+  13000 +4.34483726e+06 +4.34483941e+06  2.15e+00   7.34e-04     2.12e+00   213.820s
+  14000 +4.34483616e+06 +4.34483929e+06  3.13e+00   6.24e-04     1.78e+00   228.966s
+  15000 +4.34483515e+06 +4.34483903e+06  3.88e+00   5.80e-04     1.38e+00   244.111s
+  16000 +4.34483631e+06 +4.34483895e+06  2.65e+00   5.29e-04     1.15e+00   259.247s
+  16800 +4.34483749e+06 +4.34483891e+06  1.42e+00   4.82e-04     9.86e-01   271.353s
+LP Solver status:                Optimal
+Primal objective:                +4.34483749e+06
+Dual objective:                  +4.34483891e+06
+Duality gap (abs/rel):           +1.42e+00 / +1.63e-07
+Primal infeasibility (abs/rel):  +4.82e-04 / +2.63e-05
+Dual infeasibility (abs/rel):    +9.86e-01 / +9.59e-05
+PDLP finished
+Status: Optimal   Objective: 4.34483749e+06  Iterations: 16800  Time: 278.233s
+
+### exit_code=0
+### finished=2026-08-09T14:30:14.439770
+### gpu_peak_mb=145050.4
+### gpu_peak2_mb=0.0
+### per_gpu_peak_mb=[145050.375]

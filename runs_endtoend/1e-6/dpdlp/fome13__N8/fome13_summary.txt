@@ -1,0 +1,17 @@
+Termination Reason: DUAL_INFEASIBLE
+Runtime (sec): 5.062987e-02
+Iterations Count: 400
+Primal Objective Value: 1.057641e+10
+Dual Objective Value: 1.815015e+10
+Relative Primal Residual: 8.408137e-03
+Relative Dual Residual: 2.173999e-03
+Absolute Objective Gap: 7.573738e+09
+Relative Objective Gap: 2.636494e-01
+Rows: 47680
+Columns: 85864
+Nonzeros: 270176
+Presolve Status: REDUCED
+Presolve Time (sec): 6.250000e-02
+Reduced Rows: 47680
+Reduced Columns: 85864
+Reduced Nonzeros: 270176

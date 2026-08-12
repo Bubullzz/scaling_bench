@@ -43,3 +43,6 @@ __pycache__/
 *.swp
 .DS_Store
 Thumbs.db
+
+# Local Julia tarball (too large for GitHub; keep offline)
+julia.tar.gz

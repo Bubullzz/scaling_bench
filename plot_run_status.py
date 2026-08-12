@@ -74,9 +74,11 @@ ST_COLOR = {
 
 # Short display labels (extend plot_speedup_1v1.DISPLAY)
 DISPLAY = {
+    "C5_bigger_sanitized": "C5-bigger",
     "C5_bigger_sanitized_gurobi_presolved": "C5-bigger*",
     "C5_baseline_sanitized": "C5-baseline",
     "Dual2_5000": "Dual2-5000",
+    "ELMOD_876_10_noVEnames": "ELMOD-876",
     "ELMOD_876_10_noVEnames_gurobi_presolved": "ELMOD-876*",
     "amazon_lp003": "amazon-lp003",
     "amazon_lp004": "amazon-lp004",
@@ -88,11 +90,14 @@ DISPLAY = {
     "multicommodity-flow-instance_5000_100_250": "mcf-5000×100×250",
     "multicommodity-flow-instance_5000_50_500": "mcf-5000×50×500",
     "production-imventory": "production-inventory",
+    "psr_100": "psr-100",
     "psr_100_gurobi_presolved": "psr-100*",
+    "qap-tho-150": "qap-tho-150",
     "qap-tho-150_gurobi_presolved": "qap-tho-150*",
     "qap-wil-100": "qap-wil-100",
     "supply-chain": "supply-chain",
     "tsp-gaia-10m": "tsp-gaia-10m",
+    "design_match": "design-match",
     "design_match_gurobi_presolved": "design-match*",
     "zib03": "zib03",
     "world-shipping": "world-shipping",
@@ -165,7 +170,7 @@ def _as_int(x) -> int | None:
 
 
 def expected_stems() -> list[str]:
-    """Canonical instance stems in sweep order (PRESOLVE_THESE applied)."""
+    """Canonical instance stems in sweep order (NO_PRESOLVE_THESE = raw paths)."""
     return [bench._stem_of(p) for p in ee._all_instances()]
 
 
@@ -344,8 +349,13 @@ def plot_status(grids: dict[str, dict[tuple[str, str], int]],
                fontsize=8.5, frameon=False,
                bbox_to_anchor=(0.6, 0.985))
 
-    fig.suptitle("End-to-end sweep status  (37 instances × 3 solvers = 111 runs / tol)",
-                 fontsize=13, fontweight="bold", y=0.995)
+    n_inst = len(stems)
+    n_runs = n_inst * len(SOLVERS)
+    fig.suptitle(
+        f"End-to-end sweep status  ({n_inst} instances × {len(SOLVERS)} solvers "
+        f"= {n_runs} runs / tol)",
+        fontsize=13, fontweight="bold", y=0.995,
+    )
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out_path, dpi=140)

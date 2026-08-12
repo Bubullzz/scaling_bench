@@ -335,10 +335,14 @@ def plot_view(rows: list[Row], view_name: str, out_path: Path, tol: str,
 def _instance_key(instance: str) -> str:
     """Normalize instance path for grouping across solvers / presolve subs."""
     name = Path(instance).name
-    name = name.replace("_gurobi_presolved", "")
+    for suf in ("_PSLP_presolved", "_gurobi_presolved"):
+        name = name.replace(suf, "")
     for sfx in (".mps.gz", ".mps", ".lp.gz", ".lp"):
         if name.endswith(sfx):
-            return name[: -len(sfx)]
+            name = name[: -len(sfx)]
+            break
+    if name == "psr-100":
+        name = "psr_100"
     return name
 
 

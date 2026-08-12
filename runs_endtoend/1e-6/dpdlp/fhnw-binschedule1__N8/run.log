@@ -1,0 +1,10 @@
+### solver=dpdlp
+### instance=/home/scratch.cmaes_sw/hans_lps/fhnw-binschedule1.mps
+### n_gpus=8
+### note=manual hang skip — D-PDLP stalls after ~400 iters / no progress
+### Delete this footer (or the whole log) to force a re-run.
+### exit_code=124
+### finished=2026-08-10T00:59:18-07:00
+### gpu_peak_mb=0
+### gpu_peak2_mb=0
+### per_gpu_peak_mb=[]

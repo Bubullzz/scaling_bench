@@ -1,0 +1,68 @@
+### solver=cuopt-distributed
+### instance=/home/scratch.cmaes_sw/hans_lps/pds-100.mps
+### n_gpus=8
+### CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+### started=2026-08-09T19:19:11.450398
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --method 1 --mps-reader experimental-fast --time-limit 3600 --iteration-limit 1000000000 --relative-primal-tolerance 1e-4 --relative-dual-tolerance 1e-4 --relative-gap-tolerance 1e-4 --log-to-console true --num-gpus 8 /home/scratch.cmaes_sw/hans_lps/pds-100.mps
+### --- solver output ---
+Setting parameter iteration_limit to 1000000000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter num_gpus to 8
+Setting parameter relative_dual_tolerance to 1.000000e-04
+Setting parameter relative_gap_tolerance to 1.000000e-04
+Setting parameter relative_primal_tolerance to 1.000000e-04
+Setting parameter time_limit to 3.600000e+03
+Reading file pds-100.mps
+Using experimental fast MPS parser for '/home/scratch.cmaes_sw/hans_lps/pds-100.mps'
+Read file pds-100.mps in 0.38 seconds
+cuOpt version: 26.10.0, git hash: f3ebc673, host arch: x86_64, device archs: 100a-real
+CPU: INTEL(R) XEON(R) PLATINUM 8570, threads (physical/logical): 112/224, RAM (available/total): 1570.36 / 2015.54 GiB
+CUDA 13.3, device: NVIDIA B200 (ID 0), VRAM: 178.34 GiB
+CUDA device UUID: 681a378c-9967-0edf-3943-b009e5595378
+CUDA 13.3, device: NVIDIA B200 (ID 1), VRAM: 178.34 GiB
+CUDA device UUID: f362e9ae-1176-2fdc-bc5f-44f36e3f008b
+CUDA 13.3, device: NVIDIA B200 (ID 2), VRAM: 178.34 GiB
+CUDA device UUID: 12fd6dd7-3383-bd42-35f5-31ce1246a7b2
+CUDA 13.3, device: NVIDIA B200 (ID 3), VRAM: 178.34 GiB
+CUDA device UUID: bf38f101-598c-c6a6-4396-7a12a540e9b0
+CUDA 13.3, device: NVIDIA B200 (ID 4), VRAM: 178.34 GiB
+CUDA device UUID: 18e03214-c1f8-c0cc-2376-566dd06569da
+CUDA 13.3, device: NVIDIA B200 (ID 5), VRAM: 178.34 GiB
+CUDA device UUID: a614b617-6398-7625-f7e1-08fd2ec48ca6
+CUDA 13.3, device: NVIDIA B200 (ID 6), VRAM: 178.34 GiB
+CUDA device UUID: 30d73ef0-1aa5-e1c9-bd4a-2c000df06cde
+CUDA 13.3, device: NVIDIA B200 (ID 7), VRAM: 178.34 GiB
+CUDA device UUID: 303952f7-5df8-2cb3-91d7-e18ea6249e44
+Solving a problem with 156243 constraints, 505360 variables (0 integers), and 1086785 nonzeros
+Using PSLP presolver
+PSLP Presolved problem: 140263 constraints, 478729 variables, 1021214 non-zeros
+PSLP presolve time: 0.25s
+Solving with distributed PDLP on 8 GPUs.
+NCCL version 2.30.7+cuda13.3
+      0 +0.00000000e+00 +0.00000000e+00  0.00e+00   1.67e+05     9.56e+05   3.910s
+   1000 +8.82665921e+09 +1.12438433e+10  2.42e+09   3.19e+02     3.09e+04   4.279s
+   2000 +1.08655815e+10 +1.11108416e+10  2.45e+08   1.60e+01     7.14e+03   4.469s
+   3000 +1.09409794e+10 +1.09181315e+10  2.28e+07   1.71e+00     7.79e+02   4.659s
+   4000 +1.09334749e+10 +1.09283223e+10  5.15e+06   3.36e-01     5.34e+02   4.847s
+   5000 +1.09322657e+10 +1.09316763e+10  5.89e+05   5.14e+00     2.72e+02   5.036s
+   6000 +1.09322021e+10 +1.09314086e+10  7.94e+05   3.26e+00     1.76e+02   5.222s
+   7000 +1.09307989e+10 +1.09310468e+10  2.48e+05   1.58e+00     1.41e+02   5.408s
+   8000 +1.09636879e+10 +1.09289177e+10  3.48e+07   2.19e+01     3.10e+01   5.596s
+   9000 +1.09472533e+10 +1.09283396e+10  1.89e+07   2.02e+01     8.43e+00   5.783s
+  10000 +1.09400043e+10 +1.09282724e+10  1.17e+07   9.49e+00     3.29e+00   5.968s
+  10400 +1.09301996e+10 +1.09282338e+10  1.97e+06   8.39e+00     1.30e+00   6.041s
+LP Solver status:                Optimal
+Primal objective:                +1.09301996e+10
+Dual objective:                  +1.09282338e+10
+Duality gap (abs/rel):           +1.97e+06 / +8.99e-05
+Primal infeasibility (abs/rel):  +8.39e+00 / +4.50e-05
+Dual infeasibility (abs/rel):    +1.30e+00 / +1.36e-06
+PDLP finished
+Status: Optimal   Objective: 1.09301996e+10  Iterations: 10400  Time: 6.081s
+
+### exit_code=0
+### finished=2026-08-09T19:19:26.293462
+### gpu_peak_mb=5306.4
+### gpu_peak2_mb=5210.4
+### per_gpu_peak_mb=[5306.375, 5210.375, 5210.375, 5210.375, 5210.375, 5210.375, 5210.375, 5210.375]

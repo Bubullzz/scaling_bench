@@ -25,10 +25,12 @@ Shared with bench.py:
     workers on N nodes cooperate without a scheduler.
   - Solver env / argv builders (LD_LIBRARY_PATH, mpirun wiring, etc.).
 
-Instances marked in PRESOLVE_THESE are replaced by their Gurobi-presolved
-`.mps` counterpart (see gurobi_things/presolve.py) so we skip the solver's
-internal presolver on problems where PSLP / Papilo crashes with
-std::length_error or OOMs.
+Instances in PSLP_PRESOLVED are swapped to an externally PSLP-presolved
+MPS (`*_PSLP_presolved.mps`) and run with in-solver presolve disabled
+(cuopt `--presolve 0`, D-PDLP `--no_presolve`). `design_match` still uses
+the raw MPS with the same no-presolve flags (no external substitute yet).
+Historical Gurobi-presolved e2e runs live under `gurobi_presolved_e2e/`
+and are not part of the active grid.
 
 Usage:
     # default: sweep both 1e-4 and 1e-6 sequentially, all 3 solvers
@@ -133,83 +135,60 @@ def _visible_gpu_count() -> int:
 
 
 # ---------------------------------------------------------------------------
-# Presolve substitution
+# Externally PSLP-presolved stems (+ raw no-presolve leftovers)
 # ---------------------------------------------------------------------------
-#   A few of our instances make the solver's built-in presolver (Papilo/PSLP)
-# crash or OOM (std::length_error on int32-overflow, or hours of preprocessing
-# for a small gain). For those, we pre-generate a Gurobi-presolved MPS via
-# gurobi_things/presolve.py and tell the end-to-end sweep to use THAT file
-# INSTEAD of the raw one.
+# Default PSLP on these LPs crashes / OOMs (int32 overflow / fill-in). We
+# substitute a specially-parameterized PSLP-presolved MPS and force
+# in-solver presolve OFF:
+#   cuopt:  --presolve 0
+#   D-PDLP: --no_presolve
 #
-# Rules of the road:
-#   (1) An instance stem listed in PRESOLVE_THESE below is REPLACED in the
-#       sweep grid by its gurobi-presolved variant -- the raw MPS is not
-#       run at all for that stem. Only one variant per stem lands in the
-#       CSV / plot, keeping the report uncluttered.
-#   (2) The substituted path is passed to the solver with presolve
-#       DISABLED (cuopt: --presolve 0, D-PDLP: --no_presolve), so
-#       presolve_s / setup_s in the CSV reflect the raw pre-iter cost
-#       without Papilo/PSLP work.
-#   (3) The stem must exactly match Path(instance).stem stripped of the
-#       .mps[.gz|.bz2|.lz4] suffixes -- same convention as bench._stem_of.
+# design_match has no external substitute yet → raw MPS + no-presolve.
+# Older Gurobi-presolved e2e runs are archived under gurobi_presolved_e2e/.
 # ---------------------------------------------------------------------------
 
-_GUROBI_PRESOLVED_DIR = "/home/scratch.vmostovoi_gpu/gurobi_things/gurobi_presolved"
+PSLP_PRESOLVED_DIR = Path("/home/scratch.vmostovoi_gpu/datasets/PSLP_presolved")
 
-# Stems (NOT full paths) of bench.INSTANCES entries whose raw MPS should
-# be REPLACED with the gurobi-presolved variant at sweep time. The
-# resolver:
-#   raw path .../<stem>.mps       ->   <_GUROBI_PRESOLVED_DIR>/<stem>_gurobi_presolved.mps
-# Add a stem here after you've produced the presolved MPS.
-PRESOLVE_THESE: set[str] = {
-    "psr_100",
-    "C5_bigger_sanitized",
-    "ELMOD_876_10_noVEnames",
-    "design_match",
-    "qap-tho-150",
+# Canonical stem -> externally PSLP-presolved MPS path.
+PSLP_PRESOLVED: dict[str, Path] = {
+    "psr_100": PSLP_PRESOLVED_DIR / "psr-100_PSLP_presolved.mps",
+    "C5_bigger_sanitized": PSLP_PRESOLVED_DIR / "C5_bigger_sanitized_PSLP_presolved.mps",
+    "ELMOD_876_10_noVEnames": (
+        PSLP_PRESOLVED_DIR / "ELMOD_876_10_noVEnames_PSLP_presolved.mps"
+    ),
+    "qap-tho-150": PSLP_PRESOLVED_DIR / "qap-tho-150_PSLP_presolved.mps",
 }
 
+# Raw MPS + no in-solver presolve (no external substitute available).
+NO_PRESOLVE_RAW: set[str] = {
+    "design_match",
+}
 
-def _gurobi_presolved_path_for(stem: str) -> str:
-    """Return the canonical gurobi-presolved MPS path for a raw stem."""
-    return f"{_GUROBI_PRESOLVED_DIR}/{stem}_gurobi_presolved.mps"
+NO_PRESOLVE_THESE: set[str] = set(PSLP_PRESOLVED) | NO_PRESOLVE_RAW
 
-
-def _maybe_substitute_presolved(instance_path: str) -> str:
-    """If Path(instance_path).stem is in PRESOLVE_THESE, return the
-    corresponding gurobi-presolved file path; otherwise return the input
-    path unchanged."""
-    stem = _stem_of(instance_path)
-    if stem in PRESOLVE_THESE:
-        return _gurobi_presolved_path_for(stem)
-    return instance_path
+# Back-compat alias for anything that still imports the old name.
+PRESOLVE_THESE = NO_PRESOLVE_THESE
 
 
-def _is_already_presolved(instance: str) -> bool:
-    """True if this instance path lives under the gurobi_presolved
-    directory (== was produced by an external presolver and must NOT be
-    re-presolved by the solver)."""
-    return instance.startswith(_GUROBI_PRESOLVED_DIR + "/")
+def _force_no_presolve(instance: str) -> bool:
+    """True if this instance stem should run with in-solver presolve off."""
+    return _stem_of(instance) in NO_PRESOLVE_THESE
 
 
 def _all_instances() -> list[str]:
-    """The end-to-end sweep grid = bench.INSTANCES with every stem
-    listed in PRESOLVE_THESE swapped for its gurobi-presolved variant.
-    The raw MPS for those stems is NOT run.
-
-    Warns (to stderr) once per missing gurobi-presolved file so a typo
-    or a not-yet-produced variant fails loudly instead of silently
-    falling back to the raw path.
-    """
+    """End-to-end sweep grid = bench.INSTANCES with PSLP_PRESOLVED swaps."""
     out: list[str] = []
-    for raw in INSTANCES:
-        subbed = _maybe_substitute_presolved(raw)
-        if subbed is not raw and not Path(subbed).is_file():
-            print(f"!! PRESOLVE_THESE lists stem {_stem_of(raw)!r} but the "
-                  f"expected file {subbed} does not exist. "
-                  f"Run gurobi_things/presolve.py on {raw} first.",
-                  file=sys.stderr)
-        out.append(subbed)
+    for p in INSTANCES:
+        stem = _stem_of(p)
+        if stem in PSLP_PRESOLVED:
+            sub = PSLP_PRESOLVED[stem]
+            if not sub.is_file():
+                raise FileNotFoundError(
+                    f"PSLP-presolved MPS missing for {stem}: {sub}"
+                )
+            out.append(str(sub))
+        else:
+            out.append(p)
     return out
 
 
@@ -245,16 +224,18 @@ def _ee_cuopt_params(already_presolved: bool = False) -> list[tuple[str, str]]:
     presolve normally -- passing `--presolve 1` explicitly routes cuopt
     through the Papilo path instead of the intended PSLP path. Leaving
     the flag off lets cuopt pick PSLP as its default. We only pass
-    `--presolve 0` when the MPS was already reduced externally (Gurobi)
-    and we want no in-solver presolve at all.
+    `--presolve 0` when the MPS was already reduced externally (PSLP /
+    Gurobi) and we want no in-solver presolve at all.
 
     Uses `--mps-reader experimental-fast`, the SIMD MPS parser now
     wired into the distributed loader path. Earlier builds rejected
     the flag with `Unknown argument: --mps-reader`; if you point at an
     older cuopt_cli, remove this line or the run will refuse to start.
+
+    Multi-GPU count is NOT listed here: `_cuopt_argv` always appends
+    `--num-gpus <n>` from the sweep's n_gpus (default CLI value is 1).
     """
     params: list[tuple[str, str]] = [
-        ("use-distributed-pdlp",       "true"),
         ("method",                     "1"),
         ("mps_reader",                 "experimental-fast"),
         ("time_limit",                 str(EE_TIME_LIMIT_S)),
@@ -264,7 +245,7 @@ def _ee_cuopt_params(already_presolved: bool = False) -> list[tuple[str, str]]:
     ]
     if already_presolved:
         # Externally pre-reduced MPS -- disable in-solver presolve.
-        params.insert(2, ("presolve", "0"))
+        params.insert(1, ("presolve", "0"))
     return params
 
 
@@ -406,7 +387,7 @@ def _run_one(solver: Solver, instance: str, n_gpus: int, tol: str) -> dict:
     saved_params = None
     saved_flags = None
     saved_bool_flags = None
-    already = _is_already_presolved(instance)
+    already = _force_no_presolve(instance)
     try:
         # Build argv/env with tolerance + presolve flags overridden.
         if solver.name == "cuopt-distributed":
@@ -491,7 +472,8 @@ def _run_sweep_for_tol(args: argparse.Namespace, tol: str) -> int:
         active = [EE_SOLVERS[args.solver]]
 
     grid_instances = _all_instances()
-    n_presolved = sum(1 for i in grid_instances if _is_already_presolved(i))
+    n_pslp = sum(1 for i in grid_instances if _stem_of(i) in PSLP_PRESOLVED)
+    n_raw_np = sum(1 for i in grid_instances if _stem_of(i) in NO_PRESOLVE_RAW)
     n_runs = sum(len(ee_gpu_counts_for(s)) for s in active) * len(grid_instances)
 
     print(f"=== endtoend_bench (tol={tol}): {n_runs} runs "
@@ -500,17 +482,12 @@ def _run_sweep_for_tol(args: argparse.Namespace, tol: str) -> int:
           f"{[(s.name, ee_gpu_counts_for(s)) for s in active]}) ===")
     print(f"    runs dir     : {_tol_runs_dir(tol)}")
     print(f"    time_limit   : {EE_TIME_LIMIT_S}s per run")
-    print(f"    presolve     : cuopt=1, dpdlp=on for raw MPS; "
-          f"disabled for {n_presolved} externally-presolved instance(s)")
-    if PRESOLVE_THESE:
-        subs = [
-            f"{stem} -> {_gurobi_presolved_path_for(stem)}"
-            for stem in sorted(PRESOLVE_THESE)
-        ]
-        print(f"    presolved sub: {len(PRESOLVE_THESE)} stem(s) substituted "
-              f"via PRESOLVE_THESE (raw MPS NOT run for these):")
-        for line in subs:
-            print(f"        {line}")
+    print(f"    presolve     : on by default; off for "
+          f"{n_pslp} PSLP-presolved MPS + {n_raw_np} raw no-presolve")
+    if PSLP_PRESOLVED:
+        print(f"    PSLP files   : {', '.join(sorted(PSLP_PRESOLVED))}")
+    if NO_PRESOLVE_RAW:
+        print(f"    raw+no-presolve: {', '.join(sorted(NO_PRESOLVE_RAW))}")
     print("(workers only produce per-run logs; "
           f"consolidate later with `python endtoend_build_csv.py --tol {tol}`)")
 

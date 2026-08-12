@@ -1,0 +1,59 @@
+### solver=cuopt-distributed
+### instance=/home/scratch.cmaes_sw/hans_lps/a2864.mps
+### n_gpus=8
+### CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+### started=2026-08-09T18:22:59.512193
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --method 1 --mps-reader experimental-fast --time-limit 3600 --iteration-limit 1000000000 --relative-primal-tolerance 1e-4 --relative-dual-tolerance 1e-4 --relative-gap-tolerance 1e-4 --log-to-console true --num-gpus 8 /home/scratch.cmaes_sw/hans_lps/a2864.mps
+### --- solver output ---
+Setting parameter iteration_limit to 1000000000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter num_gpus to 8
+Setting parameter relative_dual_tolerance to 1.000000e-04
+Setting parameter relative_gap_tolerance to 1.000000e-04
+Setting parameter relative_primal_tolerance to 1.000000e-04
+Setting parameter time_limit to 3.600000e+03
+Reading file a2864.mps
+Using experimental fast MPS parser for '/home/scratch.cmaes_sw/hans_lps/a2864.mps'
+Read file a2864.mps in 1.28 seconds
+cuOpt version: 26.10.0, git hash: f3ebc673, host arch: x86_64, device archs: 100a-real
+CPU: INTEL(R) XEON(R) PLATINUM 8570, threads (physical/logical): 112/224, RAM (available/total): 1968.09 / 2015.54 GiB
+CUDA 13.3, device: NVIDIA B200 (ID 0), VRAM: 178.34 GiB
+CUDA device UUID: 60b1e1cb-ecc0-0b03-f242-03b708f69ef9
+CUDA 13.3, device: NVIDIA B200 (ID 1), VRAM: 178.34 GiB
+CUDA device UUID: 0aa5b660-20d3-b569-c712-8704c8049681
+CUDA 13.3, device: NVIDIA B200 (ID 2), VRAM: 178.34 GiB
+CUDA device UUID: ed2455df-4e5f-44a6-c58e-ce3537049d32
+CUDA 13.3, device: NVIDIA B200 (ID 3), VRAM: 178.34 GiB
+CUDA device UUID: de85800a-4950-7a4c-1834-7a30fcf4bbe1
+CUDA 13.3, device: NVIDIA B200 (ID 4), VRAM: 178.34 GiB
+CUDA device UUID: 392681e6-30ed-fa8b-27a9-eaf56b595c32
+CUDA 13.3, device: NVIDIA B200 (ID 5), VRAM: 178.34 GiB
+CUDA device UUID: 31e6ca9e-2ac3-affe-a481-429c89c88f05
+CUDA 13.3, device: NVIDIA B200 (ID 6), VRAM: 178.34 GiB
+CUDA device UUID: a9047ee9-473a-2050-e125-75f8a005a35d
+CUDA 13.3, device: NVIDIA B200 (ID 7), VRAM: 178.34 GiB
+CUDA device UUID: 86ff0bbe-6d2a-ed72-a882-9abe402ba79e
+Solving a problem with 22117 constraints, 200787 variables (0 integers), and 20078717 nonzeros
+Using PSLP presolver
+PSLP Presolved problem: 20669 constraints, 13824 variables, 1378816 non-zeros
+PSLP presolve time: 0.93s
+Solving with distributed PDLP on 8 GPUs.
+NCCL version 2.30.7+cuda13.3
+      0 -1.70000000e+01 -1.70000000e+01  0.00e+00   0.00e+00     1.18e+02   4.074s
+   1000 -2.82955125e+02 -2.82994223e+02  3.91e-02   1.37e-02     9.09e-02   4.444s
+   1500 -2.82965830e+02 -2.82963171e+02  2.66e-03   6.46e-03     8.83e-03   4.537s
+LP Solver status:                Optimal
+Primal objective:                -2.82965830e+02
+Dual objective:                  -2.82963171e+02
+Duality gap (abs/rel):           +2.66e-03 / +4.69e-06
+Primal infeasibility (abs/rel):  +6.46e-03 / +1.66e-05
+Dual infeasibility (abs/rel):    +8.83e-03 / +7.45e-05
+PDLP finished
+Status: Optimal   Objective: -2.82965830e+02  Iterations: 1500  Time: 4.583s
+
+### exit_code=0
+### finished=2026-08-09T18:23:13.573390
+### gpu_peak_mb=5274.4
+### gpu_peak2_mb=5210.4
+### per_gpu_peak_mb=[5274.375, 5210.375, 5210.375, 5210.375, 5210.375, 5210.375, 5210.375, 5210.375]

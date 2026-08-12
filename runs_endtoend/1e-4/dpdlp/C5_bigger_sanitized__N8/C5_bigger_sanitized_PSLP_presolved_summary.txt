@@ -1,0 +1,12 @@
+Termination Reason: PRIMAL_INFEASIBLE
+Runtime (sec): 5.754341e-01
+Iterations Count: 200
+Primal Objective Value: -5.999820e+11
+Dual Objective Value: 5.221513e+13
+Relative Primal Residual: 8.845000e-02
+Relative Dual Residual: 2.272413e-02
+Absolute Objective Gap: 5.281511e+13
+Relative Objective Gap: 1.000000e+00
+Rows: 41815048
+Columns: 299222166
+Nonzeros: 645160824

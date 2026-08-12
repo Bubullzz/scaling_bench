@@ -1,0 +1,26 @@
+### solver=cuopt-distributed
+### instance=/home/scratch.vmostovoi_gpu/datasets/big_lp/design_match.mps
+### n_gpus=8
+### CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+### started=2026-08-09T17:12:52.823621
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --method 1 --presolve 0 --mps-reader experimental-fast --time-limit 3600 --iteration-limit 1000000000 --relative-primal-tolerance 1e-4 --relative-dual-tolerance 1e-4 --relative-gap-tolerance 1e-4 --log-to-console true --num-gpus 8 /home/scratch.vmostovoi_gpu/datasets/big_lp/design_match.mps
+### --- solver output ---
+Setting parameter iteration_limit to 1000000000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter num_gpus to 8
+Setting parameter presolve to 0
+Setting parameter relative_dual_tolerance to 1.000000e-04
+Setting parameter relative_gap_tolerance to 1.000000e-04
+Setting parameter relative_primal_tolerance to 1.000000e-04
+Setting parameter time_limit to 3.600000e+03
+Reading file design_match.mps
+Using experimental fast MPS parser for '/home/scratch.vmostovoi_gpu/datasets/big_lp/design_match.mps'
+Parser exception: {"MPS_PARSER_ERROR_TYPE": "RuntimeError", "msg": "fast MPS parser requires 64-bit indices: nnz=2760000000 exceeds index max=2147483647"}
+Parsing input file failed. Exiting!
+
+### exit_code=255
+### finished=2026-08-09T17:15:15.255254
+### gpu_peak_mb=1364.4
+### gpu_peak2_mb=1364.4
+### per_gpu_peak_mb=[1364.375, 1364.375, 1364.375, 1364.375, 1364.375, 1364.375, 1364.375, 1364.375]

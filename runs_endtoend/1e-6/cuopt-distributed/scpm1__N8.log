@@ -1,0 +1,112 @@
+### solver=cuopt-distributed
+### instance=/home/scratch.cmaes_sw/hans_lps/scpm1.mps
+### n_gpus=8
+### CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+### started=2026-08-10T14:53:20.700195
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --method 1 --mps-reader experimental-fast --time-limit 3600 --iteration-limit 1000000000 --relative-primal-tolerance 1e-6 --relative-dual-tolerance 1e-6 --relative-gap-tolerance 1e-6 --log-to-console true --num-gpus 8 /home/scratch.cmaes_sw/hans_lps/scpm1.mps
+### --- solver output ---
+Setting parameter iteration_limit to 1000000000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter num_gpus to 8
+Setting parameter relative_dual_tolerance to 1.000000e-06
+Setting parameter relative_gap_tolerance to 1.000000e-06
+Setting parameter relative_primal_tolerance to 1.000000e-06
+Setting parameter time_limit to 3.600000e+03
+Reading file scpm1.mps
+Using experimental fast MPS parser for '/home/scratch.cmaes_sw/hans_lps/scpm1.mps'
+Read file scpm1.mps in 0.51 seconds
+cuOpt version: 26.10.0, git hash: f3ebc673, host arch: x86_64, device archs: 100a-real
+CPU: INTEL(R) XEON(R) PLATINUM 8570, threads (physical/logical): 112/224, RAM (available/total): 1963.03 / 2015.54 GiB
+CUDA 13.3, device: NVIDIA B200 (ID 0), VRAM: 178.34 GiB
+CUDA device UUID: 48ab7b4d-7b0a-65b7-4538-4e37338d2330
+CUDA 13.3, device: NVIDIA B200 (ID 1), VRAM: 178.34 GiB
+CUDA device UUID: 5dd43d25-54eb-687e-91f8-d4c917f40a3c
+CUDA 13.3, device: NVIDIA B200 (ID 2), VRAM: 178.34 GiB
+CUDA device UUID: a40e62a0-1502-ea41-88b7-8ebfb62f67b6
+CUDA 13.3, device: NVIDIA B200 (ID 3), VRAM: 178.34 GiB
+CUDA device UUID: 69c2235c-eda1-228c-f9ee-e444f16a4e31
+CUDA 13.3, device: NVIDIA B200 (ID 4), VRAM: 178.34 GiB
+CUDA device UUID: 92e986d5-fb1f-ac84-bd70-b03e127c762a
+CUDA 13.3, device: NVIDIA B200 (ID 5), VRAM: 178.34 GiB
+CUDA device UUID: fb4dfdcf-c8fe-1714-a140-0823be2fde13
+CUDA 13.3, device: NVIDIA B200 (ID 6), VRAM: 178.34 GiB
+CUDA device UUID: 3519c8dd-244c-a241-e2ee-ef61e97ec465
+CUDA 13.3, device: NVIDIA B200 (ID 7), VRAM: 178.34 GiB
+CUDA device UUID: b80ee313-5762-b760-dd9a-a5669634bef9
+Solving a problem with 5000 constraints, 500000 variables (0 integers), and 6250000 nonzeros
+Using PSLP presolver
+PSLP Presolved problem: 5000 constraints, 500000 variables, 6250000 non-zeros
+PSLP presolve time: 0.68s
+Solving with distributed PDLP on 8 GPUs.
+NCCL version 2.30.7+cuda13.3
+      0 +0.00000000e+00 +0.00000000e+00  0.00e+00   7.07e+01     4.11e+04   5.508s
+   1000 +4.16779807e+02 +4.26119944e+02  9.34e+00   5.20e-01     2.58e+00   5.880s
+   2000 +4.13836833e+02 +4.14442198e+02  6.05e-01   1.58e-01     2.80e-01   6.065s
+   3000 +4.13760874e+02 +4.13807221e+02  4.63e-02   6.78e-02     8.44e-02   6.249s
+   4000 +4.13766760e+02 +4.13774259e+02  7.50e-03   3.97e-02     3.98e-02   6.434s
+   5000 +4.13777452e+02 +4.13777533e+02  8.13e-05   1.92e-02     2.40e-02   6.617s
+   6000 +4.13778957e+02 +4.13778131e+02  8.26e-04   1.27e-02     1.59e-02   6.804s
+   7000 +4.13780447e+02 +4.13779396e+02  1.05e-03   1.02e-02     1.17e-02   6.988s
+   8000 +4.13780469e+02 +4.13779798e+02  6.71e-04   7.08e-03     9.47e-03   7.172s
+   9000 +4.13781051e+02 +4.13780697e+02  3.54e-04   5.30e-03     7.69e-03   7.355s
+  10000 +4.13781137e+02 +4.13782038e+02  9.01e-04   4.67e-03     6.76e-03   7.542s
+  11000 +4.13781394e+02 +4.13783144e+02  1.75e-03   3.92e-03     5.50e-03   7.718s
+  12000 +4.13781662e+02 +4.13782458e+02  7.97e-04   3.28e-03     4.46e-03   7.893s
+  13000 +4.13781782e+02 +4.13782403e+02  6.20e-04   2.72e-03     3.51e-03   8.068s
+  14000 +4.13781586e+02 +4.13782344e+02  7.58e-04   2.27e-03     2.97e-03   8.242s
+  15000 +4.13781837e+02 +4.13782224e+02  3.88e-04   1.93e-03     2.94e-03   8.418s
+  16000 +4.13781884e+02 +4.13782034e+02  1.50e-04   1.63e-03     2.92e-03   8.593s
+  17000 +4.13781882e+02 +4.13781793e+02  8.89e-05   1.25e-03     2.84e-03   8.767s
+  18000 +4.13781870e+02 +4.13781820e+02  4.96e-05   9.51e-04     2.57e-03   8.942s
+  19000 +4.13781891e+02 +4.13782157e+02  2.66e-04   7.82e-04     2.20e-03   9.117s
+  20000 +4.13781953e+02 +4.13782392e+02  4.39e-04   6.42e-04     1.91e-03   9.291s
+  21000 +4.13781962e+02 +4.13782283e+02  3.21e-04   5.99e-04     1.61e-03   9.466s
+  22000 +4.13782031e+02 +4.13782077e+02  4.55e-05   5.81e-04     1.36e-03   9.641s
+  23000 +4.13781927e+02 +4.13781795e+02  1.32e-04   5.62e-04     1.23e-03   9.818s
+  24000 +4.13781954e+02 +4.13781739e+02  2.15e-04   6.00e-04     1.14e-03   9.993s
+  25000 +4.13782000e+02 +4.13781763e+02  2.37e-04   6.37e-04     1.01e-03   10.170s
+  26000 +4.13782008e+02 +4.13781857e+02  1.51e-04   6.23e-04     9.15e-04   10.345s
+  27000 +4.13782031e+02 +4.13781874e+02  1.56e-04   5.65e-04     8.65e-04   10.522s
+  28000 +4.13782040e+02 +4.13781857e+02  1.83e-04   4.91e-04     8.42e-04   10.699s
+  29000 +4.13782017e+02 +4.13781863e+02  1.55e-04   4.14e-04     8.22e-04   10.874s
+  30000 +4.13782034e+02 +4.13781873e+02  1.61e-04   3.69e-04     7.67e-04   11.053s
+  31000 +4.13782015e+02 +4.13781939e+02  7.62e-05   3.38e-04     6.97e-04   11.229s
+  32000 +4.13782036e+02 +4.13781993e+02  4.35e-05   3.07e-04     6.47e-04   11.407s
+  33000 +4.13782066e+02 +4.13782036e+02  3.10e-05   2.92e-04     6.06e-04   11.585s
+  34000 +4.13782097e+02 +4.13782036e+02  6.07e-05   2.81e-04     5.66e-04   11.760s
+  35000 +4.13782098e+02 +4.13782078e+02  1.94e-05   2.76e-04     5.12e-04   11.936s
+  36000 +4.13782168e+02 +4.13782026e+02  1.42e-04   3.12e-04     4.53e-04   12.114s
+  37000 +4.13782218e+02 +4.13782031e+02  1.87e-04   3.59e-04     4.01e-04   12.289s
+  38000 +4.13782233e+02 +4.13782028e+02  2.06e-04   3.80e-04     3.53e-04   12.466s
+  39000 +4.13782251e+02 +4.13782035e+02  2.16e-04   3.87e-04     2.97e-04   12.641s
+  40000 +4.13782250e+02 +4.13782036e+02  2.14e-04   3.82e-04     2.49e-04   12.816s
+  41000 +4.13782224e+02 +4.13782055e+02  1.69e-04   3.75e-04     2.09e-04   12.991s
+  42000 +4.13782204e+02 +4.13782067e+02  1.37e-04   3.59e-04     1.84e-04   13.167s
+  43000 +4.13782188e+02 +4.13782065e+02  1.23e-04   3.38e-04     1.70e-04   13.342s
+  44000 +4.13782179e+02 +4.13782065e+02  1.14e-04   3.12e-04     1.65e-04   13.517s
+  45000 +4.13782173e+02 +4.13782073e+02  9.95e-05   2.85e-04     1.65e-04   13.693s
+  46000 +4.13782160e+02 +4.13782076e+02  8.37e-05   2.60e-04     1.63e-04   13.868s
+  47000 +4.13782150e+02 +4.13782079e+02  7.05e-05   2.40e-04     1.54e-04   14.043s
+  48000 +4.13782124e+02 +4.13782073e+02  5.09e-05   2.23e-04     1.47e-04   14.219s
+  49000 +4.13782119e+02 +4.13782077e+02  4.26e-05   2.10e-04     1.43e-04   14.394s
+  50000 +4.13782096e+02 +4.13782068e+02  2.79e-05   2.01e-04     1.37e-04   14.569s
+  51000 +4.13782092e+02 +4.13782074e+02  1.73e-05   1.96e-04     1.29e-04   14.746s
+  52000 +4.13782094e+02 +4.13782073e+02  2.07e-05   1.90e-04     1.20e-04   14.921s
+  53000 +4.13782094e+02 +4.13782079e+02  1.56e-05   1.86e-04     1.08e-04   15.097s
+  54000 +4.13782087e+02 +4.13782086e+02  1.41e-06   1.78e-04     9.86e-05   15.272s
+  55000 +4.13782098e+02 +4.13782078e+02  2.00e-05   1.69e-04     9.39e-05   15.447s
+LP Solver status:                Optimal
+Primal objective:                +4.13782098e+02
+Dual objective:                  +4.13782078e+02
+Duality gap (abs/rel):           +2.00e-05 / +2.42e-08
+Primal infeasibility (abs/rel):  +1.69e-04 / +2.36e-06
+Dual infeasibility (abs/rel):    +9.39e-05 / +2.28e-09
+PDLP finished
+Status: Optimal   Objective: 4.13782098e+02  Iterations: 55000  Time: 15.472s
+
+### exit_code=0
+### finished=2026-08-10T14:53:45.388451
+### gpu_peak_mb=5434.4
+### gpu_peak2_mb=5338.4
+### per_gpu_peak_mb=[5434.375, 5338.375, 5338.375, 5338.375, 5338.375, 5338.375, 5338.375, 5338.375]

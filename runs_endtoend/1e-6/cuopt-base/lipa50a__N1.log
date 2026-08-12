@@ -1,0 +1,94 @@
+### solver=cuopt-base
+### instance=/home/scratch.vmostovoi_gpu/datasets/generated/qap/QAP-LP/lipa50a.mps
+### n_gpus=1
+### CUDA_VISIBLE_DEVICES=0
+### started=2026-08-02T10:26:05.956002
+### argv=/home/scratch.vmostovoi_gpu/mostovoi_cuopt/cpp/build/cuopt_cli --method 1 --mps-reader experimental-fast --time-limit 3600 --iteration-limit 1000000000 --relative-primal-tolerance 1e-6 --relative-dual-tolerance 1e-6 --relative-gap-tolerance 1e-6 --log-to-console true /home/scratch.vmostovoi_gpu/datasets/generated/qap/QAP-LP/lipa50a.mps
+### --- solver output ---
+Setting parameter iteration_limit to 1000000000
+Setting parameter log_to_console to true
+Setting parameter method to 1
+Setting parameter relative_dual_tolerance to 1.000000e-06
+Setting parameter relative_gap_tolerance to 1.000000e-06
+Setting parameter relative_primal_tolerance to 1.000000e-06
+Setting parameter time_limit to 3.600000e+03
+Reading file lipa50a.mps
+Using experimental fast MPS parser for '/home/scratch.vmostovoi_gpu/datasets/generated/qap/QAP-LP/lipa50a.mps'
+Read file lipa50a.mps in 0.26 seconds
+cuOpt version: 26.8.0, git hash: 7116ead1, host arch: x86_64, device archs: 100a-real
+CPU: INTEL(R) XEON(R) PLATINUM 8570, threads (physical/logical): 112/224, RAM: 910.42 GiB
+CUDA 13.3, device: NVIDIA B200 (ID 0), VRAM: 178.34 GiB
+CUDA device UUID: b8f49f10-582d-1433-afd7-3a3fbd279b94
+Solving a problem with 245100 constraints, 3003750 variables (0 integers), and 12255000 nonzeros
+Problem scaling:
+Objective coefficents range:          [4e+00, 2e+02]
+Constraint matrix coefficients range: [1e+00, 1e+00]
+Constraint rhs / bounds range:        [1e+00, 1e+00]
+Variable bounds range:                [0e+00, 0e+00]
+
+Using PSLP presolver
+PSLP Presolved problem: 245100 constraints, 3003750 variables, 12255000 non-zeros
+PSLP presolve time: 1.54s
+Objective offset 0.000000 scaling_factor 1.000000
+   Iter    Primal Obj.      Dual Obj.    Gap        Primal Res.  Dual Res.   Time
+      0 +0.00000000e+00 +0.00000000e+00  0.00e+00   1.00e+01     9.92e+04   1.616s
+   1000 +6.23041674e+04 +6.23269311e+04  2.28e+01   6.00e-02     8.09e+01   1.828s
+   2000 +6.22472923e+04 +6.22469880e+04  3.04e-01   3.22e-02     1.37e+01   1.991s
+   3000 +6.22380911e+04 +6.22271534e+04  1.09e+01   4.29e-02     3.28e+00   2.154s
+   4000 +6.22315378e+04 +6.22230885e+04  8.45e+00   2.88e-02     1.34e+00   2.317s
+   5000 +6.22244471e+04 +6.22222038e+04  2.24e+00   1.87e-02     6.03e-01   2.480s
+   6000 +6.22232642e+04 +6.22218731e+04  1.39e+00   1.34e-02     3.95e-01   2.643s
+   7000 +6.22223066e+04 +6.22218147e+04  4.92e-01   1.05e-02     2.93e-01   2.805s
+   8000 +6.22221338e+04 +6.22217368e+04  3.97e-01   8.12e-03     2.19e-01   2.968s
+   9000 +6.22218457e+04 +6.22217469e+04  9.88e-02   5.73e-03     1.76e-01   3.131s
+  10000 +6.22217603e+04 +6.22216779e+04  8.24e-02   5.00e-03     1.28e-01   3.294s
+  11000 +6.22216090e+04 +6.22216483e+04  3.92e-02   3.30e-03     1.14e-01   3.454s
+  12000 +6.22216313e+04 +6.22216576e+04  2.63e-02   2.59e-03     9.17e-02   3.615s
+  13000 +6.22216816e+04 +6.22216489e+04  3.27e-02   1.95e-03     7.47e-02   3.775s
+  14000 +6.22216881e+04 +6.22216476e+04  4.05e-02   1.70e-03     6.09e-02   3.936s
+  15000 +6.22217072e+04 +6.22216465e+04  6.06e-02   1.73e-03     4.67e-02   4.097s
+  16000 +6.22217253e+04 +6.22216464e+04  7.89e-02   1.63e-03     3.96e-02   4.257s
+  17000 +6.22216921e+04 +6.22216432e+04  4.88e-02   1.51e-03     3.44e-02   4.421s
+  18000 +6.22216849e+04 +6.22216424e+04  4.25e-02   1.46e-03     2.89e-02   4.582s
+  19000 +6.22216661e+04 +6.22216377e+04  2.84e-02   1.37e-03     2.47e-02   4.742s
+  20000 +6.22216681e+04 +6.22216347e+04  3.33e-02   1.26e-03     2.22e-02   4.903s
+  21000 +6.22216721e+04 +6.22216315e+04  4.07e-02   1.15e-03     2.01e-02   5.063s
+  22000 +6.22216551e+04 +6.22216304e+04  2.48e-02   9.86e-04     1.93e-02   5.224s
+  23000 +6.22216541e+04 +6.22216288e+04  2.53e-02   8.41e-04     1.99e-02   5.385s
+  24000 +6.22216432e+04 +6.22216297e+04  1.35e-02   7.40e-04     2.14e-02   5.545s
+  25000 +6.22216464e+04 +6.22216276e+04  1.88e-02   6.79e-04     2.14e-02   5.706s
+  26000 +6.22216429e+04 +6.22216266e+04  1.63e-02   6.37e-04     2.06e-02   5.866s
+  27000 +6.22216417e+04 +6.22216257e+04  1.60e-02   6.03e-04     1.94e-02   6.027s
+  28000 +6.22216381e+04 +6.22216253e+04  1.28e-02   5.58e-04     1.82e-02   6.187s
+  29000 +6.22216385e+04 +6.22216251e+04  1.34e-02   5.08e-04     1.74e-02   6.348s
+  30000 +6.22216403e+04 +6.22216246e+04  1.56e-02   4.66e-04     1.63e-02   6.508s
+  31000 +6.22216437e+04 +6.22216254e+04  1.83e-02   4.35e-04     1.48e-02   6.669s
+  32000 +6.22216400e+04 +6.22216257e+04  1.43e-02   4.04e-04     1.34e-02   6.829s
+  33000 +6.22216318e+04 +6.22216245e+04  7.35e-03   3.73e-04     1.24e-02   6.990s
+  34000 +6.22216309e+04 +6.22216239e+04  6.99e-03   3.57e-04     1.12e-02   7.151s
+  35000 +6.22216276e+04 +6.22216242e+04  3.43e-03   3.38e-04     1.01e-02   7.311s
+  36000 +6.22216268e+04 +6.22216232e+04  3.53e-03   3.19e-04     9.48e-03   7.472s
+  37000 +6.22216249e+04 +6.22216236e+04  1.24e-03   3.17e-04     8.74e-03   7.632s
+  38000 +6.22216228e+04 +6.22216247e+04  1.93e-03   3.19e-04     7.73e-03   7.793s
+  39000 +6.22216214e+04 +6.22216254e+04  4.02e-03   3.14e-04     6.84e-03   7.954s
+  40000 +6.22216219e+04 +6.22216258e+04  3.92e-03   3.07e-04     6.19e-03   8.114s
+  41000 +6.22216208e+04 +6.22216263e+04  5.45e-03   2.71e-04     6.24e-03   8.275s
+  42000 +6.22216224e+04 +6.22216268e+04  4.37e-03   2.30e-04     6.34e-03   8.435s
+  43000 +6.22216234e+04 +6.22216270e+04  3.62e-03   1.89e-04     6.34e-03   8.596s
+  44000 +6.22216237e+04 +6.22216275e+04  3.83e-03   1.60e-04     6.24e-03   8.756s
+  45000 +6.22216254e+04 +6.22216274e+04  1.93e-03   1.35e-04     6.19e-03   8.917s
+  46000 +6.22216255e+04 +6.22216272e+04  1.78e-03   1.09e-04     6.16e-03   9.077s
+LP Solver status:                Optimal
+Primal objective:                +6.22216255e+04
+Dual objective:                  +6.22216272e+04
+Duality gap (abs/rel):           +1.78e-03 / +1.43e-08
+Primal infeasibility (abs/rel):  +1.09e-04 / +9.90e-06
+Dual infeasibility (abs/rel):    +6.16e-03 / +6.21e-08
+PDLP finished
+Status: Optimal   Objective: 6.22216255e+04  Iterations: 46000  Time: 9.079s
+
+### exit_code=0
+### finished=2026-08-02T10:26:17.081495
+### gpu_peak_mb=3450.4
+### gpu_peak2_mb=0.0
+### per_gpu_peak_mb=[3450.375]
